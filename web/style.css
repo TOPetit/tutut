@@ -14,3 +14,29 @@
     width: 100%;
     border: 2px solid red;
 }
+
+.log {
+    align-self: center;
+    height: 300px;
+    width: 100%;
+    row-gap: 5px;
+    display: grid;
+    grid-template-areas: "a" "b" "c" "d" "e" "f" "g" "h" "i" "j";
+}
+
+.tutut_log {
+    border: 2px solid red;
+    width: 100%;
+    height: 100%;
+}
+
+#log1 {grid-area: a;}
+#log2 {grid-area: b;}
+#log3 {grid-area: c;}
+#log4 {grid-area: d;}
+#log5 {grid-area: e;}
+#log6 {grid-area: f;}
+#log7 {grid-area: g;}
+#log8 {grid-area: h;}
+#log9 {grid-area: i;}
+#log10 {grid-area: j;}
