@@ -48,7 +48,7 @@
 
 #log3 {
     grid-area: c;
-    background-color: lightgrey;
+    background-color: rgb(236, 236, 236);
 }
 
 #log4 {
@@ -57,7 +57,7 @@
 
 #log5 {
     grid-area: e;
-    background-color: lightgrey;
+    background-color: rgb(236, 236, 236);
 }
 
 #log6 {
@@ -66,7 +66,7 @@
 
 #log7 {
     grid-area: g;
-    background-color: lightgrey;
+    background-color: rgb(236, 236, 236);
 }
 
 #log8 {
@@ -75,7 +75,7 @@
 
 #log9 {
     grid-area: i;
-    background-color: lightgrey;
+    background-color: rgb(236, 236, 236);
 }
 
 #log10 {
@@ -84,16 +84,11 @@
 
 #log11 {
     grid-area: k;
-    background-color: lightgrey;
+    background-color: rgb(236, 236, 236);
 }
 
 .tutut_log>div {
     padding: 4px 6px;
-}
-
-#log1>div {
-    border: 1px solid black;
-    padding: 4px 5px;
 }
 
 #log2>div {
