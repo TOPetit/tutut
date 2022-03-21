@@ -1,0 +1,5 @@
+var text = "Tutut from Jodie Moullet at 2022 - 03 - 18 20: 20: 21.632000.\nTutut from Théo Petit at 2022 - 03 - 18 21: 21: 24.301000.\nTutut from Jodie Moullet at 2022 - 03 - 18 21: 21: 25.627000.\nTutut from Théo Petit at 2022 - 03 - 18 21: 21: 29.323000.\nTutut from Cassandra Gilet at 2022 - 03 - 18 21: 21: 44.110000.\nTutut from Jodie Moullet at 2022 - 03 - 18 23: 23: 05.896000.\nTutut from Théo Petit at 2022 - 03 - 18 23: 23: 11.830000.\nTutut from Théo Petit at 2022 - 03 - 18 23: 23: 17.972000.\nTutut from Matthieu An'ArtRoll Pastag'art Muller at 2022 - 03 - 18 23: 23: 21.934000.\nTutut from Matthieu An'ArtRoll Pastag'art Muller at 2022 - 03 - 19 01: 01: 07.310000.\nTutut from Jodie Moullet at 2022 - 03 - 19 01: 01: 50.730000.\nTutut from Théo Petit at 2022 - 03 - 20 18: 18: 02.221000.\nTutut from Théo Petit at 2022 - 03 - 20 18: 18: 05.516000.\nTutut from Jodie Moullet at 2022 - 03 - 20 18: 18: 08.749000.\nTutut from Matthieu An'ArtRoll Pastag'art Muller at 2022 - 03 - 20 18: 18: 12.899000.\nTutut from Cassandra Gilet at 2022 - 03 - 20 18: 18: 18.612000."
+var lines = text.split("\n");
+lines = lines.reverse();
+console.log(lines);
+
