@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="100000">
+    <title>Stutustiques</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+    <script src="script.js"></script>
+
+    <link rel="stylesheet" href="style.css?rnd=23">
+</head>
+
+<body>
+    <div class="title">STUTUSTIQUES</div>
+    <div class="trug">
+        <span class="dropdown">
+            <button class="dropbtn" id="thread">Dropdown</button>
+            <div class="dropdown-content">
+                <div id="btn1">Option 1</div>
+                <div id="btn2">Option 2</div>
+                <div id="btn3">Option 3</div>
+                <!-- <div id="btn4">Option 4</div> -->
+            </div>
+        </span>
+    </div>
+    <div class="separator"></div>
+    <div class="tiles">
+        <div class="data">
+            <div class="data_title">Fastest Tutut</div>
+            <div class="data_name" id="fastest_name"></div>
+            <div class="data_value" id="fastest_value"></div>
+        </div>
+        <div class="data">
+            <div class="data_title">Latest Tutut</div>
+            <div class="data_name" id="latest_name"></div>
+            <div class="data_value" id="latest_value"></div>
+        </div>
+        <div class="data">
+            <div class="data_title">Most Tutut in a row</div>
+            <div class="data_name" id="serie_name"></div>
+            <div class="data_value" id="serie_value"></div>
+        </div>
+        <div class="data">
+            <div class="data_title">Most errors</div>
+            <div class="data_name" id="error_name"></div>
+            <div class="data_value" id="error_value"></div>
+        </div>
+    </div>
+    <div class="separator"></div>
+    <div id="div_chart_tutut_pie">
+        <canvas id="chart_tutut_pie"></canvas>
+    </div>
+    <div class="separator"></div>
+    <div id="div_chart_tutut_week">
+        <canvas id="chart_tutut_week"></canvas>
+    </div>
+    <div class="separator"></div>
+    <div id="div_chart_tutut_day">
+        <canvas id="chart_tutut_day"></canvas>
+    </div>
+    <div class="separator"></div>
+    <div id="div_chart_tutut_min">
+        <canvas id="chart_tutut_min"></canvas>
+    </div>
+    <div class="separator"></div>
+    <div class="page-selector">
+        <img class="arrow" id="arrow-left" src="arrow.svg" alt="" height="40px" width="40px" />
+        <div class="page-number" id="page_number">Page 0</div>
+        <img class="arrow" id="arrow-right" src="arrow.svg" alt="" height="40px" width="40px" />
+    </div>
+    <table id="log_table">
+        <tr id="log_hd">
+            <th id="Id">Id</th>
+            <th id="Name">Name</th>
+            <th id="Date">Date</th>
+            <th id="Time">Time</th>
+            <th id="Serie">Serie</th>
+        </tr>
+    </table>
+
+</body>
+
+</html>
