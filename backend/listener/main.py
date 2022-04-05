@@ -81,5 +81,7 @@ class TututBot(Client):
                     f.write(tutut)
 
 
-client = TututBot("theo.petit.1848", getpass())
+username_theo = "theo.petit.1848"
+username = input("username : ")
+client = TututBot(username, getpass())
 client.listen()
