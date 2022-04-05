@@ -26,7 +26,7 @@ The more computing you do in backend the better.
 - [ ] warning quand tutut 
 - [x] nombre d'erreurs
 - [ ] expand / collapse logs
-~~- [ ] Téma la taille du rat~~
+- [ ] ~~Téma la taille du rat~~
 - [ ] Hamming
 - [ ] chart jours glissants par personne
 - [ ] logs taille constante
