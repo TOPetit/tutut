@@ -30,3 +30,4 @@ The more computing you do in backend the better.
 - [ ] Hamming
 - [ ] chart jours glissants par personne
 - [ ] logs taille constante
+- [ ] same format for all tutut in csv
