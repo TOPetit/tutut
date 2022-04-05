@@ -31,3 +31,6 @@ The more computing you do in backend the better.
 - [ ] chart jours glissants par personne
 - [ ] logs taille constante
 - [ ] same format for all tutut in csv
+- [ ] fix js
+  - [ ] auto refresh
+  - [ ] reformat all js to clean it
