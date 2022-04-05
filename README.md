@@ -1,6 +1,6 @@
 # Stutustiques
 
-Some statistiques about Tutut.
+Some statistics about Tutut.
 Open source private project between friends.
 
 ## Front-end
