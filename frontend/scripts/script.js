@@ -7,12 +7,38 @@ var page = 1;
 
 window.onload = function () {
 
-    // Add html static content
-    document.getElementById("page_number").innerHTML = "Page " + String(page);
+    // Populate html content
+    document.getElementById("thread").innerHTML = threads[glob_current_thread_id];
 
-    // Add listeners
-    document.getElementById("arrow-right").onclick = function () { pageChange(page + 1, data) };
-    document.getElementById("arrow-left").onclick = function () { pageChange(page - 1, data) };
+    // Thread
+    document.getElementById("btn1").innerHTML = threads[4567795139935838];
+    document.getElementById("btn2").innerHTML = threads[100008800800648];
+    document.getElementById("btn3").innerHTML = threads[100014962631116];
+
+    document.getElementById("btn1").onclick = function () { updatePage("4567795139935838") };
+    document.getElementById("btn2").onclick = function () { updatePage("100008800800648") };
+    document.getElementById("btn3").onclick = function () { updatePage("100014962631116") };
+
+    // Page management
+    document.getElementById("page_number").innerHTML = "Page " + String(page);
+    document.getElementById("arrow-right").onclick = function () { pageChange(page + 1) };
+    document.getElementById("arrow-left").onclick = function () { pageChange(page - 1) };
+
+    populate();
+}
+
+function updatePage(thread) {
+    pageChange(1);
+    glob_current_thread_id = thread;
+    document.getElementById("thread").innerHTML = threads[glob_current_thread_id];
+    hourChart.destroy();
+    dayChart.destroy();
+    pieChart.destroy();
+    secChart.destroy();
+    populate();
+}
+
+function populate() {
 
     // We get the data
     let data = getData(glob_current_thread_id);

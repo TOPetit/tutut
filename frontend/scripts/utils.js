@@ -1,8 +1,8 @@
 function getData(thread_id) {
     let content = '';
     var request = new XMLHttpRequest();
-    request.open('GET', "https://tutut.popota.me/" + thread_id + ".csv", false);
-    // request.open('GET', window.location.href + thread_id + '.csv', false);
+    request.open('GET', "https://tutut.popota.me/" + "data/" + thread_id + ".csv", false);
+    // request.open('GET', window.location.href + "data/" + thread_id + '.csv', false);
     request.send(null);
 
     if (request.status === 200) {
@@ -183,7 +183,8 @@ function serie(data, nb_log) {
 
 // Logs
 
-function pageChange(n_page, data) {
+function pageChange(n_page) {
+    let data = getData(glob_current_thread_id);
     page = Math.min(Math.ceil((data.split('\n').length - 1) / glob_nb_log), Math.max(1, n_page));
     document.getElementById("page_number").innerHTML = "Page " + String(page);
     let res = serie(data, nb_log) // Needs to be behind new_log
