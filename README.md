@@ -22,7 +22,7 @@ Back-end uses :
 The more computing you do in backend the better.
 
 ## TODO
-- [ ] tiles des best tututer of the day (reset at 0h00) and of the week (reset at Monday 0h00)
+- [ ] tiles des best tututer of the day (reset at 0h00:00) and of the week (reset at Monday 0h00:00)
 - [x] chart minutes / jours populaires
 - [ ] warning quand tutut 
 - [x] nombre d'erreurs
