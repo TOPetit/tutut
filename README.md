@@ -29,7 +29,7 @@ The more computing you do in backend the better.
 - [ ] expand / collapse logs
 - [ ] ~~Téma la taille du rat~~
 - [ ] Hamming
-- [ ] chart jours glissants par personne
+- [ ] graphe ligne du nombre de tututs par personne sur 14 jours glissants (une courbe par personne)
 - [ ] logs taille constante
 - [ ] same format for all tutut in csv
 - [ ] fix js
