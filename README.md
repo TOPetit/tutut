@@ -22,14 +22,14 @@ Back-end uses :
 The more computing you do in backend the better.
 
 ## TODO
-- [ ] tiles des best tututer of the day (reset at 0h00) and of the week (reset at Monday 0h00)
+- [ ] tiles des best tututer of the day (reset at 0h00:00) and of the week (reset at Monday 0h00:00)
 - [x] chart minutes / jours populaires
 - [ ] warning quand tutut 
 - [x] nombre d'erreurs
 - [ ] expand / collapse logs
 - [ ] ~~Téma la taille du rat~~
 - [ ] Hamming
-- [ ] chart jours glissants par personne
+- [ ] graphe ligne du nombre de tututs par personne sur 14 jours glissants (une courbe par personne)
 - [ ] logs taille constante
 - [ ] same format for all tutut in csv
 - [ ] fix js
