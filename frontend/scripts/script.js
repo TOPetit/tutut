@@ -1,14 +1,16 @@
-var glob_current_thread_id = "4567795139935838";
+var glob_current_thread_id = "";
 var glob_nb_log = 20;
 var page = 1;
 
+var pageUp = x => { let page_tmp = page; pageChange(page_tmp + 1, x) };
+var pageDown = x => { let page_tmp = page; pageChange(page_tmp - 1, x) };
+var pageReset = x => pageChange(1, x);
 
-// console.log(getData(glob_current_thread_id));
 
 window.onload = function () {
 
-    // Populate html content
-    document.getElementById("thread").innerHTML = threads[glob_current_thread_id];
+    // refresh
+    document.getElementById("refresh_div").onclick = function () { updatePage(glob_current_thread_id) };
 
     // Thread
     document.getElementById("btn1").innerHTML = threads[4567795139935838];
@@ -21,27 +23,32 @@ window.onload = function () {
 
     // Page management
     document.getElementById("page_number").innerHTML = "Page " + String(page);
-    document.getElementById("arrow-right").onclick = function () { pageChange(page + 1) };
-    document.getElementById("arrow-left").onclick = function () { pageChange(page - 1) };
+    document.getElementById("arrow-right").onclick = function () { getData(glob_current_thread_id, pageUp) };
+    document.getElementById("arrow-left").onclick = function () { getData(glob_current_thread_id, pageDown) };
 
-    populate();
+
+    glob_current_thread_id = "4567795139935838";
+
+    getData(glob_current_thread_id, populate);
+
 }
 
 function updatePage(thread) {
-    pageChange(1);
-    glob_current_thread_id = thread;
-    document.getElementById("thread").innerHTML = threads[glob_current_thread_id];
+    if (thread != glob_current_thread_id) {
+        getData(thread, pageReset);
+        glob_current_thread_id = thread;
+        document.getElementById("thread").innerHTML = threads[glob_current_thread_id];
+    }
     hourChart.destroy();
     dayChart.destroy();
     pieChart.destroy();
     secChart.destroy();
-    populate();
+    getData(glob_current_thread_id, populate);
 }
 
-function populate() {
+function populate(data) {
 
-    // We get the data
-    let data = getData(glob_current_thread_id);
+    document.getElementById("thread").innerHTML = threads[glob_current_thread_id];
 
     // We use the data to fill html content
     nb_log = Math.min(data.split('\n').length - 1, glob_nb_log); // Can't show more log than what we have

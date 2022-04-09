@@ -1,17 +1,18 @@
-function getData(thread_id) {
-    let content = '';
-    var request = new XMLHttpRequest();
-    request.open('GET', "https://tutut.popota.me/" + "data/" + thread_id + ".csv", false);
-    // request.open('GET', window.location.href + "data/" + thread_id + '.csv', false);
-    request.send(null);
+async function getData(thread_id, func) {
+    const response = await fetch("https://tutut.popota.me/" + "data/" + thread_id + ".csv");
+    // waits until the request completes...
+    text = await response.text().then(function (data) {
+        func(data)
+    });
 
-    if (request.status === 200) {
-        content = request.responseText;
-    }
-    return content;
 }
 
 // Every useful variables
+
+var hourChart;
+var dayChart;
+var pieChart;
+var secChart;
 
 var names = {
     100032236723941: "Theo",
@@ -183,8 +184,7 @@ function serie(data, nb_log) {
 
 // Logs
 
-function pageChange(n_page) {
-    let data = getData(glob_current_thread_id);
+function pageChange(n_page, data) {
     page = Math.min(Math.ceil((data.split('\n').length - 1) / glob_nb_log), Math.max(1, n_page));
     document.getElementById("page_number").innerHTML = "Page " + String(page);
     let res = serie(data, nb_log) // Needs to be behind new_log

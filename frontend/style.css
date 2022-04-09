@@ -26,7 +26,7 @@ body {
 
 .trug {
     margin: auto;
-    width: 300px;
+    width: 350px;
     display: flex;
     justify-content: center;
     padding-bottom: 5px;
@@ -41,6 +41,7 @@ body {
     font-size: 15px;
     border: none;
     cursor: pointer;
+    border-radius: 5px;
   }
   
   /* Style for dropdown content */
@@ -75,12 +76,40 @@ body {
   .dropdown:hover .dropdown-content {
     display: block;
   }
-  
+
   /* Highlight dropdown button when dropdown menu is open */
   .dropdown:hover .dropbtn {
     background-color: #474885;
+    border-radius: 5px 5px 0px 0px;
   }
   
+#refresh_div {
+    margin: auto;
+    height: 37.2px;
+    width: 37.2px;
+    background-color: #5d5fd6;
+    cursor: pointer;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#refresh_div:hover {
+    animation-name: refresh;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+}
+
+@keyframes refresh {
+    from {
+      transform: rotate(0deg);
+    }
+  
+    to {
+        transform: rotate(360deg);
+    }
+  }
 
 .button {
     margin: auto;
@@ -88,7 +117,7 @@ body {
     border-radius: 10px;
     text-align: center;
 }
-  
+
 .tiles {
     width: 75%;
     margin: auto;
