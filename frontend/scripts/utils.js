@@ -549,24 +549,27 @@ function tututMin(d) {
 
     let lines = d.split('\n').slice(0, -1);
 
-    let nbPointParSec = 1 / 5;
+    let nbPointParSec = 1 / 4;
 
     let nb_sec = 60;
 
-    let labels = [];
+    let labels = ["0s"];
 
-    let values = [];
+    let values = [0];
     for (let index = 0; index < nb_sec * nbPointParSec; index++) {
-        values[index] = 0;
-        labels[index] = String((index / nbPointParSec).toFixed(2)).padStart(2, '0') + 's';
+        values[index + 1] = 0;
+        labels[index + 1] = String((index / nbPointParSec + 1 / (2 * nbPointParSec))).padStart(2, '0') + 's';
     }
+
+    values.push(0);
+    labels.push("60s");
 
     for (let index = 0; index < lines.length; index++) {
         const element = lines[index]
         if (isCorrect(element)) {
             let date = moment(element.split(';')[1]);
 
-            values[Math.floor(nbPointParSec * parseInt(date.seconds()) + Math.floor(date.milliseconds() / (1000 / nbPointParSec)))] += 1;
+            values[Math.floor(nbPointParSec * parseInt(date.seconds()) + Math.floor(date.milliseconds() / (1000 / nbPointParSec))) + 1] += 1;
         }
     }
 
@@ -585,7 +588,7 @@ function tututMin(d) {
             }]
         },
         options: {
-            tension: 0.4,
+            tension: 0.45,
             plugins: {
                 title: {
                     display: true,
@@ -606,7 +609,7 @@ function tututMin(d) {
                 x: {
                     display: true,
                     grid: {
-                        display: false,
+                        color: "rgb(45, 45, 59)",
                     },
                     ticks: {
                         color: "lightgrey",
@@ -630,7 +633,6 @@ function tututMin(d) {
                         }
                     }
                 }
-
             }
         }
     });
@@ -728,7 +730,6 @@ function tututDyn(d) {
                     min: 0,
                     grid: {
                         display: false,
-
                     },
                     ticks: {
                         color: "lightgrey",
