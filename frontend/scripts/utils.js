@@ -280,29 +280,65 @@ Chart.defaults.size = 20;
 
 function tututPie(d) {
 
-    var data = {
-        labels: ["Chocolate", "Vanilla", "Strawberry"],
-        datasets: [{
-            label: "Blue",
-            backgroundColor: "blue",
-            data: [3, 7, 4]
-        }, {
-            label: "Red",
-            backgroundColor: "red",
-            data: [4, 3, 5]
-        }, {
-            label: "Green",
-            backgroundColor: "green",
-            data: [7, 2, 6]
-        }]
-    };
+    let nb_step = 50; // div of time (number f points)
+
+    let lines_data = d.split('\n').slice(0, -1);
+    let start_date = new Date(lines_data[0].split(';')[1]);
+    let end_date = new Date(lines_data.slice(-1)[0].split(';')[1]);
+    let duration = end_date - start_date;
+
+    let step = Math.ceil(duration / nb_step);
+
+    datasets = [];
+
+    for (let index = 0; index < in_thread[glob_current_thread_id].length; index++) {
+        datasets[index] = {};
+        datasets[index]['label'] = names[in_thread[glob_current_thread_id][index]];
+        datasets[index]['borderColor'] = colors[in_thread[glob_current_thread_id][index]];
+        datasets[index]['backgroundColor'] = colors[in_thread[glob_current_thread_id][index]];
+        datasets[index]['data'] = [];
+        for (let index1 = 0; index1 < nb_step; index1++) {
+            datasets[index]['data'][index1] = 0;
+        }
+    }
+
+    let step_labels = [];
+
+    for (let index = 0; index < nb_step; index++) {
+        let step_date = new Date((start_date - 1) + index * step);
+        step_labels[index] = String(step_date.getDate()) + '/' + String(step_date.getMonth()) + '/' + String(step_date.getYear());
+        console.log(step_labels[index]);
+    }
+
+    for (let index = 0; index < lines_data.length; index++) {
+        let current_tutut = lines_data[index];
+        let current_date = new Date(current_tutut.split(';')[1]);
+        let current_id = parseInt(current_tutut.split(';')[0]);
+        let index_of_id = in_thread[glob_current_thread_id].indexOf(current_id);
+        let current_duration = current_date - start_date;
+        let index_in_data = Math.floor(current_duration / step);
+        for (let index1 = index_in_data; index1 < nb_step; index1++) {
+            datasets[index_of_id]['data'][index1] += 1;
+        }
+    }
+
+    data = {};
+
+    data['labels'] = step_labels;
+    data['datasets'] = datasets;
 
     var ctx = document.getElementById("chart_tutut_pie").getContext('2d');
 
     lineChart = new Chart(ctx, {
-        type: 'line',
+        type: 'bar',
         data: data,
         options: {
+            tension: 0.4,
+            elements: {
+                point: {
+                    radius: 0
+                }
+            },
             plugins: {
                 legend: {
                     labels: {
@@ -342,6 +378,38 @@ function tututPie(d) {
             },
             maintainAspectRatio: false,
             responsive: true,
+            scales: {
+                x: {
+                    display: true,
+                    grid: {
+                        display: false,
+                    },
+                    ticks: {
+                        color: "lightgrey",
+                        font: {
+                            size: 18,
+                            family: 'Lato'
+                        },
+                        autoSkip: true,
+                        maxTicksLimit: 10
+                    }
+                },
+                y: {
+                    display: true,
+                    grid: {
+                        color: "rgb(45, 45, 59)",
+                    },
+                    ticks: {
+                        beginAtZero: true,
+                        color: "lightgrey",
+                        font: {
+                            size: 18,
+                            family: 'Lato'
+                        }
+                    }
+                }
+
+            }
         }
     });
 
@@ -619,6 +687,5 @@ function tututMin(d) {
 
 function isCorrect(line) {
     let tmp = line.split(';')[1];
-    let tmp_date = new Date(tmp);
-    return (tmp_date.getHours() == tmp_date.getMinutes());
+    return (tmp.split(' ')[1].split(':')[0] == tmp.split(' ')[1].split(':')[1]);
 }
