@@ -8,3 +8,7 @@ This folder contains all necessary script to convert fb raw data into usable `.c
 ## test-js-res
 
 A test to represent current `.csv` directly in a js array.
+
+## date format
+
+The date must be in this format : `YYYY/MM/DD HH:MM:SS.mmm000` (instead of the current `YYYY-MM-DD HH:MM:SS.mmm000`).
