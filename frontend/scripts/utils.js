@@ -65,8 +65,8 @@ function fastest(data) {
         let line = lines[index];
         // If tutut is correct
         if (isCorrect(line)) {
-            let tmp = new Date(line.split(';')[1]);
-            let tmp_val = tmp.getSeconds() + tmp.getMilliseconds() / 1000;
+            let tmp = moment(line.split(';')[1]);
+            let tmp_val = tmp.seconds() + tmp.milliseconds() / 1000;
             if (tmp_val < fastest) {
                 fastest = tmp_val;
                 name = names[line.split(';')[0]];
@@ -88,8 +88,8 @@ function latest(data) {
         let line = lines[index];
         // If tutut is correct
         if (isCorrect(line)) {
-            let tmp = new Date(line.split(';')[1]);
-            let tmp_val = tmp.getSeconds() + tmp.getMilliseconds() / 1000;
+            let tmp = moment(line.split(';')[1]);
+            let tmp_val = tmp.seconds() + tmp.milliseconds() / 1000;
             if (tmp_val > latest) {
                 latest = tmp_val;
                 name = names[line.split(';')[0]];
@@ -145,14 +145,14 @@ function serie(data, nb_log) {
 
     for (let index = 0; index < nb_people; index++) {
         values[index] = 0; // Incremented when the series is on
-        last_dates[index] = new Date("0000-01-01 00:00:00.000000");
+        last_dates[index] = moment("0000-01-01 00:00:00.000000");
     }
 
     for (let index = 0; index < lines.length; index++) {
         let line = lines[index];
         // If Tutut is correct
         if (isCorrect(line)) {
-            let current_date = new Date(line.split(';')[1]);
+            let current_date = moment(line.split(';')[1]);
             let current_name = line.split(';')[0];
             let id = in_thread[glob_current_thread_id].indexOf(parseInt(current_name))
             let last_date = last_dates[id];
@@ -371,8 +371,8 @@ function tututWeek(d) {
     for (let index = 0; index < lines.length; index++) {
         const element = lines[index]
         if (isCorrect(element)) {
-            let date = new Date(element.split(';')[1]);
-            values[(date.getDay() + 6) % 7] += 1;
+            let date = moment(element.split(';')[1]);
+            values[(date.days() + 6) % 7] += 1;
         }
     }
 
@@ -461,8 +461,8 @@ function tututDay(d) {
     for (let index = 0; index < lines.length; index++) {
         const element = lines[index]
         if (isCorrect(element)) {
-            let date = new Date(element.split(';')[1]);
-            values[parseInt(date.getHours())] += 1;
+            let date = moment(element.split(';')[1]);
+            values[parseInt(date.hours())] += 1;
         }
     }
 
@@ -552,9 +552,9 @@ function tututMin(d) {
     for (let index = 0; index < lines.length; index++) {
         const element = lines[index]
         if (isCorrect(element)) {
-            let date = new Date(element.split(';')[1]);
+            let date = moment(element.split(';')[1]);
 
-            values[Math.floor(nbPointParSec * parseInt(date.getSeconds()) + Math.floor(date.getMilliseconds() / (1000 / nbPointParSec)))] += 1;
+            values[Math.floor(nbPointParSec * parseInt(date.seconds()) + Math.floor(date.milliseconds() / (1000 / nbPointParSec)))] += 1;
         }
     }
 
@@ -628,6 +628,6 @@ function tututMin(d) {
 
 function isCorrect(line) {
     let tmp = line.split(';')[1];
-    let tmp_date = new Date(tmp);
-    return (tmp_date.getHours() == tmp_date.getMinutes());
+    var tmp_date = moment(tmp);
+    return (tmp_date.hours() == tmp_date.minutes());
 }
