@@ -41,7 +41,7 @@ function updatePage(thread) {
     }
     hourChart.destroy();
     dayChart.destroy();
-    lineChart.destroy();
+    pieChart.destroy();
     secChart.destroy();
     getData(glob_current_thread_id, populate);
 }

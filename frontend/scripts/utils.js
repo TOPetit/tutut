@@ -11,7 +11,7 @@ async function getData(thread_id, func) {
 
 var hourChart;
 var dayChart;
-var lineChart;
+var pieChart;
 var secChart;
 
 var names = {
@@ -280,28 +280,39 @@ Chart.defaults.size = 20;
 
 function tututPie(d) {
 
-    var data = {
-        labels: ["Chocolate", "Vanilla", "Strawberry"],
-        datasets: [{
-            label: "Blue",
-            backgroundColor: "blue",
-            data: [3, 7, 4]
-        }, {
-            label: "Red",
-            backgroundColor: "red",
-            data: [4, 3, 5]
-        }, {
-            label: "Green",
-            backgroundColor: "green",
-            data: [7, 2, 6]
-        }]
-    };
+    let lines = d.split('\n').slice(0, -1);
 
+    let values = [];
+    for (let index = 0; index < in_thread[glob_current_thread_id].length; index++) {
+        values[index] = 0;
+    }
+
+    for (let index = 0; index < lines.length; index++) {
+        const element = lines[index]
+        if (isCorrect(element)) {
+            values[in_thread[glob_current_thread_id].indexOf(parseInt(element.split(';')[0]))] += 1;
+        }
+    }
+
+    let data = values;
+    let labels = in_thread[glob_current_thread_id].map(x => names[x]);
     var ctx = document.getElementById("chart_tutut_pie").getContext('2d');
 
-    lineChart = new Chart(ctx, {
-        type: 'line',
-        data: data,
+
+
+    pieChart = new Chart(ctx, {
+        type: 'pie',
+        plugins: [ChartDataLabels],
+        data: {
+            labels: labels,
+            datasets: [{
+                data: data,
+                backgroundColor: in_thread[glob_current_thread_id].map(x => colors[x]),
+                hoverBackgroundColor: in_thread[glob_current_thread_id].map(x => hoverColors[x]),
+                borderColor: 'rgb(22, 22, 29)',
+                borderWidth: 5,
+            }]
+        },
         options: {
             plugins: {
                 legend: {
@@ -344,8 +355,6 @@ function tututPie(d) {
             responsive: true,
         }
     });
-
-
 }
 
 function tututWeek(d) {
