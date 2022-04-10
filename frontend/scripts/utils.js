@@ -4,7 +4,6 @@ async function getData(thread_id, func) {
     text = await response.text().then(function (data) {
         func(data)
     });
-
 }
 
 // Every useful variables
@@ -13,6 +12,7 @@ var hourChart;
 var dayChart;
 var pieChart;
 var secChart;
+var dynChart;
 
 var names = {
     100032236723941: "Theo",
@@ -588,6 +588,90 @@ function tututMin(d) {
                     display: false
                 }
             },
+            maintainAspectRatio: false,
+            responsive: true,
+            scales: {
+                x: {
+                    display: true,
+                    grid: {
+                        display: false,
+                    },
+                    ticks: {
+                        color: "lightgrey",
+                        font: {
+                            size: 18,
+                            family: 'Lato'
+                        }
+                    }
+                },
+                y: {
+                    display: true,
+                    grid: {
+                        color: "rgb(45, 45, 59)",
+                    },
+                    ticks: {
+                        beginAtZero: true,
+                        color: "lightgrey",
+                        font: {
+                            size: 18,
+                            family: 'Lato'
+                        }
+                    }
+                }
+
+            }
+        }
+    });
+}
+
+function tututDyn(d) {
+
+    let lines = d.split('\n').slice(0, -1);
+
+    let values = [];
+    for (let index = 0; index < in_thread[glob_current_thread_id].length; index++) {
+        values[index] = 0;
+    }
+
+    for (let index = 0; index < lines.length; index++) {
+        const element = lines[index]
+        if (isCorrect(element)) {
+            values[in_thread[glob_current_thread_id].indexOf(parseInt(element.split(';')[0]))] += 1;
+        }
+    }
+
+    let data = values;
+    let labels = in_thread[glob_current_thread_id].map(x => names[x]);
+
+    var ctx = document.getElementById("chart_tutut_dyn").getContext('2d');
+
+    dynChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                data: data,
+                borderWidth: 2,
+                backgroundColor: in_thread[glob_current_thread_id].map(x => colors[x]),
+                hoverBackgroundColor: in_thread[glob_current_thread_id].map(x => hoverColors[x]),
+            }]
+        },
+        options: {
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Number of Tutut per hour',
+                    color: "lightgrey",
+                    font: {
+                        size: 30,
+                        family: 'Lato'
+                    }
+                },
+                legend: {
+                    display: false
+                }
+            },
+            indexAxis: 'y',
             maintainAspectRatio: false,
             responsive: true,
             scales: {

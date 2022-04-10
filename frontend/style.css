@@ -1,7 +1,7 @@
 @font-face {
     font-family: roboto;
     src: url(Roboto-Medium.ttf);
-  }
+}
 
 body {
     background-color: rgb(22, 22, 29);
@@ -42,12 +42,13 @@ body {
     border: none;
     cursor: pointer;
     border-radius: 5px;
-  }
-  
-  /* Style for dropdown content */
-  .dropdown-content {
+}
+
+/* Style for dropdown content */
+.dropdown-content {
     min-width: 300px;
-    display: none; /* Hidden by default */
+    display: none;
+    /* Hidden by default */
     position: absolute;
     background-color: #8a8bd3;
     color: beige;
@@ -55,34 +56,34 @@ body {
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
     cursor: pointer;
-  }
-  
-  /* Style for each content div */
-  .dropdown-content div {
+}
+
+/* Style for each content div */
+.dropdown-content div {
     min-width: 298px;
     padding: 10px 0px 10px 0px;
     text-align: center;
     border: 1px solid #8a8bd3;
-  }
-  
-  /* Highlight dropdown options on hover */
-  .dropdown-content div:hover {
+}
+
+/* Highlight dropdown options on hover */
+.dropdown-content div:hover {
     color: beige;
     background-color: #7173ca;
     border: 1px solid black;
-  }
-  
-  /* Show the dropdown menu on hover */
-  .dropdown:hover .dropdown-content {
-    display: block;
-  }
+}
 
-  /* Highlight dropdown button when dropdown menu is open */
-  .dropdown:hover .dropbtn {
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Highlight dropdown button when dropdown menu is open */
+.dropdown:hover .dropbtn {
     background-color: #474885;
     border-radius: 5px 5px 0px 0px;
-  }
-  
+}
+
 #refresh_div {
     margin: auto;
     height: 37.2px;
@@ -103,13 +104,13 @@ body {
 
 @keyframes refresh {
     from {
-      transform: rotate(0deg);
+        transform: rotate(0deg);
     }
-  
+
     to {
         transform: rotate(360deg);
     }
-  }
+}
 
 .button {
     margin: auto;
@@ -218,6 +219,15 @@ body {
 }
 
 #div_chart_tutut_min {
+    height: 50vh;
+    width: 80vw;
+    position: relative;
+    display: block;
+    margin: auto;
+    color: lightgrey;
+}
+
+#div_dyn_chart {
     height: 50vh;
     width: 80vw;
     position: relative;

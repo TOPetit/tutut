@@ -43,6 +43,7 @@ function updatePage(thread) {
     dayChart.destroy();
     pieChart.destroy();
     secChart.destroy();
+    dynChart.destroy();
     getData(glob_current_thread_id, populate);
 }
 
@@ -62,4 +63,5 @@ function populate(data) {
     tututWeek(data);
     tututDay(data);
     tututMin(data);
+    tututDyn(data);
 }
