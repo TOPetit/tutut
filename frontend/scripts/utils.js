@@ -6,6 +6,18 @@ async function getData(thread_id, func) {
     });
 }
 
+function getRandomInt(max) {
+    return Math.floor(Math.random() * max);
+}
+
+var fake_dyn = setInterval(clock, 200);
+var nb_dyn = 200;
+
+function clock() {
+    nb_dyn += 1;
+    getData(glob_current_thread_id, setDyn);
+}
+
 // Every useful variables
 
 var hourChart;
@@ -624,9 +636,16 @@ function tututMin(d) {
     });
 }
 
-function tututDyn(d) {
+function sortedIndex(values) {
+    var len = values.length;
+    var indices = new Array(len);
+    for (var i = 0; i < len; ++i) { indices[i] = i }
+    indices.sort(function (a, b) { return values[a] < values[b] ? -1 : values[a] > values[b] ? 1 : 0; });
+    return indices;
+}
 
-    let lines = d.split('\n').slice(0, -1);
+function setDyn(d) {
+    let lines = d.split('\n').slice(0, -1).slice(0, nb_dyn);
 
     let values = [];
     for (let index = 0; index < in_thread[glob_current_thread_id].length; index++) {
@@ -640,17 +659,43 @@ function tututDyn(d) {
         }
     }
 
-    let data = values;
     let labels = in_thread[glob_current_thread_id].map(x => names[x]);
+    let nique = in_thread[glob_current_thread_id].map(x => colors[x]);
+    let nique2 = in_thread[glob_current_thread_id].map(x => hoverColors[x]);
+
+    let tmp_data = [];
+    let tmp_label = [];
+    let tmp_color = [];
+    let tmp_hover = [];
+
+    indexes = sortedIndex(values).reverse();
+
+    for (let index = 0; index < indexes.length; index++) {
+        tmp_data[index] = values[indexes[index]];
+        tmp_label[index] = labels[indexes[index]];
+        tmp_color[index] = nique[indexes[index]];
+        tmp_hover[index] = nique2[indexes[index]];
+    }
+
+
+    dynChart.data.datasets[0].data = tmp_data;
+    dynChart.data.labels = tmp_label;
+    dynChart.data.datasets[0].backgroundColor = tmp_color;
+    dynChart.data.datasets[0].hoverBackgroundColor = tmp_hover;
+    dynChart.options.scales.x.min = Math.max(0, tmp_data.slice(-1)[0] - 20);
+    dynChart.update();
+}
+
+function tututDyn(d) {
 
     var ctx = document.getElementById("chart_tutut_dyn").getContext('2d');
-
     dynChart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: labels,
+            labels: in_thread[glob_current_thread_id].map(x => names[x]),
             datasets: [{
-                data: data,
+                barThickness: 40,
+                data: in_thread[glob_current_thread_id].map(x => 0),
                 borderWidth: 2,
                 backgroundColor: in_thread[glob_current_thread_id].map(x => colors[x]),
                 hoverBackgroundColor: in_thread[glob_current_thread_id].map(x => hoverColors[x]),
@@ -660,7 +705,7 @@ function tututDyn(d) {
             plugins: {
                 title: {
                     display: true,
-                    text: 'Number of Tutut per hour',
+                    text: 'Tutut race',
                     color: "lightgrey",
                     font: {
                         size: 30,
@@ -672,13 +717,18 @@ function tututDyn(d) {
                 }
             },
             indexAxis: 'y',
+            animation: {
+                duration: 200,
+            },
             maintainAspectRatio: false,
             responsive: true,
             scales: {
                 x: {
                     display: true,
+                    min: 0,
                     grid: {
                         display: false,
+
                     },
                     ticks: {
                         color: "lightgrey",
@@ -702,7 +752,6 @@ function tututDyn(d) {
                         }
                     }
                 }
-
             }
         }
     });
