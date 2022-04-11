@@ -6,18 +6,6 @@ async function getData(thread_id, func) {
     });
 }
 
-function getRandomInt(max) {
-    return Math.floor(Math.random() * max);
-}
-
-var fake_dyn = setInterval(clock, 200);
-var nb_dyn = 200;
-
-function clock() {
-    nb_dyn += 1;
-    getData(glob_current_thread_id, setDyn);
-}
-
 // Every useful variables
 
 var hourChart;
@@ -646,6 +634,8 @@ function sortedIndex(values) {
     return indices;
 }
 
+// Bar chart race
+
 function setDyn(d) {
     let lines = d.split('\n').slice(0, -1).slice(0, nb_dyn);
 
@@ -684,7 +674,8 @@ function setDyn(d) {
     dynChart.data.labels = tmp_label;
     dynChart.data.datasets[0].backgroundColor = tmp_color;
     dynChart.data.datasets[0].hoverBackgroundColor = tmp_hover;
-    dynChart.options.scales.x.min = Math.max(0, tmp_data.slice(-1)[0] - 20);
+    //dynChart.options.scales.x.min = Math.max(0, tmp_data.slice(-1)[0] - 20);
+    dynChart.options.scales.x.max = 350;
     dynChart.update();
 }
 
@@ -756,6 +747,61 @@ function tututDyn(d) {
             }
         }
     });
+}
+
+// Controls
+
+var step = 50;
+var interval_showing = 1000;
+var interval_background = 1000;
+var min_interval = 100;
+var max_interval = 3000;
+
+var playing = false; // false is pause, true is play
+
+var counter = interval_showing;
+
+var updating = setInterval(clock, 10);
+var nb_dyn = 0;
+
+function clock() {
+
+    counter -= step;
+
+    if (counter < 0) {
+        counter = interval_showing;
+        console.log(interval_showing);
+        if (playing) {
+            nb_dyn += 1;
+            getData(glob_current_thread_id, setDyn);
+        }
+    }
+    // console.log("interval_showing = " + String(interval_showing) + '\interval_background = ' + String(interval_background) + '\n')
+}
+
+function play() {
+    interval_showing = interval_background;
+    playing = true;
+}
+
+function pause() {
+    playing = false;
+}
+
+function faster() {
+    interval_background = Math.max(min_interval, interval_background - step);
+}
+
+function slower() {
+    interval_background = Math.min(max_interval, interval_background + step);
+}
+
+function reset() {
+    interval_showing = 1000;
+    interval_background = 1000;
+    nb_dyn = 0;
+    playing = false;
+    counter = interval_showing;
 }
 
 // Functions sandbox
