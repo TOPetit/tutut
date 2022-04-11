@@ -675,7 +675,7 @@ function setDyn(d) {
     dynChart.data.datasets[0].backgroundColor = tmp_color;
     dynChart.data.datasets[0].hoverBackgroundColor = tmp_hover;
     //dynChart.options.scales.x.min = Math.max(0, tmp_data.slice(-1)[0] - 20);
-    dynChart.options.scales.x.max = 350;
+    dynChart.options.scales.x.max = 400;
     dynChart.update();
 }
 
