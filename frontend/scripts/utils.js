@@ -754,7 +754,7 @@ function tututDyn(d) {
 var step = 50;
 var interval_showing = 1000;
 var interval_background = 1000;
-var min_interval = 100;
+var min_interval = 50;
 var max_interval = 3000;
 
 var playing = false; // false is pause, true is play
@@ -767,6 +767,13 @@ var nb_dyn = 0;
 function clock() {
 
     counter -= step;
+
+    if (playing) {
+        document.getElementById("play").style.backgroundImage = "url('media_icons/media-pause.svg')";
+    }
+    else {
+        document.getElementById("play").style.backgroundImage = "url('media_icons/media-play.svg')";
+    }
 
     if (counter < 0) {
         counter = interval_showing;
@@ -790,10 +797,16 @@ function pause() {
 
 function faster() {
     interval_background = Math.max(min_interval, interval_background - step);
+    if (playing) {
+        play();
+    }
 }
 
 function slower() {
     interval_background = Math.min(max_interval, interval_background + step);
+    if (playing) {
+        play();
+    }
 }
 
 function reset() {
@@ -802,6 +815,13 @@ function reset() {
     nb_dyn = 0;
     playing = false;
     counter = interval_showing;
+    getData(glob_current_thread_id, setDyn)
+}
+
+function skip() {
+    playing = false;
+    nb_dyn = 10000000;
+    getData(glob_current_thread_id, setDyn)
 }
 
 // Functions sandbox

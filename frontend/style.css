@@ -236,6 +236,52 @@ body {
     color: lightgrey;
 }
 
+#progression {
+    margin: auto;
+    width: 80%;
+    height: 20px;
+}
+
+#controls {
+    margin: auto;
+    width: 18%;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    border: 2px solid grey;
+    border-radius: 5px;
+}
+
+#controls>div {
+    height: 30px;
+    width: 30px;
+    cursor: pointer;
+    background-size: 100%;
+}
+
+#reset {
+    background-image: url(media_icons/media-back.svg);
+}
+
+#slower {
+    background-image: url(media_icons/media-forward.svg);
+    transform: rotate(180deg);
+}
+
+#play {
+    background-image: url(media_icons/media-play.svg);
+}
+
+#faster {
+    background-image: url(media_icons/media-forward.svg);
+}
+
+#skip {
+    background-image: url(media_icons/media-back.svg);
+    transform: rotate(180deg);
+}
+
 .page-selector {
     padding-bottom: 15px;
     margin: auto;

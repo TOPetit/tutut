@@ -26,6 +26,13 @@ window.onload = function () {
     document.getElementById("arrow-right").onclick = function () { getData(glob_current_thread_id, pageUp) };
     document.getElementById("arrow-left").onclick = function () { getData(glob_current_thread_id, pageDown) };
 
+    // Race controls
+    document.getElementById("slower").onclick = function () { slower() };
+    document.getElementById("faster").onclick = function () { faster() };
+    document.getElementById("play").onclick = function () { if (playing) { pause() } else { play() } };
+    document.getElementById("reset").onclick = function () { reset() };
+    document.getElementById("skip").onclick = function () { skip() };
+
 
     glob_current_thread_id = "4567795139935838";
 
