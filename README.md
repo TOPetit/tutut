@@ -9,7 +9,7 @@ Front-end uses :
 - HTML
 - CSS
 - Javascript
-  
+
 ## Back-end
 
 Back-end uses :
