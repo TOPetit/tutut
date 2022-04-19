@@ -34,4 +34,4 @@ The more computing you do in backend the better.
 - [ ] same format for all tutut in csv
 - [ ] fix js
   - [ ] auto refresh
-  - [ ] reformat all js to clean it
+  - [x] reformat all js to clean it
