@@ -36,4 +36,4 @@ The more computing you do in backend the better.
   - [ ] auto refresh
   - [x] reformat all js to clean it
 - [ ] git prod branch
-- [ ] feature test
+- [x] feature test
