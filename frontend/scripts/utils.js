@@ -510,13 +510,6 @@ function tututWeek(d) {
 
     let lines = d.split('\n').slice(0, -1);
 
-    let nb_day = 7;
-
-    let values = [];
-    for (let index = 0; index < nb_day; index++) {
-        values[index] = 0;
-    }
-
     let datasets = [];
     let nb_people = in_thread[glob_current_thread_id].length;
 
@@ -608,6 +601,106 @@ function tututWeek(d) {
 }
 
 function tututDay(d) {
+
+    let lines = d.split('\n').slice(0, -1);
+    let labels = [];
+
+    let nb_hours = 24;
+
+    for (let index = 0; index < nb_hours; index++) {
+        labels[index] = String(index).padStart(2, '0') + 'h' + String(index).padStart(2, '0');
+    }
+
+    let datasets = [];
+    let nb_people = in_thread[glob_current_thread_id].length;
+
+    for (let index = 0; index < nb_people; index++) {
+        datasets[index] = {
+            data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            label: in_thread[glob_current_thread_id].map(x => names[x])[index],
+            backgroundColor: in_thread[glob_current_thread_id].map(x => colors[x])[index],
+            hoverBackgroundColor: in_thread[glob_current_thread_id].map(x => hoverColors[x])[index],
+        }
+    }
+
+    for (let index = 0; index < lines.length; index++) {
+        const element = lines[index]
+        if (isCorrect(element)) {
+            let parsed = parseLine(element);
+            let name_index = in_thread[glob_current_thread_id].indexOf(parsed["int_id"]);
+            let date = moment(element.split(';')[1]);
+            datasets[name_index]["data"][parseInt(date.hours())] += 1;
+        }
+    }
+
+    var ctx = document.getElementById("chart_tutut_day").getContext('2d');
+
+    hourChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: datasets,
+        },
+        options: {
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Number of Tutut per hours',
+                    color: "lightgrey",
+                    font: {
+                        size: 30,
+                        family: 'Lato'
+                    }
+                },
+                legend: {
+                    labels: {
+                        color: "lightgrey",
+                        font: {
+                            size: 18,
+                            family: "Lato"
+                        }
+                    }
+                },
+            },
+            maintainAspectRatio: false,
+            responsive: true,
+            scales: {
+                x: {
+                    stacked: true,
+                    display: true,
+                    grid: {
+                        display: false,
+                    },
+                    ticks: {
+                        color: "lightgrey",
+                        font: {
+                            size: 18,
+                            family: 'Lato'
+                        }
+                    }
+                },
+                y: {
+                    stacked: true,
+                    display: true,
+                    grid: {
+                        color: "rgb(45, 45, 59)",
+                    },
+                    ticks: {
+                        beginAtZero: true,
+                        color: "lightgrey",
+                        font: {
+                            size: 18,
+                            family: 'Lato'
+                        }
+                    }
+                }
+
+            }
+        }
+    });
+}
+
+function tututDaysdqqqqq(d) {
 
     let lines = d.split('\n').slice(0, -1);
 
