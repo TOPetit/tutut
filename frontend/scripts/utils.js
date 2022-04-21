@@ -57,80 +57,178 @@ var hoverColors = {
 // Functions to fill html tiles
 
 function fastest(data) {
-    let fastest = 59.999;
-    let name = "Test";
-    let value = "Test";
-    var lines = data.split("\n").slice(0, -1);
+
+    let lines = data.split('\n').slice(0, -1);
+    let name = [];
+    let value = [];
+    let fastest = [];
+
+    let nb_people = in_thread[glob_current_thread_id].length;
+
+    for (let index = 0; index < nb_people; index++) {
+        name[index] = names[in_thread[glob_current_thread_id][index]];
+        value[index] = "";
+        fastest[index] = 60;
+    }
+
     for (let index = 0; index < lines.length; index++) {
         let line = lines[index];
-        // If tutut is correct
         if (isCorrect(line)) {
-            let tmp = moment(line.split(';')[1]);
-            let tmp_val = tmp.seconds() + tmp.milliseconds() / 1000;
-            if (tmp_val < fastest) {
-                fastest = tmp_val;
-                name = names[line.split(';')[0]];
-                value = line.split(';')[1].slice(0, -3);
-
+            let parsed = parseLine(line);
+            let name_index = in_thread[glob_current_thread_id].indexOf(parsed["int_id"]);
+            if (parsed["value"] < fastest[name_index]) {
+                fastest[name_index] = parsed["value"];
+                value[name_index] = parsed["slash_date"] + ' ' + parsed["instant"];
             }
         }
     }
-    document.getElementById("fastest_name").innerHTML = name;
-    document.getElementById("fastest_value").innerHTML = value;
+
+    let tmp_name = [];
+    let tmp_value = [];
+
+    let indexes = sortedIndex(fastest);
+
+    for (let index = 0; index < indexes.length; index++) {
+        tmp_name[index] = name[indexes[index]];
+        tmp_value[index] = value[indexes[index]];
+    }
+
+    let data_container = document.getElementById("fastest");
+
+    data_container.innerHTML = "";
+
+    for (let index = 0; index < nb_people; index++) {
+
+        let data_obj = document.createElement("div");
+        data_obj.setAttribute("class", "data");
+
+        let data_name = document.createElement("div");
+        data_name.setAttribute("class", "name");
+        data_name.innerHTML = tmp_name[index];
+
+        let data_value = document.createElement("div");
+        data_value.setAttribute("class", "value");
+        data_value.innerHTML = tmp_value[index];
+
+        data_obj.appendChild(data_name);
+        data_obj.appendChild(data_value);
+        data_container.appendChild(data_obj);
+    }
 }
 
 function latest(data) {
-    let latest = 0;
-    let name = "Test";
-    let value = "Test";
-    var lines = data.split("\n").slice(0, -1);
+
+    let lines = data.split('\n').slice(0, -1);
+    let name = [];
+    let value = [];
+    let latestt = [];
+
+    let nb_people = in_thread[glob_current_thread_id].length;
+
+    for (let index = 0; index < nb_people; index++) {
+        name[index] = names[in_thread[glob_current_thread_id][index]];
+        value[index] = "";
+        latestt[index] = 0;
+    }
+
     for (let index = 0; index < lines.length; index++) {
         let line = lines[index];
-        // If tutut is correct
         if (isCorrect(line)) {
-            let tmp = moment(line.split(';')[1]);
-            let tmp_val = tmp.seconds() + tmp.milliseconds() / 1000;
-            if (tmp_val > latest) {
-                latest = tmp_val;
-                name = names[line.split(';')[0]];
-                value = line.split(';')[1].slice(0, -3);
+            let parsed = parseLine(line);
+            let name_index = in_thread[glob_current_thread_id].indexOf(parsed["int_id"]);
+            if (parsed["value"] > latestt[name_index]) {
+                latestt[name_index] = parsed["value"];
+                value[name_index] = parsed["slash_date"] + ' ' + parsed["instant"];
             }
         }
     }
-    document.getElementById("latest_name").innerHTML = name;
-    document.getElementById("latest_value").innerHTML = value;
+
+    let tmp_name = [];
+    let tmp_value = [];
+
+    let indexes = sortedIndex(latestt).reverse();
+
+    for (let index = 0; index < indexes.length; index++) {
+        tmp_name[index] = name[indexes[index]];
+        tmp_value[index] = value[indexes[index]];
+    }
+
+
+    let data_container = document.getElementById("latest");
+    data_container.innerHTML = "";
+
+    for (let index = 0; index < nb_people; index++) {
+
+        let data_obj = document.createElement("div");
+        data_obj.setAttribute("class", "data");
+
+        let data_name = document.createElement("div");
+        data_name.setAttribute("class", "name");
+        data_name.innerHTML = tmp_name[index];
+
+        let data_value = document.createElement("div");
+        data_value.setAttribute("class", "value");
+        data_value.innerHTML = tmp_value[index];
+
+        data_obj.appendChild(data_name);
+        data_obj.appendChild(data_value);
+        data_container.appendChild(data_obj);
+    }
 }
 
 function error_tile(data) {
 
-    let name = "";
-    let value = 0;
-
     let lines = data.split('\n').slice(0, -1);
+    let name = [];
+    let value = [];
+
     let nb_people = in_thread[glob_current_thread_id].length;
-    var values = [];
 
     for (let index = 0; index < nb_people; index++) {
-        values[index] = 0; // Incremented when we have an error
+        name[index] = names[in_thread[glob_current_thread_id][index]];
+        value[index] = 0;
     }
 
     for (let index = 0; index < lines.length; index++) {
         let line = lines[index];
         if (!isCorrect(line)) {
-            let current_name = line.split(';')[0];
-            let id = in_thread[glob_current_thread_id].indexOf(parseInt(current_name))
-            values[id] += 1;
-
-            if (values[id] > value) {
-                value = values[id];
-                name = current_name;
-            }
+            let parsed = parseLine(line);
+            let name_index = in_thread[glob_current_thread_id].indexOf(parsed["int_id"]);
+            value[name_index] += 1;
         }
-
     }
 
-    document.getElementById("error_name").innerHTML = names[name];
-    document.getElementById("error_value").innerHTML = value;
+    let tmp_name = [];
+    let tmp_value = [];
+
+    let indexes = sortedIndex(value);
+
+    for (let index = 0; index < indexes.length; index++) {
+        tmp_name[index] = name[indexes[index]];
+        tmp_value[index] = value[indexes[index]];
+    }
+
+
+    let data_container = document.getElementById("errors");
+    data_container.innerHTML = "";
+
+    for (let index = 0; index < nb_people; index++) {
+
+        let data_obj = document.createElement("div");
+        data_obj.setAttribute("class", "data");
+
+        let data_name = document.createElement("div");
+        data_name.setAttribute("class", "name");
+        data_name.innerHTML = tmp_name[index];
+
+        let data_value = document.createElement("div");
+        data_value.setAttribute("class", "value");
+        data_value.innerHTML = tmp_value[index];
+
+        data_obj.appendChild(data_name);
+        data_obj.appendChild(data_value);
+        data_container.appendChild(data_obj);
+    }
 }
 
 function serie(data, nb_log) {
@@ -176,10 +274,61 @@ function serie(data, nb_log) {
             res[index] = '';
         }
     }
-    document.getElementById("serie_name").innerHTML = names[name];
-    document.getElementById("serie_value").innerHTML = value;
 
     return res;
+}
+
+function serie_tile(data, res) {
+
+    let lines = data.split('\n').slice(0, -1);
+    let name = [];
+    let value = [];
+
+    let nb_people = in_thread[glob_current_thread_id].length;
+
+    for (let index = 0; index < nb_people; index++) {
+        name[index] = names[in_thread[glob_current_thread_id][index]];
+        value[index] = 0;
+    }
+
+    for (let index = 0; index < lines.length; index++) {
+        let line = lines[index];
+        let parsed = parseLine(line);
+        let name_index = in_thread[glob_current_thread_id].indexOf(parsed["int_id"]);
+        value[name_index] = Math.max(value[name_index], res[index]);
+    }
+
+    let tmp_name = [];
+    let tmp_value = [];
+
+    let indexes = sortedIndex(value).reverse();
+
+    for (let index = 0; index < indexes.length; index++) {
+        tmp_name[index] = name[indexes[index]];
+        tmp_value[index] = value[indexes[index]];
+    }
+
+
+    let data_container = document.getElementById("series");
+    data_container.innerHTML = "";
+
+    for (let index = 0; index < nb_people; index++) {
+
+        let data_obj = document.createElement("div");
+        data_obj.setAttribute("class", "data");
+
+        let data_name = document.createElement("div");
+        data_name.setAttribute("class", "name");
+        data_name.innerHTML = tmp_name[index];
+
+        let data_value = document.createElement("div");
+        data_value.setAttribute("class", "value");
+        data_value.innerHTML = tmp_value[index];
+
+        data_obj.appendChild(data_name);
+        data_obj.appendChild(data_value);
+        data_container.appendChild(data_obj);
+    }
 }
 
 // Logs
@@ -660,7 +809,7 @@ function setDyn(d) {
     let tmp_color = [];
     let tmp_hover = [];
 
-    indexes = sortedIndex(values).reverse();
+    let indexes = sortedIndex(values).reverse();
 
     for (let index = 0; index < indexes.length; index++) {
         tmp_data[index] = values[indexes[index]];
@@ -751,11 +900,11 @@ function tututDyn(d) {
 
 // Controls
 
-var step = 50;
-var interval_showing = 1000;
-var interval_background = 1000;
+var step = 500;
+var interval_showing = 1050;
+var interval_background = 1050;
 var min_interval = 50;
-var max_interval = 3000;
+var max_interval = 3050;
 
 var playing = false; // false is pause, true is play
 
@@ -777,7 +926,6 @@ function clock() {
 
     if (counter < 0) {
         counter = interval_showing;
-        console.log(interval_showing);
         if (playing) {
             nb_dyn += 1;
             getData(glob_current_thread_id, setDyn);
@@ -830,4 +978,28 @@ function isCorrect(line) {
     let tmp = line.split(';')[1];
     var tmp_date = moment(tmp);
     return (tmp_date.hours() == tmp_date.minutes());
+}
+
+function parseLine(line) {
+    let parsed = {};
+    let tmp = line.split(";");
+    parsed["id"] = tmp[0];
+    parsed["time"] = tmp[1].slice(0, -3);
+    parsed["int_id"] = parseInt(tmp[0]);
+    let tmp1 = tmp[1].slice(0, -3).split(" ");
+    parsed["date"] = tmp1[0];
+    let tmpDate = tmp1[0].split("-");
+    parsed["year"] = tmpDate[0];
+    parsed["month"] = tmpDate[1];
+    parsed["day"] = tmpDate[2];
+    parsed["slash_date"] = tmpDate[2] + '/' + tmpDate[1] + '/' + tmpDate[0];
+    parsed["instant"] = tmp1[1];
+    let tmp2 = tmp1[1].split(':');
+    parsed["hours"] = parseInt(tmp2[0]);
+    parsed["minutes"] = parseInt(tmp2[1]);
+    let tmp3 = tmp2[2].split('.');
+    parsed["seconds"] = parseInt(tmp3[0]);
+    parsed["milliseconds"] = parseInt(tmp3[1]);
+    parsed["value"] = parsed["seconds"] + parsed["milliseconds"] / 1000;
+    return parsed;
 }

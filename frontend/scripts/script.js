@@ -63,7 +63,8 @@ function populate(data) {
     fastest(data);
     latest(data);
     error_tile(data);
-    let res = serie(data, nb_log); // Needs to be behind new_log
+    let res = serie(data, nb_log);
+    serie_tile(data, res);
     new_log(data, res.reverse());
 
     tututPie(data);

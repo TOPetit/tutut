@@ -15,20 +15,62 @@
     <main>
         <div id="separator"></div>
         <div id="tiles_container">
-            <div id="tile"></div>
-            <div id="tile"></div>
-            <div id="tile"></div>
-            <div id="tile"></div>
+            <div class="tile">
+                <div class="tile_title">Title of this tile</div>
+                <div class="data_container">
+                    <div class="data" id="first">
+                        <div class="name">Jordan</div>
+                        <div class="value">2022-04-21 11:11:02.122</div>
+                    </div>
+                    <div class="data" id="second">
+                        <div class="name">Kevin</div>
+                        <div class="value">2022-04-04 15:15:22.789</div>
+                    </div>
+                    <div class="data" id="third">
+                        <div class="name">Dylan</div>
+                        <div class="value">2022-02-25 18:18:23.458</div>
+                    </div>
+                </div>
+            </div>
+            <div class="tile">
+                <div class="tile_title">Title of this tile, might be very very very long</div>
+                <div class="data_container">
+                    <div class="data" id="first">
+                        <div class="name">Jordan</div>
+                        <div class="value">2022-04-21 11:11:02.122</div>
+                    </div>
+                    <div class="data" id="second">
+                        <div class="name">Kevin</div>
+                        <div class="value">2022-04-04 15:15:22.789</div>
+                    </div>
+                </div>
+            </div>
+            <div class="tile"></div>
         </div>
         <div id="separator"></div>
-        <div id="graphs_container"></div>
+        <div id="graphs_container">
+            <div class="graph" id="test"></div>
+            <div class="graph"></div>
+            <div class="graph"></div>
+            <div class="graph"></div>
+        </div>
         <div id="separator"></div>
-        <div id="logs_container"></div>
+        <div id="logs_container">
+            <table id="logs_table">
+                <tr id="logs_hd">
+                    <th id="Id">Id</th>
+                    <th id="Name">Name</th>
+                    <th id="Date">Date</th>
+                    <th id="Time">Time</th>
+                    <th id="Serie">Serie</th>
+                </tr>
+            </table>
+        </div>
         <div id="separator"></div>
     </main>
 </body>
 
-<script src="script.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script src="script.js"></script>
 
 </html>
