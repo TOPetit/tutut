@@ -19,7 +19,7 @@ window.onload = function () {
 
     document.getElementById("btn1").onclick = function () { updatePage("4567795139935838"); reset() };
     document.getElementById("btn2").onclick = function () { updatePage("100008800800648"); reset() };
-    document.getElementById("btn3").onclick = function () { updatePage("100014962631116"); reset() };
+    document.getElementById("btn3").onclick = function () { updatePage("2"); reset() };
 
     // Page management
     document.getElementById("page_number").innerHTML = "Page " + String(page);
