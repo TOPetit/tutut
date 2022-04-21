@@ -700,49 +700,56 @@ function tututDay(d) {
     });
 }
 
-function tututDaysdqqqqq(d) {
+function tututMin(d) {
 
     let lines = d.split('\n').slice(0, -1);
 
-    let nb_hour = 24;
+    let nbPointParSec = 1 / 4;
+    let nb_sec = 60;
+    let labels = ["0s"];
 
-    let labels = [];
+    for (let index = 0; index < nb_sec * nbPointParSec; index++) {
+        labels[index + 1] = String((index / nbPointParSec + 1 / (2 * nbPointParSec))).padStart(2, '0') + 's';
+    }
+    labels.push("60s");
 
-    let values = [];
-    for (let index = 0; index < nb_hour; index++) {
-        values[index] = 0;
-        labels[index] = String(index).padStart(2, '0') + 'h' + String(index).padStart(2, '0');
+    let datasets = [];
+    let nb_people = in_thread[glob_current_thread_id].length;
+
+
+    for (let index = 0; index < nb_people; index++) {
+        datasets[index] = {
+            data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            label: in_thread[glob_current_thread_id].map(x => names[x])[index],
+            backgroundColor: in_thread[glob_current_thread_id].map(x => colors[x])[index],
+            borderColor: in_thread[glob_current_thread_id].map(x => colors[x])[index]
+        }
     }
 
     for (let index = 0; index < lines.length; index++) {
         const element = lines[index]
         if (isCorrect(element)) {
+            let parsed = parseLine(element);
+            let name_index = in_thread[glob_current_thread_id].indexOf(parsed["int_id"]);
             let date = moment(element.split(';')[1]);
-            values[parseInt(date.hours())] += 1;
+            datasets[name_index]["data"][Math.floor(nbPointParSec * parseInt(date.seconds()) + Math.floor(date.milliseconds() / (1000 / nbPointParSec))) + 1] += 1;
         }
     }
 
-    let data = values;
-    var ctx = document.getElementById("chart_tutut_day").getContext('2d');
+    var ctx = document.getElementById("chart_tutut_min").getContext('2d');
 
-    hourChart = new Chart(ctx, {
-        type: 'bar',
+    secChart = new Chart(ctx, {
+        type: 'line',
         data: {
             labels: labels,
-            datasets: [{
-                data: data,
-                borderWidth: 2,
-                backgroundColor: "#f8c4ad",
-                hoverBackgroundColor: "#ef8050",
-                borderColor: "#ef8050",
-                hoverBorderColor: "#f8c4ad"
-            }]
+            datasets: datasets,
         },
         options: {
+            tension: 0.45,
             plugins: {
                 title: {
                     display: true,
-                    text: 'Number of Tutut per hour',
+                    text: 'Number of Tutut per hours',
                     color: "lightgrey",
                     font: {
                         size: 30,
@@ -750,8 +757,14 @@ function tututDaysdqqqqq(d) {
                     }
                 },
                 legend: {
-                    display: false
-                }
+                    labels: {
+                        color: "lightgrey",
+                        font: {
+                            size: 18,
+                            family: "Lato"
+                        }
+                    }
+                },
             },
             maintainAspectRatio: false,
             responsive: true,
@@ -789,7 +802,7 @@ function tututDaysdqqqqq(d) {
     });
 }
 
-function tututMin(d) {
+function tututMindfdf(d) {
 
     let lines = d.split('\n').slice(0, -1);
 
