@@ -491,7 +491,7 @@ function tututPie(d) {
                 },
                 title: {
                     display: true,
-                    text: 'Number of Tutut per person',
+                    text: 'Nombre de tututs par personne',
                     color: "lightgrey",
                     font: {
                         size: 30,
@@ -545,7 +545,7 @@ function tututWeek(d) {
             plugins: {
                 title: {
                     display: true,
-                    text: 'Number of Tutut per day',
+                    text: 'Nombre de tututs par jour',
                     color: "lightgrey",
                     font: {
                         size: 30,
@@ -645,7 +645,7 @@ function tututDay(d) {
             plugins: {
                 title: {
                     display: true,
-                    text: 'Number of Tutut per hours',
+                    text: 'Nombre de tututs par heure',
                     color: "lightgrey",
                     font: {
                         size: 30,
@@ -749,7 +749,7 @@ function tututMin(d) {
             plugins: {
                 title: {
                     display: true,
-                    text: 'Number of Tutut per hours',
+                    text: 'Nombre de tututs par minute',
                     color: "lightgrey",
                     font: {
                         size: 30,
@@ -797,99 +797,6 @@ function tututMin(d) {
                     }
                 }
 
-            }
-        }
-    });
-}
-
-function tututMindfdf(d) {
-
-    let lines = d.split('\n').slice(0, -1);
-
-    let nbPointParSec = 1 / 4;
-
-    let nb_sec = 60;
-
-    let labels = ["0s"];
-
-    let values = [0];
-    for (let index = 0; index < nb_sec * nbPointParSec; index++) {
-        values[index + 1] = 0;
-        labels[index + 1] = String((index / nbPointParSec + 1 / (2 * nbPointParSec))).padStart(2, '0') + 's';
-    }
-
-    values.push(0);
-    labels.push("60s");
-
-    for (let index = 0; index < lines.length; index++) {
-        const element = lines[index]
-        if (isCorrect(element)) {
-            let date = moment(element.split(';')[1]);
-
-            values[Math.floor(nbPointParSec * parseInt(date.seconds()) + Math.floor(date.milliseconds() / (1000 / nbPointParSec))) + 1] += 1;
-        }
-    }
-
-    let data = values;
-    var ctx = document.getElementById("chart_tutut_min").getContext('2d');
-
-    secChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: labels,
-            datasets: [{
-                data: data,
-                borderWidth: 2,
-                borderColor: "#b43927",
-                hoverBorderColor: "beige"
-            }]
-        },
-        options: {
-            tension: 0.45,
-            plugins: {
-                title: {
-                    display: true,
-                    text: 'Number of Tutut per second',
-                    color: "lightgrey",
-                    font: {
-                        size: 30,
-                        family: 'Lato'
-                    }
-                },
-                legend: {
-                    display: false
-                }
-            },
-            maintainAspectRatio: false,
-            responsive: true,
-            scales: {
-                x: {
-                    display: true,
-                    grid: {
-                        color: "rgb(45, 45, 59)",
-                    },
-                    ticks: {
-                        color: "lightgrey",
-                        font: {
-                            size: 18,
-                            family: 'Lato'
-                        }
-                    }
-                },
-                y: {
-                    display: true,
-                    grid: {
-                        color: "rgb(45, 45, 59)",
-                    },
-                    ticks: {
-                        beginAtZero: true,
-                        color: "lightgrey",
-                        font: {
-                            size: 18,
-                            family: 'Lato'
-                        }
-                    }
-                }
             }
         }
     });
@@ -967,7 +874,7 @@ function tututDyn(d) {
             plugins: {
                 title: {
                     display: true,
-                    text: 'Tutut race',
+                    text: 'Course aux tututs',
                     color: "lightgrey",
                     font: {
                         size: 30,
