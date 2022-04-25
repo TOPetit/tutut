@@ -809,7 +809,7 @@ function tututMin(d) {
             plugins: {
                 title: {
                     display: true,
-                    text: 'Nombre de tututs par minute',
+                    text: 'Nombre de tututs sur la minute',
                     color: "lightgrey",
                     font: {
                         size: 30,
