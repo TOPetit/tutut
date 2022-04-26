@@ -7,6 +7,13 @@ async function getData(thread_id, func) {
     });
 }
 
+// moment.js options
+moment.updateLocale('en', {
+    week: {
+      dow : 1, // Monday is the first day of the week.
+    }
+  });
+
 // Every useful variables
 
 var hourChart;
@@ -431,6 +438,69 @@ function daily_tile(data) {
 
 
     let data_container = document.getElementById("daily");
+    data_container.innerHTML = "";
+
+    for (let index = 0; index < nb_people; index++) {
+
+        let data_obj = document.createElement("div");
+        data_obj.setAttribute("class", "data");
+
+        let data_name = document.createElement("div");
+        data_name.setAttribute("class", "name");
+        data_name.innerHTML = tmp_name[index];
+
+        let data_value = document.createElement("div");
+        data_value.setAttribute("class", "value");
+        data_value.innerHTML = tmp_value[index];
+
+        data_obj.appendChild(data_name);
+        data_obj.appendChild(data_value);
+        data_container.appendChild(data_obj);
+    }
+}
+
+function weekly_tile(data) {
+
+    let lines = data.split('\n').slice(0, -1).reverse();
+    let name = [];
+    let value = [];
+
+    let nb_people = in_thread[glob_current_thread_id].length;
+
+    for (let index = 0; index < nb_people; index++) {
+        name[index] = names[in_thread[glob_current_thread_id][index]];
+        value[index] = 0;
+    }
+
+    let current_week = moment().week();
+
+    for (let index = 0; index < lines.length; index++) {
+        let line = lines[index];
+        if (isCorrect(line)) {
+            let parsed = parseLine(line);
+            if (moment(parsed["time"]).week() == current_week) {
+                console.log(parsed['time']);
+                let name_index = in_thread[glob_current_thread_id].indexOf(parsed["int_id"]);
+                value[name_index] += 1;    
+            }
+            else {
+                break;
+            }
+        }
+    }
+
+    let tmp_name = [];
+    let tmp_value = [];
+
+    let indexes = sortedIndex(value).reverse();
+
+    for (let index = 0; index < indexes.length; index++) {
+        tmp_name[index] = name[indexes[index]];
+        tmp_value[index] = value[indexes[index]];
+    }
+
+
+    let data_container = document.getElementById("weekly");
     data_container.innerHTML = "";
 
     for (let index = 0; index < nb_people; index++) {
