@@ -910,7 +910,13 @@ function setDyn(d) {
     dynChart.data.labels = tmp_label;
     dynChart.data.datasets[0].backgroundColor = tmp_color;
     dynChart.data.datasets[0].hoverBackgroundColor = tmp_hover;
-    dynChart.options.plugins.title.text = ["Course des tututs", parseLine(lines.reverse()[0])["slash_date"]];
+    if (nb_dyn == 0) {
+        dynChart.options.plugins.title.text = ["Course des tututs", parseLine(d.split('\n')[0])["slash_date"]];
+    }
+    else {
+        dynChart.options.plugins.title.text = ["Course des tututs", parseLine(lines.reverse()[0])["slash_date"]];
+    }
+    
     //dynChart.options.scales.x.min = Math.max(0, tmp_data.slice(-1)[0] - 20);
     //dynChart.options.scales.x.max = 400;
     dynChart.update();
