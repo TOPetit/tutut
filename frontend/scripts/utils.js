@@ -2,6 +2,7 @@ async function getData(thread_id, func) {
     const response = await fetch("https://tutut.popota.me/" + "data/" + thread_id + ".csv");
     // waits until the request completes...
     text = await response.text().then(function (data) {
+        data = formatData(data);
         func(data)
     });
 }
@@ -350,7 +351,6 @@ function perfect_tile(data) {
         if (isCorrect(line)) {
             let parsed = parseLine(line);
             if (parsed["hours"] == parsed["seconds"]) {
-                console.log(parsed["time"]);
                 let name_index = in_thread[glob_current_thread_id].indexOf(parsed["int_id"]);
                 value[name_index] += 1;
             }
@@ -1089,4 +1089,17 @@ function parseLine(line) {
     parsed["milliseconds"] = parseInt(tmp3[1]);
     parsed["value"] = parsed["seconds"] + parsed["milliseconds"] / 1000;
     return parsed;
+}
+
+function formatData(data) {
+    let lines = data.split('\n')
+    for (let index = 0; index < lines.length - 1; index++) {
+        let line = lines[index];
+        let splitted = line.split(';');
+        if (splitted[1].length == 19) {
+            splitted[1] = splitted[1] + ".999000";
+        }
+        lines[index] = splitted.join(';');
+    }
+    return lines.join('\n');
 }
