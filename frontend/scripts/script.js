@@ -64,6 +64,7 @@ function populate(data) {
     latest(data);
     error_tile(data);
     perfect_tile(data);
+    daily_tile(data);
     let res = serie(data, nb_log);
     serie_tile(data, res);
     new_log(data, res.reverse());
