@@ -26,14 +26,15 @@ The more computing you do in backend the better.
 - [x] chart minutes / jours populaires
 - [ ] warning quand tutut 
 - [x] nombre d'erreurs
-- [ ] expand / collapse logs
+- [ ] ~~expand / collapse logs~~
 - [ ] ~~Téma la taille du rat~~
 - [ ] Hamming
 - [ ] graphe ligne du nombre de tututs par personne sur 14 jours glissants (une courbe par personne)
 - [ ] logs taille constante
-- [ ] same format for all tutut in csv
+- [ ] ~~same format for all tutut in csv~~
+- [x] fixed bad formatting
 - [ ] fix js
   - [ ] auto refresh
   - [x] reformat all js to clean it
-- [ ] git prod branch
+- [x] git prod branch
 - [x] feature test
