@@ -10,9 +10,9 @@ async function getData(thread_id, func) {
 // moment.js options
 moment.updateLocale('en', {
     week: {
-      dow : 1, // Monday is the first day of the week.
+        dow: 1, // Monday is the first day of the week.
     }
-  });
+});
 
 // Every useful variables
 
@@ -36,7 +36,7 @@ var threads = {
     100009809855629: "Jodie / Théo",
     100014962631116: "Matthieu / Théo",
     100040105721223: "Catherine / Théo",
-    2: "Matthieu / Théo"
+    100014962631116: "Matthieu / Théo"
 }
 
 var in_thread = {
@@ -45,7 +45,7 @@ var in_thread = {
     100009809855629: [100009809855629, 100032236723941],
     100014962631116: [100014962631116, 100032236723941],
     100040105721223: [100040105721223, 100032236723941],
-    2: [100014962631116, 100032236723941]
+    100014962631116: [100014962631116, 100032236723941]
 }
 
 var colors = {
@@ -418,7 +418,7 @@ function daily_tile(data) {
             let parsed = parseLine(line);
             if (parsed["slash_date"] == current_date) {
                 let name_index = in_thread[glob_current_thread_id].indexOf(parsed["int_id"]);
-                value[name_index] += 1;    
+                value[name_index] += 1;
             }
             else {
                 break;
@@ -479,9 +479,8 @@ function weekly_tile(data) {
         if (isCorrect(line)) {
             let parsed = parseLine(line);
             if (moment(parsed["time"]).week() == current_week) {
-                console.log(parsed['time']);
                 let name_index = in_thread[glob_current_thread_id].indexOf(parsed["int_id"]);
-                value[name_index] += 1;    
+                value[name_index] += 1;
             }
             else {
                 break;
@@ -1048,7 +1047,7 @@ function setDyn(d) {
     else {
         dynChart.options.plugins.title.text = ["Course des tututs", parseLine(lines.reverse()[0])["slash_date"]];
     }
-    
+
     //dynChart.options.scales.x.min = Math.max(0, tmp_data.slice(-1)[0] - 20);
     //dynChart.options.scales.x.max = 400;
     dynChart.update();
