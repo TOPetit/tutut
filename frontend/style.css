@@ -269,6 +269,7 @@ body {
 
 .arrow {
   border: 1px solid rgb(22, 22, 29);
+  cursor: pointer;
 }
 
 .arrow:hover {
@@ -292,7 +293,7 @@ body {
   background-color: #334756;
   border-radius: 5px;
   transition: box-shadow 0.3s ease-in-out;
-  cursor: url("cursor.cur"), pointer;
+  cursor: pointer;
 }
 
 .tile:hover {
