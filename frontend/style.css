@@ -179,6 +179,15 @@ body {
   color: lightgrey;
 }
 
+#div_two_weeks {
+  height: 50vh;
+  width: 80vw;
+  position: relative;
+  display: block;
+  margin: auto;
+  color: lightgrey;
+}
+
 #div_dyn_chart {
   height: 40vh;
   width: 80vw;
