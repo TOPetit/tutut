@@ -1185,7 +1185,7 @@ function tututTwoWeeks(d) {
             plugins: {
                 title: {
                     display: true,
-                    text: 'Nombre de tututs par jour sur les deux dernières semaines',
+                    text: ['Nombre de tututs par jour','sur les deux dernières semaines'],
                     color: "lightgrey",
                     font: {
                         size: 30,
