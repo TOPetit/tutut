@@ -648,6 +648,92 @@ function weekly_tile(data) {
     }
 }
 
+function speed_tile(data) {
+
+    let lines = data.split('\n').slice(0, -1).reverse();
+    let name = [];
+    let value = [];
+    let rank = [];
+
+    let nb_people = in_thread[glob_current_thread_id].length;
+
+    for (let index = 0; index < nb_people; index++) {
+        name[index] = names[in_thread[glob_current_thread_id][index]];
+        value[index] = 0;
+        rank[index] = 0;
+    }
+
+    let last_date = moment().add(2, 'days');
+    let counter = 1;
+
+    for (let index = 0; index < lines.length; index++) {
+        let line = lines[index];
+        if (isCorrect(line)) {
+            let parsed = parseLine(line);
+            let date = moment(parsed['time']);
+            if (date.format("DDMMYYYYHH") == last_date.format("DDMMYYYYHH")) {
+                // Both tutut are within the same hour
+                counter += 1
+            }
+            else {
+                counter = 1;
+                last_date = date;
+            }
+            // Add tutut to total
+            let name_index = in_thread[glob_current_thread_id].indexOf(parsed["int_id"]);
+            value[name_index] += 1;
+            // Add rank to total
+            rank[name_index] += counter;
+        }
+    }
+
+    for (let index = 0; index < nb_people; index++) {
+        value[index] = (rank[index] / value[index]).toFixed(2);
+    }
+
+    let tmp_name = [];
+    let tmp_value = [];
+
+    let indexes = sortedIndex(value);
+
+    for (let index = 0; index < indexes.length; index++) {
+        tmp_name[index] = name[indexes[index]];
+        tmp_value[index] = value[indexes[index]];
+    }
+
+    let css = '#tile_speed:hover {box-shadow: 0 0 15px ' + colors[in_thread[glob_current_thread_id][indexes[0]]] + '}';
+    let style = document.createElement('style');
+
+    if (style.styleSheet) {
+        style.styleSheet.cssText = css;
+    } else {
+        style.appendChild(document.createTextNode(css));
+    }
+
+    document.getElementsByTagName('head')[0].appendChild(style);
+
+    let data_container = document.getElementById("speed");
+    data_container.innerHTML = "";
+
+    for (let index = 0; index < nb_people; index++) {
+
+        let data_obj = document.createElement("div");
+        data_obj.setAttribute("class", "data");
+
+        let data_name = document.createElement("div");
+        data_name.setAttribute("class", "name");
+        data_name.innerHTML = tmp_name[index];
+
+        let data_value = document.createElement("div");
+        data_value.setAttribute("class", "value");
+        data_value.innerHTML = tmp_value[index];
+
+        data_obj.appendChild(data_name);
+        data_obj.appendChild(data_value);
+        data_container.appendChild(data_obj);
+    }
+}
+
 // Logs
 
 function pageChange(n_page, data) {
