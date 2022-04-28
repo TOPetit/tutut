@@ -170,6 +170,8 @@ function fastest(data) {
 
     document.getElementsByTagName('head')[0].appendChild(style);
 
+    document.getElementById("title_fastest").innerHTML = "Tutut le plus tôt";
+
     let data_container = document.getElementById("fastest");
 
     data_container.innerHTML = "";
@@ -241,6 +243,8 @@ function latest(data) {
 
     document.getElementsByTagName('head')[0].appendChild(style);
 
+    document.getElementById("title_latest").innerHTML = "Tutut le plus tard";
+
     let data_container = document.getElementById("latest");
     data_container.innerHTML = "";
 
@@ -305,6 +309,8 @@ function error_tile(data) {
     }
 
     document.getElementsByTagName('head')[0].appendChild(style);
+
+    document.getElementById("title_errors").innerHTML = "Nombre d'erreurs";
 
     let data_container = document.getElementById("errors");
     data_container.innerHTML = "";
@@ -415,6 +421,8 @@ function serie_tile(data, res) {
 
     document.getElementsByTagName('head')[0].appendChild(style);
 
+    document.getElementById("title_series").innerHTML = "Séries de tutut";
+
     let data_container = document.getElementById("series");
     data_container.innerHTML = "";
 
@@ -481,6 +489,8 @@ function perfect_tile(data) {
     }
 
     document.getElementsByTagName('head')[0].appendChild(style);
+
+    document.getElementById("title_perfect").innerHTML = "Nombre de tututs parfaits";
 
     let data_container = document.getElementById("perfect");
     data_container.innerHTML = "";
@@ -554,6 +564,8 @@ function daily_tile(data) {
 
     document.getElementsByTagName('head')[0].appendChild(style);
 
+    document.getElementById("title_daily").innerHTML = "Tututs du jour";
+
     let data_container = document.getElementById("daily");
     data_container.innerHTML = "";
 
@@ -625,6 +637,8 @@ function weekly_tile(data) {
     }
 
     document.getElementsByTagName('head')[0].appendChild(style);
+
+    document.getElementById("title_weekly").innerHTML = "Tututs de la semaine";
 
     let data_container = document.getElementById("weekly");
     data_container.innerHTML = "";
@@ -712,6 +726,8 @@ function speed_tile(data) {
 
     document.getElementsByTagName('head')[0].appendChild(style);
 
+    document.getElementById("title_speed").innerHTML = "Rang du tutut moyen";
+
     let data_container = document.getElementById("speed");
     data_container.innerHTML = "";
 
@@ -786,6 +802,8 @@ function sec_tile(data) {
     }
 
     document.getElementsByTagName('head')[0].appendChild(style);
+
+    document.getElementById("title_sec").innerHTML = "Temps du tutut moyen";
 
     let data_container = document.getElementById("sec");
     data_container.innerHTML = "";

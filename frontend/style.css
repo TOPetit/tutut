@@ -295,22 +295,23 @@ body {
 }
 
 .tile {
-  width: 350px;
-  height: 200px;
-  min-width: 325px;
-  min-height: 200px;
+  width: 250px;
+  height: 120px;
+  min-width: 250px;
+  min-height: 120px;
   background-color: #334756;
   border-radius: 5px;
   transition: box-shadow 0.3s ease-in-out;
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
 }
 
 .tile_title {
-  margin: auto;
-  padding-top: 10px;
-  margin-bottom: 40px;
   text-align: center;
-  font-size: 1.5rem;
+  font-size: 1rem;
 }
 
 .data {
@@ -319,6 +320,7 @@ body {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+  font-size: 0.8rem;
 }
 
 .data > .name {
