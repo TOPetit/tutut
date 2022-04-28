@@ -305,10 +305,6 @@ body {
   cursor: pointer;
 }
 
-.tile:hover {
-  box-shadow: 0 0 15px white;
-}
-
 .tile_title {
   margin: auto;
   padding-top: 10px;

@@ -159,6 +159,17 @@ function fastest(data) {
         tmp_value[index] = value[indexes[index]];
     }
 
+    let css = '#tile_fastest:hover {box-shadow: 0 0 15px ' + colors[in_thread[glob_current_thread_id][indexes[0]]] + '}';
+    let style = document.createElement('style');
+
+    if (style.styleSheet) {
+        style.styleSheet.cssText = css;
+    } else {
+        style.appendChild(document.createTextNode(css));
+    }
+
+    document.getElementsByTagName('head')[0].appendChild(style);
+
     let data_container = document.getElementById("fastest");
 
     data_container.innerHTML = "";
@@ -219,6 +230,16 @@ function latest(data) {
         tmp_value[index] = value[indexes[index]];
     }
 
+    let css = '#tile_latest:hover {box-shadow: 0 0 15px ' + colors[in_thread[glob_current_thread_id][indexes[0]]] + '}';
+    let style = document.createElement('style');
+
+    if (style.styleSheet) {
+        style.styleSheet.cssText = css;
+    } else {
+        style.appendChild(document.createTextNode(css));
+    }
+
+    document.getElementsByTagName('head')[0].appendChild(style);
 
     let data_container = document.getElementById("latest");
     data_container.innerHTML = "";
@@ -274,6 +295,16 @@ function error_tile(data) {
         tmp_value[index] = value[indexes[index]];
     }
 
+    let css = '#tile_errors:hover {box-shadow: 0 0 15px ' + colors[in_thread[glob_current_thread_id][indexes[0]]] + '}';
+    let style = document.createElement('style');
+
+    if (style.styleSheet) {
+        style.styleSheet.cssText = css;
+    } else {
+        style.appendChild(document.createTextNode(css));
+    }
+
+    document.getElementsByTagName('head')[0].appendChild(style);
 
     let data_container = document.getElementById("errors");
     data_container.innerHTML = "";
@@ -373,6 +404,16 @@ function serie_tile(data, res) {
         tmp_value[index] = value[indexes[index]];
     }
 
+    let css = '#tile_series:hover {box-shadow: 0 0 15px ' + colors[in_thread[glob_current_thread_id][indexes[0]]] + '}';
+    let style = document.createElement('style');
+
+    if (style.styleSheet) {
+        style.styleSheet.cssText = css;
+    } else {
+        style.appendChild(document.createTextNode(css));
+    }
+
+    document.getElementsByTagName('head')[0].appendChild(style);
 
     let data_container = document.getElementById("series");
     data_container.innerHTML = "";
@@ -430,6 +471,16 @@ function perfect_tile(data) {
         tmp_value[index] = value[indexes[index]];
     }
 
+    let css = '#tile_perfect:hover {box-shadow: 0 0 15px ' + colors[in_thread[glob_current_thread_id][indexes[0]]] + '}';
+    let style = document.createElement('style');
+
+    if (style.styleSheet) {
+        style.styleSheet.cssText = css;
+    } else {
+        style.appendChild(document.createTextNode(css));
+    }
+
+    document.getElementsByTagName('head')[0].appendChild(style);
 
     let data_container = document.getElementById("perfect");
     data_container.innerHTML = "";
@@ -492,6 +543,16 @@ function daily_tile(data) {
         tmp_value[index] = value[indexes[index]];
     }
 
+    let css = '#tile_daily:hover {box-shadow: 0 0 15px ' + colors[in_thread[glob_current_thread_id][indexes[0]]] + '}';
+    let style = document.createElement('style');
+
+    if (style.styleSheet) {
+        style.styleSheet.cssText = css;
+    } else {
+        style.appendChild(document.createTextNode(css));
+    }
+
+    document.getElementsByTagName('head')[0].appendChild(style);
 
     let data_container = document.getElementById("daily");
     data_container.innerHTML = "";
@@ -554,6 +615,16 @@ function weekly_tile(data) {
         tmp_value[index] = value[indexes[index]];
     }
 
+    let css = '#tile_weekly:hover {box-shadow: 0 0 15px ' + colors[in_thread[glob_current_thread_id][indexes[0]]] + '}';
+    let style = document.createElement('style');
+
+    if (style.styleSheet) {
+        style.styleSheet.cssText = css;
+    } else {
+        style.appendChild(document.createTextNode(css));
+    }
+
+    document.getElementsByTagName('head')[0].appendChild(style);
 
     let data_container = document.getElementById("weekly");
     data_container.innerHTML = "";
