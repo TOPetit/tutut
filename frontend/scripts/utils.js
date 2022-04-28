@@ -697,15 +697,10 @@ function medal_tile(data) {
                 last_date = date;
             }
 
-            if (counter > nb_people - 1) {
-                console.log(line);
-            }
             // Add rank to total
             medal[name_index][counter] += 1;
         }
     }
-
-    console.log(medal);
 
     let tmp_name = [];
     let tmp_medal = [];
