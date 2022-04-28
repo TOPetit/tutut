@@ -662,60 +662,57 @@ function weekly_tile(data) {
     }
 }
 
-function speed_tile(data) {
+function medal_tile(data) {
 
     let lines = data.split('\n').slice(0, -1).reverse();
     let name = [];
-    let value = [];
-    let rank = [];
+    let medal = [];
 
     let nb_people = in_thread[glob_current_thread_id].length;
 
     for (let index = 0; index < nb_people; index++) {
         name[index] = names[in_thread[glob_current_thread_id][index]];
-        value[index] = 0;
-        rank[index] = 0;
+        medal[index] = [];
+        for (let jndex = 0; jndex < nb_people; jndex++) {
+            medal[index][jndex] = 0;
+        }
+        
     }
 
     let last_date = moment().add(2, 'days');
-    let counter = 1;
+    let counter = 0;
 
     for (let index = 0; index < lines.length; index++) {
         let line = lines[index];
         if (isCorrect(line)) {
             let parsed = parseLine(line);
             let date = moment(parsed['time']);
+            let name_index = in_thread[glob_current_thread_id].indexOf(parsed["int_id"]);
             if (date.format("DDMMYYYYHH") == last_date.format("DDMMYYYYHH")) {
                 // Both tutut are within the same hour
                 counter += 1
             }
             else {
-                counter = 1;
+                counter = 0;
                 last_date = date;
             }
-            // Add tutut to total
-            let name_index = in_thread[glob_current_thread_id].indexOf(parsed["int_id"]);
-            value[name_index] += 1;
             // Add rank to total
-            rank[name_index] += counter;
+            medal[name_index][counter] +=1;
         }
     }
-
-    for (let index = 0; index < nb_people; index++) {
-        value[index] = (rank[index] / value[index]).toFixed(2);
-    }
+    console.log(medal);
 
     let tmp_name = [];
-    let tmp_value = [];
+    let tmp_medal = [];
 
-    let indexes = sortedIndex(value);
+    let indexes = olympicSort(medal).reverse();
 
     for (let index = 0; index < indexes.length; index++) {
         tmp_name[index] = name[indexes[index]];
-        tmp_value[index] = value[indexes[index]];
+        tmp_medal[index] = medal[indexes[index]];
     }
 
-    let css = '#tile_speed:hover {box-shadow: 0 0 15px ' + colors[in_thread[glob_current_thread_id][indexes[0]]] + '}';
+    let css = '#tile_medal:hover {box-shadow: 0 0 15px ' + colors[in_thread[glob_current_thread_id][indexes[0]]] + '}';
     let style = document.createElement('style');
 
     if (style.styleSheet) {
@@ -726,9 +723,9 @@ function speed_tile(data) {
 
     document.getElementsByTagName('head')[0].appendChild(style);
 
-    document.getElementById("title_speed").innerHTML = "Rang du tutut moyen";
+    document.getElementById("title_medal").innerHTML = "Medailles des tututs";
 
-    let data_container = document.getElementById("speed");
+    let data_container = document.getElementById("medal");
     data_container.innerHTML = "";
 
     for (let index = 0; index < nb_people; index++) {
@@ -742,7 +739,7 @@ function speed_tile(data) {
 
         let data_value = document.createElement("div");
         data_value.setAttribute("class", "value");
-        data_value.innerHTML = tmp_value[index];
+        data_value.innerHTML = tmp_medal[index];
 
         data_obj.appendChild(data_name);
         data_obj.appendChild(data_value);
@@ -1422,6 +1419,14 @@ function sortedIndex(values) {
     var indices = new Array(len);
     for (var i = 0; i < len; ++i) { indices[i] = i }
     indices.sort(function (a, b) { return values[a] < values[b] ? -1 : values[a] > values[b] ? 1 : 0; });
+    return indices;
+}
+
+function olympicSort(values) {
+    var len = values.length;
+    var indices = new Array(len);
+    for (var i = 0; i < len; ++i) { indices[i] = i }
+    indices.sort(function (a, b) { return values[a] > values[b]});
     return indices;
 }
 
