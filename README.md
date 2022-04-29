@@ -38,3 +38,6 @@ The more computing you do in backend the better.
   - [x] reformat all js to clean it
 - [x] git prod branch
 - [x] feature test
+- [ ] performance issue (regroup functions)
+- [x] homepage
+- [ ] fill homepage

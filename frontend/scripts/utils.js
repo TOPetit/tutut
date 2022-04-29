@@ -1569,20 +1569,23 @@ var nb_dyn = 0;
 
 function clock() {
 
-    counter -= step;
+    if (thread_initialized) {
 
-    if (playing) {
-        document.getElementById("play").style.backgroundImage = "url('media_icons/media-pause.svg')";
-    }
-    else {
-        document.getElementById("play").style.backgroundImage = "url('media_icons/media-play.svg')";
-    }
+        counter -= step;
 
-    if (counter < 0) {
-        counter = interval_showing;
         if (playing) {
-            nb_dyn += 1;
-            getData(glob_current_thread_id, setDyn);
+            document.getElementById("play").style.backgroundImage = "url('media_icons/media-pause.svg')";
+        }
+        else {
+            document.getElementById("play").style.backgroundImage = "url('media_icons/media-play.svg')";
+        }
+
+        if (counter < 0) {
+            counter = interval_showing;
+            if (playing) {
+                nb_dyn += 1;
+                getData(glob_current_thread_id, setDyn);
+            }
         }
     }
     // console.log("interval_showing = " + String(interval_showing) + '\interval_background = ' + String(interval_background) + '\n')

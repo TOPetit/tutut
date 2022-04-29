@@ -9,34 +9,7 @@ var pageReset = x => pageChange(1, x);
 
 window.onload = function () {
 
-    // refresh
-    document.getElementById("refresh_div").onclick = function () { updatePage(glob_current_thread_id) };
-
-    // Thread
-    document.getElementById("btn1").innerHTML = threads[4567795139935838];
-    document.getElementById("btn2").innerHTML = threads[100008800800648];
-    document.getElementById("btn3").innerHTML = threads[100014962631116];
-
-    document.getElementById("btn1").onclick = function () { updatePage("4567795139935838"); reset() };
-    document.getElementById("btn2").onclick = function () { updatePage("100008800800648"); reset() };
-    document.getElementById("btn3").onclick = function () { updatePage("100014962631116"); reset() };
-
-    // Page management
-    document.getElementById("page_number").innerHTML = "Page " + String(page);
-    document.getElementById("arrow-right").onclick = function () { getData(glob_current_thread_id, pageUp) };
-    document.getElementById("arrow-left").onclick = function () { getData(glob_current_thread_id, pageDown) };
-
-    // Race controls
-    document.getElementById("slower").onclick = function () { slower() };
-    document.getElementById("faster").onclick = function () { faster() };
-    document.getElementById("play").onclick = function () { if (playing) { pause() } else { play() } };
-    document.getElementById("reset").onclick = function () { reset() };
-    document.getElementById("skip").onclick = function () { skip() };
-
-
-    glob_current_thread_id = "4567795139935838";
-
-    getData(glob_current_thread_id, populate);
+    init_home();
 
 }
 

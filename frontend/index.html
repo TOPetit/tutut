@@ -12,6 +12,7 @@
     <script src="https://momentjs.com/downloads/moment.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+    <script src="scripts/init.js?1500"></script>
     <script src="scripts/utils.js?1500"></script>
     <script src="scripts/script.js?1500"></script>
 
@@ -19,110 +20,6 @@
 </head>
 
 <body>
-    <div class="title">STUTUSTIQUES</div>
-    <div class="trug">
-        <span class="dropdown">
-            <button class="dropbtn" id="thread">Dropdown</button>
-            <div class="dropdown-content">
-                <div id="btn1">Option 1</div>
-                <div id="btn2">Option 2</div>
-                <div id="btn3">Option 3</div>
-                <!-- <div id="btn4">Option 4</div> -->
-            </div>
-        </span>
-        <div id="refresh_div">
-            <img id="refresh" src="refresh.svg" alt="" height="20px" width="20px" margin="auto" />
-        </div>
-    </div>
-    <div class="separator"></div>
-    <div id="tiles_container">
-        <div class="tile" id="tile_fastest">
-            <div class="tile_title" id="title_fastest"></div>
-            <div class="data_container" id="fastest"></div>
-        </div>
-        <div class="tile" id="tile_latest">
-            <div class="tile_title" id="title_latest"></div>
-            <div class="data_container" id="latest"></div>
-        </div>
-        <div class="tile" id="tile_errors">
-            <div class="tile_title" id="title_errors"></div>
-            <div class="data_container" id="errors"></div>
-        </div>
-        <div class="tile" id="tile_series">
-            <div class="tile_title" id="title_series"></div>
-            <div class="data_container" id="series"></div>
-        </div>
-        <div class="tile" id="tile_perfect">
-            <div class="tile_title" id="title_perfect"></div>
-            <div class="data_container" id="perfect"></div>
-        </div>
-        <div class="tile" id="tile_daily">
-            <div class="tile_title" id="title_daily"></div>
-            <div class="data_container" id="daily"></div>
-        </div>
-        <div class="tile" id="tile_weekly">
-            <div class="tile_title" id="title_weekly"></div>
-            <div class="data_container" id="weekly"></div>
-        </div>
-        <div class="tile" id="tile_medal">
-            <div class="tile_title" id="title_medal"></div>
-            <div class="data_container" id="medal"></div>
-        </div>
-        <div class="tile" id="tile_sec">
-            <div class="tile_title" id="title_sec"></div>
-            <div class="data_container" id="sec"></div>
-        </div>
-    </div>
-    <div class="separator"></div>
-    <div id="div_chart_tutut_pie">
-        <canvas id="chart_tutut_pie"></canvas>
-    </div>
-    <div class="separator"></div>
-    <div id="div_chart_tutut_week">
-        <canvas id="chart_tutut_week"></canvas>
-    </div>
-    <div class="separator"></div>
-    <div id="div_chart_tutut_day">
-        <canvas id="chart_tutut_day"></canvas>
-    </div>
-    <div class="separator"></div>
-    <div id="div_chart_tutut_min">
-        <canvas id="chart_tutut_min"></canvas>
-    </div>
-    <div class="separator"></div>
-    <div id="div_two_weeks">
-        <canvas id="chart_two_weeks"></canvas>
-    </div>
-    <div class="separator"></div>
-    <div id="div_dyn_chart">
-        <canvas id="chart_tutut_dyn"></canvas>
-    </div>
-    <div id="progression">
-        <div id="current_day"></div>
-    </div>
-    <div id="controls">
-        <div id="reset"></div>
-        <div id="slower"></div>
-        <div id="play"></div>
-        <div id="faster"></div>
-        <div id="skip"></div>
-    </div>
-    <div class="separator"></div>
-    <div class="page-selector">
-        <img class="arrow" id="arrow-left" src="arrow.svg" alt="" height="40px" width="40px" />
-        <div class="page-number" id="page_number">Page 0</div>
-        <img class="arrow" id="arrow-right" src="arrow.svg" alt="" height="40px" width="40px" />
-    </div>
-    <table id="log_table">
-        <tr id="log_hd">
-            <th id="Id">Id</th>
-            <th id="Name">Nom</th>
-            <th id="Date">Date</th>
-            <th id="Time">Heure</th>
-            <th id="Serie">Série</th>
-        </tr>
-    </table>
-
 </body>
 
 </html>
