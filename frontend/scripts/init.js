@@ -8,7 +8,7 @@ let html_thread =
     "            <div id='btn1'>Thread 1</div>" +
     "            <div id='btn2'>Thread 2</div>" +
     "            <div id='btn3'>Thread 3</div>" +
-    "            <!-- <div id='btn4'>Thread 4</div> -->" +
+    "            <div id='btn4'>Thread 4</div>" +
     "        </div>" +
     "    </span>" +
     "    <div id='refresh_div'>" +
@@ -114,7 +114,7 @@ var html_menu =
     "            <div id='btn1'>Thread 1</div>" +
     "            <div id='btn2'>Thread 2</div>" +
     "            <div id='btn3'>Thread 3</div>" +
-    "            <!-- <div id='btn4'>Thread 4</div> -->" +
+    "            <div id='btn4'>Thread 4</div>" +
     "        </div>" +
     "    </span>" +
     "    <div id='refresh_div'>" +
@@ -137,11 +137,13 @@ function init_thread() {
     document.getElementById("btn1").innerHTML = threads[4567795139935838];
     document.getElementById("btn2").innerHTML = threads[100008800800648];
     document.getElementById("btn3").innerHTML = threads[100014962631116];
+    document.getElementById("btn4").innerHTML = threads[12];
 
     document.getElementById("btn0").onclick = function () { init_home(); glob_current_thread_id = "" };
     document.getElementById("btn1").onclick = function () { init_thread(); updatePage("4567795139935838"); reset() };
     document.getElementById("btn2").onclick = function () { init_thread(); updatePage("100008800800648"); reset() };
     document.getElementById("btn3").onclick = function () { init_thread(); updatePage("100014962631116"); reset() };
+    document.getElementById("btn4").onclick = function () { init_thread(); updatePage("12"); reset() };
 
     // Page management
     document.getElementById("page_number").innerHTML = "Page " + String(page);
@@ -173,11 +175,13 @@ function init_home() {
     document.getElementById("btn1").innerHTML = threads[4567795139935838];
     document.getElementById("btn2").innerHTML = threads[100008800800648];
     document.getElementById("btn3").innerHTML = threads[100014962631116];
+    document.getElementById("btn4").innerHTML = threads[12];
 
     document.getElementById("btn0").onclick = function () { init_home(); glob_current_thread_id = "" };
     document.getElementById("btn1").onclick = function () { init_thread(); glob_current_thread_id = "4567795139935838"; getData(glob_current_thread_id, populate); reset() };
     document.getElementById("btn2").onclick = function () { init_thread(); glob_current_thread_id = "100008800800648"; getData(glob_current_thread_id, populate); reset() };
     document.getElementById("btn3").onclick = function () { init_thread(); glob_current_thread_id = "100014962631116"; getData(glob_current_thread_id, populate); reset() };
+    document.getElementById("btn4").onclick = function () { init_thread(); glob_current_thread_id = "12"; getData(glob_current_thread_id, populate); reset() };
 
     thread_initialized = false;
 }
