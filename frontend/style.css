@@ -126,7 +126,7 @@ body {
   border-collapse: collapse;
 }
 
-#log_table > .tr > .th {
+#log_table>.tr>.th {
   text-align: left;
 }
 
@@ -222,7 +222,7 @@ body {
   border-radius: 5px;
 }
 
-#controls > div {
+#controls>div {
   height: 30px;
   width: 30px;
   cursor: pointer;
@@ -323,10 +323,18 @@ body {
   font-size: 0.8rem;
 }
 
-.data > .name {
+.data>.name {
   width: 25%;
 }
 
-.data > .value {
+.data>.value {
   padding-left: 5%;
+}
+
+#message {
+  margin: auto;
+  width: 80%;
+  text-align: center;
+  font-size: 2rem;
+  padding-top: 20px;
 }

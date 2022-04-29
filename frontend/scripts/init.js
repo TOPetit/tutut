@@ -121,7 +121,8 @@ var html_menu =
     "        <img id='refresh' src='refresh.svg' alt='' height='20px' width='20px' margin='auto' />" +
     "    </div>" +
     "</div>" +
-    "<div class='separator'></div>";
+    "<div class='separator'></div>" +
+    "<div id='message'> La page d'accueil est en cours de développement</div>";
 
 var thread_initialized = false;
 
