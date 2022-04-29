@@ -29,9 +29,9 @@ let html_thread =
     "        <div class='tile_title' id='title_errors'></div>" +
     "        <div class='data_container' id='errors'></div>" +
     "    </div>" +
-    "    <div class='tile' id='tile_series'>" +
-    "        <div class='tile_title' id='title_series'></div>" +
-    "        <div class='data_container' id='series'></div>" +
+    "    <div class='tile' id='tile_serie'>" +
+    "        <div class='tile_title' id='title_serie'></div>" +
+    "        <div class='data_container' id='serie'></div>" +
     "    </div>" +
     "    <div class='tile' id='tile_perfect'>" +
     "        <div class='tile_title' id='title_perfect'></div>" +

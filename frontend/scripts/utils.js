@@ -120,221 +120,70 @@ var hoverColors = {
     100040105721223: "#2e6c3d"
 }
 
+function fillTiles(data, serie_data) {
+
+    // Tiles variable
+    let fastest_tile = { name: [], str_value: [], num_value: [], color: "" };
+    let latest_tile = { name: [], str_value: [], num_value: [], color: "" };
+    let error_tile = { name: [], value: [], color: "" };
+    let serie_tile = { name: [], value: [], color: "" };
+    let perfect_tile = { name: [], value: [], color: "" };
+    let daily_tile = { name: [], value: [], color: "" };
+    let weekly_tile = { name: [], value: [], color: "" };
+
+    // Main variables
+    let nb_people = in_thread[glob_current_thread_id].length;
+    let lines = data.split('\n').slice(0, -1);
+    let nb_lines = lines.length;
+    let current_date = moment().format("DD/MM/YYYY"); // for daily tile
+    let current_week = moment().week(); // for weekly tile
+
+    // Init
+    for (let i = 0; i < nb_people; i++) {
+        init_fastest_tile(fastest_tile, i);
+        init_latest_tile(latest_tile, i);
+        init_error_tile(error_tile, i);
+        init_serie_tile(serie_tile, i);
+        init_perfect_tile(perfect_tile, i);
+        init_daily_tile(daily_tile, i);
+        init_weekly_tile(weekly_tile, i);
+    }
+
+    // Computation
+    for (let i = 0; i < nb_lines; i++) {
+        let line = lines[i];
+
+        compute_fastest_tile(fastest_tile, line);
+        compute_latest_tile(latest_tile, line);
+        compute_error_tile(error_tile, line);
+        compute_serie_tile(serie_tile, line, serie_data[i]);
+        compute_perfect_tile(perfect_tile, line);
+        compute_daily_tile(daily_tile, line, current_date);
+        compute_weekly_tile(weekly_tile, line, current_week);
+    }
+
+    // Sorting
+    sort_fastest_tile(fastest_tile, nb_people);
+    sort_latest_tile(latest_tile, nb_people);
+    sort_error_tile(error_tile, nb_people);
+    sort_serie_tile(serie_tile, nb_people);
+    sort_perfect_tile(perfect_tile, nb_people);
+    sort_daily_tile(daily_tile, nb_people);
+    sort_weekly_tile(weekly_tile, nb_people);
+
+    // Display
+    display_fastest_tile(fastest_tile, nb_people);
+    display_latest_tile(latest_tile, nb_people);
+    display_error_tile(error_tile, nb_people);
+    display_serie_tile(serie_tile, nb_people);
+    display_perfect_tile(perfect_tile, nb_people);
+    display_daily_tile(daily_tile, nb_people);
+    display_weekly_tile(weekly_tile, nb_people);
+}
+
 // Functions to fill html tiles
 
-function fastest(data) {
-
-    let lines = data.split('\n').slice(0, -1);
-    let name = [];
-    let value = [];
-    let fastest = [];
-
-    let nb_people = in_thread[glob_current_thread_id].length;
-
-    for (let index = 0; index < nb_people; index++) {
-        name[index] = names[in_thread[glob_current_thread_id][index]];
-        value[index] = "";
-        fastest[index] = 60;
-    }
-
-    for (let index = 0; index < lines.length; index++) {
-        let line = lines[index];
-        if (isCorrect(line)) {
-            let parsed = parseLine(line);
-            let name_index = in_thread[glob_current_thread_id].indexOf(parsed["int_id"]);
-            if (parsed["value"] < fastest[name_index]) {
-                fastest[name_index] = parsed["value"];
-                value[name_index] = parsed["slash_date"] + ' ' + parsed["instant"];
-            }
-        }
-    }
-
-    let tmp_name = [];
-    let tmp_value = [];
-
-    let indexes = sortedIndex(fastest);
-
-    for (let index = 0; index < indexes.length; index++) {
-        tmp_name[index] = name[indexes[index]];
-        tmp_value[index] = value[indexes[index]];
-    }
-
-    let css = '#tile_fastest:hover {box-shadow: 0 0 15px ' + colors[in_thread[glob_current_thread_id][indexes[0]]] + '}';
-    let style = document.createElement('style');
-
-    if (style.styleSheet) {
-        style.styleSheet.cssText = css;
-    } else {
-        style.appendChild(document.createTextNode(css));
-    }
-
-    document.getElementsByTagName('head')[0].appendChild(style);
-
-    document.getElementById("title_fastest").innerHTML = "Tutut le plus tôt";
-
-    let data_container = document.getElementById("fastest");
-
-    data_container.innerHTML = "";
-
-    for (let index = 0; index < nb_people; index++) {
-
-        let data_obj = document.createElement("div");
-        data_obj.setAttribute("class", "data");
-
-        let data_name = document.createElement("div");
-        data_name.setAttribute("class", "name");
-        data_name.innerHTML = tmp_name[index];
-
-        let data_value = document.createElement("div");
-        data_value.setAttribute("class", "value");
-        data_value.innerHTML = tmp_value[index];
-
-        data_obj.appendChild(data_name);
-        data_obj.appendChild(data_value);
-        data_container.appendChild(data_obj);
-    }
-}
-
-function latest(data) {
-
-    let lines = data.split('\n').slice(0, -1);
-    let name = [];
-    let value = [];
-    let latestt = [];
-
-    let nb_people = in_thread[glob_current_thread_id].length;
-
-    for (let index = 0; index < nb_people; index++) {
-        name[index] = names[in_thread[glob_current_thread_id][index]];
-        value[index] = "";
-        latestt[index] = 0;
-    }
-
-    for (let index = 0; index < lines.length; index++) {
-        let line = lines[index];
-        if (isCorrect(line)) {
-            let parsed = parseLine(line);
-            let name_index = in_thread[glob_current_thread_id].indexOf(parsed["int_id"]);
-            if (parsed["value"] > latestt[name_index]) {
-                latestt[name_index] = parsed["value"];
-                value[name_index] = parsed["slash_date"] + ' ' + parsed["instant"];
-            }
-        }
-    }
-
-    let tmp_name = [];
-    let tmp_value = [];
-
-    let indexes = sortedIndex(latestt).reverse();
-
-    for (let index = 0; index < indexes.length; index++) {
-        tmp_name[index] = name[indexes[index]];
-        tmp_value[index] = value[indexes[index]];
-    }
-
-    let css = '#tile_latest:hover {box-shadow: 0 0 15px ' + colors[in_thread[glob_current_thread_id][indexes[0]]] + '}';
-    let style = document.createElement('style');
-
-    if (style.styleSheet) {
-        style.styleSheet.cssText = css;
-    } else {
-        style.appendChild(document.createTextNode(css));
-    }
-
-    document.getElementsByTagName('head')[0].appendChild(style);
-
-    document.getElementById("title_latest").innerHTML = "Tutut le plus tard";
-
-    let data_container = document.getElementById("latest");
-    data_container.innerHTML = "";
-
-    for (let index = 0; index < nb_people; index++) {
-
-        let data_obj = document.createElement("div");
-        data_obj.setAttribute("class", "data");
-
-        let data_name = document.createElement("div");
-        data_name.setAttribute("class", "name");
-        data_name.innerHTML = tmp_name[index];
-
-        let data_value = document.createElement("div");
-        data_value.setAttribute("class", "value");
-        data_value.innerHTML = tmp_value[index];
-
-        data_obj.appendChild(data_name);
-        data_obj.appendChild(data_value);
-        data_container.appendChild(data_obj);
-    }
-}
-
-function error_tile(data) {
-
-    let lines = data.split('\n').slice(0, -1);
-    let name = [];
-    let value = [];
-
-    let nb_people = in_thread[glob_current_thread_id].length;
-
-    for (let index = 0; index < nb_people; index++) {
-        name[index] = names[in_thread[glob_current_thread_id][index]];
-        value[index] = 0;
-    }
-
-    for (let index = 0; index < lines.length; index++) {
-        let line = lines[index];
-        if (!isCorrect(line)) {
-            let parsed = parseLine(line);
-            let name_index = in_thread[glob_current_thread_id].indexOf(parsed["int_id"]);
-            value[name_index] += 1;
-        }
-    }
-
-    let tmp_name = [];
-    let tmp_value = [];
-
-    let indexes = sortedIndex(value);
-
-    for (let index = 0; index < indexes.length; index++) {
-        tmp_name[index] = name[indexes[index]];
-        tmp_value[index] = value[indexes[index]];
-    }
-
-    let css = '#tile_errors:hover {box-shadow: 0 0 15px ' + colors[in_thread[glob_current_thread_id][indexes[0]]] + '}';
-    let style = document.createElement('style');
-
-    if (style.styleSheet) {
-        style.styleSheet.cssText = css;
-    } else {
-        style.appendChild(document.createTextNode(css));
-    }
-
-    document.getElementsByTagName('head')[0].appendChild(style);
-
-    document.getElementById("title_errors").innerHTML = "Nombre d'erreurs";
-
-    let data_container = document.getElementById("errors");
-    data_container.innerHTML = "";
-
-    for (let index = 0; index < nb_people; index++) {
-
-        let data_obj = document.createElement("div");
-        data_obj.setAttribute("class", "data");
-
-        let data_name = document.createElement("div");
-        data_name.setAttribute("class", "name");
-        data_name.innerHTML = tmp_name[index];
-
-        let data_value = document.createElement("div");
-        data_value.setAttribute("class", "value");
-        data_value.innerHTML = tmp_value[index];
-
-        data_obj.appendChild(data_name);
-        data_obj.appendChild(data_value);
-        data_container.appendChild(data_obj);
-    }
-}
-
-function serie(data, nb_log) {
+function serie(data) {
     var lines = data.split("\n").slice(0, -1);
     let nb_people = in_thread[glob_current_thread_id].length;
     var values = [];
@@ -378,288 +227,6 @@ function serie(data, nb_log) {
     }
 
     return res;
-}
-
-function serie_tile(data, res) {
-
-    let lines = data.split('\n').slice(0, -1);
-    let name = [];
-    let value = [];
-
-    let nb_people = in_thread[glob_current_thread_id].length;
-
-    for (let index = 0; index < nb_people; index++) {
-        name[index] = names[in_thread[glob_current_thread_id][index]];
-        value[index] = 0;
-    }
-
-    for (let index = 0; index < lines.length; index++) {
-        let line = lines[index];
-        let parsed = parseLine(line);
-        let name_index = in_thread[glob_current_thread_id].indexOf(parsed["int_id"]);
-        value[name_index] = Math.max(value[name_index], res[index]);
-    }
-
-    let tmp_name = [];
-    let tmp_value = [];
-
-    let indexes = sortedIndex(value).reverse();
-
-    for (let index = 0; index < indexes.length; index++) {
-        tmp_name[index] = name[indexes[index]];
-        tmp_value[index] = value[indexes[index]];
-    }
-
-    let css = '#tile_series:hover {box-shadow: 0 0 15px ' + colors[in_thread[glob_current_thread_id][indexes[0]]] + '}';
-    let style = document.createElement('style');
-
-    if (style.styleSheet) {
-        style.styleSheet.cssText = css;
-    } else {
-        style.appendChild(document.createTextNode(css));
-    }
-
-    document.getElementsByTagName('head')[0].appendChild(style);
-
-    document.getElementById("title_series").innerHTML = "Séries de tutut";
-
-    let data_container = document.getElementById("series");
-    data_container.innerHTML = "";
-
-    for (let index = 0; index < nb_people; index++) {
-
-        let data_obj = document.createElement("div");
-        data_obj.setAttribute("class", "data");
-
-        let data_name = document.createElement("div");
-        data_name.setAttribute("class", "name");
-        data_name.innerHTML = tmp_name[index];
-
-        let data_value = document.createElement("div");
-        data_value.setAttribute("class", "value");
-        data_value.innerHTML = tmp_value[index];
-
-        data_obj.appendChild(data_name);
-        data_obj.appendChild(data_value);
-        data_container.appendChild(data_obj);
-    }
-}
-
-function perfect_tile(data) {
-
-    let lines = data.split('\n').slice(0, -1);
-    let name = [];
-    let value = [];
-
-    let nb_people = in_thread[glob_current_thread_id].length;
-
-    for (let index = 0; index < nb_people; index++) {
-        name[index] = names[in_thread[glob_current_thread_id][index]];
-        value[index] = 0;
-    }
-
-    for (let index = 0; index < lines.length; index++) {
-        let line = lines[index];
-        if (isCorrect(line)) {
-            let parsed = parseLine(line);
-            if (parsed["hours"] == parsed["seconds"]) {
-                let name_index = in_thread[glob_current_thread_id].indexOf(parsed["int_id"]);
-                value[name_index] += 1;
-            }
-        }
-    }
-
-    let tmp_name = [];
-    let tmp_value = [];
-
-    let indexes = sortedIndex(value).reverse();
-
-    for (let index = 0; index < indexes.length; index++) {
-        tmp_name[index] = name[indexes[index]];
-        tmp_value[index] = value[indexes[index]];
-    }
-
-    let css = '#tile_perfect:hover {box-shadow: 0 0 15px ' + colors[in_thread[glob_current_thread_id][indexes[0]]] + '}';
-    let style = document.createElement('style');
-
-    if (style.styleSheet) {
-        style.styleSheet.cssText = css;
-    } else {
-        style.appendChild(document.createTextNode(css));
-    }
-
-    document.getElementsByTagName('head')[0].appendChild(style);
-
-    document.getElementById("title_perfect").innerHTML = "Nombre de tututs parfaits";
-
-    let data_container = document.getElementById("perfect");
-    data_container.innerHTML = "";
-
-    for (let index = 0; index < nb_people; index++) {
-
-        let data_obj = document.createElement("div");
-        data_obj.setAttribute("class", "data");
-
-        let data_name = document.createElement("div");
-        data_name.setAttribute("class", "name");
-        data_name.innerHTML = tmp_name[index];
-
-        let data_value = document.createElement("div");
-        data_value.setAttribute("class", "value");
-        data_value.innerHTML = tmp_value[index];
-
-        data_obj.appendChild(data_name);
-        data_obj.appendChild(data_value);
-        data_container.appendChild(data_obj);
-    }
-}
-
-function daily_tile(data) {
-
-    let lines = data.split('\n').slice(0, -1).reverse();
-    let name = [];
-    let value = [];
-
-    let nb_people = in_thread[glob_current_thread_id].length;
-
-    for (let index = 0; index < nb_people; index++) {
-        name[index] = names[in_thread[glob_current_thread_id][index]];
-        value[index] = 0;
-    }
-
-    let current_date = moment().format("DD/MM/YYYY");
-
-    for (let index = 0; index < lines.length; index++) {
-        let line = lines[index];
-        if (isCorrect(line)) {
-            let parsed = parseLine(line);
-            if (parsed["slash_date"] == current_date) {
-                let name_index = in_thread[glob_current_thread_id].indexOf(parsed["int_id"]);
-                value[name_index] += 1;
-            }
-            else {
-                break;
-            }
-        }
-    }
-
-    let tmp_name = [];
-    let tmp_value = [];
-
-    let indexes = sortedIndex(value).reverse();
-
-    for (let index = 0; index < indexes.length; index++) {
-        tmp_name[index] = name[indexes[index]];
-        tmp_value[index] = value[indexes[index]];
-    }
-
-    let css = '#tile_daily:hover {box-shadow: 0 0 15px ' + colors[in_thread[glob_current_thread_id][indexes[0]]] + '}';
-    let style = document.createElement('style');
-
-    if (style.styleSheet) {
-        style.styleSheet.cssText = css;
-    } else {
-        style.appendChild(document.createTextNode(css));
-    }
-
-    document.getElementsByTagName('head')[0].appendChild(style);
-
-    document.getElementById("title_daily").innerHTML = "Tututs du jour";
-
-    let data_container = document.getElementById("daily");
-    data_container.innerHTML = "";
-
-    for (let index = 0; index < nb_people; index++) {
-
-        let data_obj = document.createElement("div");
-        data_obj.setAttribute("class", "data");
-
-        let data_name = document.createElement("div");
-        data_name.setAttribute("class", "name");
-        data_name.innerHTML = tmp_name[index];
-
-        let data_value = document.createElement("div");
-        data_value.setAttribute("class", "value");
-        data_value.innerHTML = tmp_value[index];
-
-        data_obj.appendChild(data_name);
-        data_obj.appendChild(data_value);
-        data_container.appendChild(data_obj);
-    }
-}
-
-function weekly_tile(data) {
-
-    let lines = data.split('\n').slice(0, -1).reverse();
-    let name = [];
-    let value = [];
-
-    let nb_people = in_thread[glob_current_thread_id].length;
-
-    for (let index = 0; index < nb_people; index++) {
-        name[index] = names[in_thread[glob_current_thread_id][index]];
-        value[index] = 0;
-    }
-
-    let current_week = moment().week();
-
-    for (let index = 0; index < lines.length; index++) {
-        let line = lines[index];
-        if (isCorrect(line)) {
-            let parsed = parseLine(line);
-            if (moment(parsed["time"]).week() == current_week) {
-                let name_index = in_thread[glob_current_thread_id].indexOf(parsed["int_id"]);
-                value[name_index] += 1;
-            }
-            else {
-                break;
-            }
-        }
-    }
-
-    let tmp_name = [];
-    let tmp_value = [];
-
-    let indexes = sortedIndex(value).reverse();
-
-    for (let index = 0; index < indexes.length; index++) {
-        tmp_name[index] = name[indexes[index]];
-        tmp_value[index] = value[indexes[index]];
-    }
-
-    let css = '#tile_weekly:hover {box-shadow: 0 0 15px ' + colors[in_thread[glob_current_thread_id][indexes[0]]] + '}';
-    let style = document.createElement('style');
-
-    if (style.styleSheet) {
-        style.styleSheet.cssText = css;
-    } else {
-        style.appendChild(document.createTextNode(css));
-    }
-
-    document.getElementsByTagName('head')[0].appendChild(style);
-
-    document.getElementById("title_weekly").innerHTML = "Tututs de la semaine";
-
-    let data_container = document.getElementById("weekly");
-    data_container.innerHTML = "";
-
-    for (let index = 0; index < nb_people; index++) {
-
-        let data_obj = document.createElement("div");
-        data_obj.setAttribute("class", "data");
-
-        let data_name = document.createElement("div");
-        data_name.setAttribute("class", "name");
-        data_name.innerHTML = tmp_name[index];
-
-        let data_value = document.createElement("div");
-        data_value.setAttribute("class", "value");
-        data_value.innerHTML = tmp_value[index];
-
-        data_obj.appendChild(data_name);
-        data_obj.appendChild(data_value);
-        data_container.appendChild(data_obj);
-    }
 }
 
 function medal_tile(data) {

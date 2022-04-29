@@ -34,17 +34,11 @@ function populate(data) {
 
     // We use the data to fill html content
     nb_log = Math.min(data.split('\n').length - 1, glob_nb_log); // Can't show more log than what we have
-    fastest(data);
-    latest(data);
-    error_tile(data);
-    perfect_tile(data);
-    daily_tile(data);
-    weekly_tile(data);
     medal_tile(data);
     sec_tile(data)
-    let res = serie(data, nb_log);
-    serie_tile(data, res);
+    let res = serie(data);
     new_log(data, res.reverse());
+    fillTiles(data, res.reverse());
 
     tututPie(data);
     tututWeek(data);
