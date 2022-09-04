@@ -21,7 +21,6 @@ function updatePage(thread) {
     if (thread != glob_current_thread_id) {
         getData(thread, pageReset);
         glob_current_thread_id = thread;
-        document.getElementById("thread").innerHTML = threads[glob_current_thread_id];
     }
     hourChart.destroy();
     dayChart.destroy();
