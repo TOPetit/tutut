@@ -1,5 +1,5 @@
 async function getData(thread_id, func) {
-    const response = await fetch("https://tutut.popota.me/" + "data/" + thread_id + ".csv");
+    const response = await fetch(window.location.href + "/data/" + thread_id + ".csv");
     // waits until the request completes...
     text = await response.text().then(function (data) {
         data = formatData(data);
