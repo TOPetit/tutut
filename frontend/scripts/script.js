@@ -33,7 +33,6 @@ function updatePage(thread) {
 
 function populate(data) {
 
-    document.getElementById("thread").innerHTML = threads[glob_current_thread_id];
 
     // We use the data to fill html content
     nb_log = Math.min(data.split('\n').length - 1, glob_nb_log); // Can't show more log than what we have
