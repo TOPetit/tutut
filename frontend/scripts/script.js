@@ -10,6 +10,10 @@ var pageReset = x => pageChange(1, x);
 window.onload = function () {
 
     init_home();
+    init_thread();
+    glob_current_thread_id = "4567795139935838";
+    getData(glob_current_thread_id, populate);
+    reset()
 
 }
 
