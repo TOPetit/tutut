@@ -1,21 +1,4 @@
 let html_thread =
-    "<div class='title'>STUTUSTIQUES</div>" +
-    "<div class='trug'>" +
-    "    <span class='dropdown'>" +
-    "        <button class='dropbtn' id='thread'>Accueil</button>" +
-    "        <div class='dropdown-content'>" +
-    "            <div id='btn0'>Accueil</div>" +
-    "            <div id='btn1'>Thread 1</div>" +
-    "            <div id='btn2'>Thread 2</div>" +
-    "            <div id='btn3'>Thread 3</div>" +
-    "            <div id='btn4'>Thread 4</div>" +
-    "        </div>" +
-    "    </span>" +
-    "    <div id='refresh_div'>" +
-    "        <img id='refresh' src='refresh.svg' alt='' height='20px' width='20px' margin='auto' />" +
-    "    </div>" +
-    "</div>" +
-    "<div class='separator'></div>" +
     "<div id='tiles_container'>" +
     "    <div class='tile' id='tile_fastest'>" +
     "        <div class='tile_title' id='title_fastest'></div>" +
@@ -129,21 +112,6 @@ var thread_initialized = false;
 function init_thread() {
     document.body.innerHTML = "";
     document.body.innerHTML = html_thread;
-
-    // refresh
-    document.getElementById("refresh_div").onclick = function () { updatePage(glob_current_thread_id) };
-
-    // Thread
-    document.getElementById("btn1").innerHTML = threads[4567795139935838];
-    document.getElementById("btn2").innerHTML = threads[100008800800648];
-    document.getElementById("btn3").innerHTML = threads[100014962631116];
-    document.getElementById("btn4").innerHTML = threads[12];
-
-    document.getElementById("btn0").onclick = function () { init_home(); glob_current_thread_id = "" };
-    document.getElementById("btn1").onclick = function () { init_thread(); updatePage("4567795139935838"); reset() };
-    document.getElementById("btn2").onclick = function () { init_thread(); updatePage("100008800800648"); reset() };
-    document.getElementById("btn3").onclick = function () { init_thread(); updatePage("100014962631116"); reset() };
-    document.getElementById("btn4").onclick = function () { init_thread(); updatePage("12"); reset() };
 
     // Page management
     document.getElementById("page_number").innerHTML = "Page " + String(page);
