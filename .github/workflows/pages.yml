@@ -36,7 +36,7 @@ jobs:
         uses: actions/upload-pages-artifact@v1
         with:
           # Upload only fronted/ folder
-          path: './frontend_old/'
+          path: './old_frontend/'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
