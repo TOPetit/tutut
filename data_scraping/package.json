@@ -1,0 +1,17 @@
+{
+  "dependencies": {
+    "puppeteer": "^19.4.1"
+  },
+  "name": "data_scraping",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "request:data": "node request_data.js",
+    "download:data": "node download_data.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
