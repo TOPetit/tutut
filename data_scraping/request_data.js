@@ -1,4 +1,4 @@
-const puppeteer = require('puppeteer');
+import { launch } from 'puppeteer';
 
 const file_URL = "https://www.facebook.com/dyi/";
 
@@ -7,7 +7,7 @@ function delay(milliseconds) {
 }
 
 (async () => {
-    const browser = await puppeteer.launch({ headless: true });
+    const browser = await launch({ headless: true });
     const context = browser.defaultBrowserContext();
     context.overridePermissions("https://www.facebook.com", ["geolocation", "notifications"]);
     const page = await browser.newPage();

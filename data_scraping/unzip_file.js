@@ -1,8 +1,8 @@
-const fs = require('fs');
-const jszip = require('jszip');
+import { readFileSync, mkdirSync, writeFileSync } from 'fs';
+import jszip from 'jszip';
 
 const fct = async () => {
-    const fileContent = fs.readFileSync('downloads/facebook-theopetit1848.zip');
+    const fileContent = readFileSync('downloads/facebook-theopetit1848.zip');
     const jszipInstance = new jszip();
     const result = await jszipInstance.loadAsync(fileContent);
     const keys = Object.keys(result.files);
@@ -10,10 +10,10 @@ const fct = async () => {
         const item = result.files[key];
         item.name = 'downloads/' + item.name;
         if (item.dir) {
-            fs.mkdirSync(item.name);
+            mkdirSync(item.name);
         }
         else {
-            fs.writeFileSync(item.name, Buffer.from(await item.async('arraybuffer')));
+            writeFileSync(item.name, Buffer.from(await item.async('arraybuffer')));
         }
     }
 }
