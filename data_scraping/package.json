@@ -9,10 +9,11 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "request:data": "node request_data.js",
-    "download:data": "node download_data.js",
-    "unzip:data": "node unzip_file.js",
-    "sanitize:data": "node sanitize_data.js"
+    "request:data": "node src/request_data.js",
+    "download:data": "node src/download_data.js",
+    "unzip:data": "node src/unzip_file.js",
+    "sanitize:data": "node src/sanitize_data.js",
+    "merge:data": "node src/merge_data.js"
   },
   "author": "",
   "license": "ISC",

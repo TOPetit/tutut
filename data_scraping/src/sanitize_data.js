@@ -1,14 +1,14 @@
 import { readFileSync, writeFileSync } from 'fs';
+import { parseJSON } from './utils.js';
+
+const content = parseJSON('downloads/messages/inbox/safespacevoyageaucentredelaterre_4567795139935838/message_1.json')
 
 var sanitized_data = {
-    participants: [],
     messages: []
 };
 
 const fct = async () => {
-    const fileContent = readFileSync('downloads/messages/inbox/safespacevoyageaucentredelaterre_4567795139935838/message_1.json', 'latin1');
-    const content = JSON.parse(fileContent);
-    decodeObject(content);
+    const content = parseJSON('downloads/messages/inbox/safespacevoyageaucentredelaterre_4567795139935838/message_1.json')
 
     const layout = `
     1234567890
@@ -18,11 +18,6 @@ const fct = async () => {
     `;
 
     const keyboard = generateKeyboard(layout);
-
-    // Get participants
-    content.participants.forEach(participant => {
-        sanitized_data.participants.push(participant.name.split(' ')[0])
-    });
 
     // Get messages
     content.messages.forEach(message => {
@@ -76,7 +71,7 @@ function decodeObject(obj) {
 }
 
 function filterMessage(content, keyboard) {
-    if (content == '💙') {return true}
+    if (content == '💙') { return true }
     const cured_content = content.toLowerCase();
     const dist = damerauLevenshteinDistance('tutut', cured_content, keyboard);
     return (dist < 3);
