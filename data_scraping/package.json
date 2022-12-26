@@ -13,7 +13,8 @@
     "download:data": "node src/download_data.js",
     "unzip:data": "node src/unzip_file.js",
     "sanitize:data": "node src/sanitize_data.js",
-    "merge:data": "node src/merge_data.js"
+    "merge:data": "node src/merge_data.js",
+    "start": "npm run request:data && sleep 300 && npm run download:data && npm run unzip:data && npm run sanitize:data && npm run merge:data"
   },
   "author": "",
   "license": "ISC",
