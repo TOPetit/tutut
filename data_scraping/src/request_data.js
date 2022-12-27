@@ -11,6 +11,7 @@ function delay(milliseconds) {
     const context = browser.defaultBrowserContext();
     context.overridePermissions("https://www.facebook.com", ["geolocation", "notifications"]);
     const page = await browser.newPage();
+    page.setDefaultTimeout(60_000);
     await page.setViewport({
         width: 1_440,
         height: 900

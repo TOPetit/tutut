@@ -11,6 +11,7 @@ function delay(milliseconds) {
     const context = browser.defaultBrowserContext();
     context.overridePermissions("https://www.facebook.com", ["geolocation", "notifications"]);
     const page = await browser.newPage();
+    page.setDefaultTimeout(60_000);
     await page.setViewport({
         width: 1_440,
         height: 900
@@ -27,6 +28,7 @@ function delay(milliseconds) {
     await page.waitForNavigation({ waitUntil: 'networkidle2' });
 
     // Go to download tab
+    await page.waitForSelector('[aria-selected="false"][role="tab"]');
     await page.click('[aria-selected="false"][role="tab"]');
 
     const client = await page.target().createCDPSession()
