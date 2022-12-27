@@ -14,7 +14,7 @@ concurrency:
 
 jobs:
   # Data scraping job
-  scraping:
+  Scraping:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -54,5 +54,5 @@ jobs:
       - name: Commit new data
         uses: EndBug/add-and-commit@v9
         with:
-          add: src/data/data.json
+          add: data_scraping/src/data/data.json
           message: 'AutoCommit: Added new data.'
