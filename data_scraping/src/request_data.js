@@ -27,6 +27,7 @@ function delay(milliseconds) {
     await page.waitForNavigation({ waitUntil: 'networkidle2' });
 
     // Select JSON
+    await page.waitForSelector('label[aria-label="Format"]');
     await page.click('label[aria-label="Format"]');
     await page.evaluate(() => {
         [...document.querySelectorAll('span')].find(element => element.textContent === 'JSON').click();
