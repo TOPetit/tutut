@@ -29,12 +29,18 @@ jobs:
 
       - name: Request data
         run: npm run request:data
+        env:
+          FACEBOOK_EMAIL: ${{ secrets.FACEBOOK_EMAIL }}
+          FACEBOOK_PASS: ${{ secrets.FACEBOOK_PASS }}
 
       - name: Wait for generated data
         run: sleep 300
 
       - name: Download data
         run: npm run download:data
+        env:
+          FACEBOOK_EMAIL: ${{ secrets.FACEBOOK_EMAIL }}
+          FACEBOOK_PASS: ${{ secrets.FACEBOOK_PASS }}
 
       - name: Unzip data
         run: npm run unzip:data
