@@ -7,11 +7,11 @@ function delay(milliseconds) {
 }
 
 (async () => {
-    const browser = await launch({ headless: true });
+    const browser = await launch({ headless: false });
     const context = browser.defaultBrowserContext();
     context.overridePermissions("https://www.facebook.com", ["geolocation", "notifications"]);
     const page = await browser.newPage();
-    page.setDefaultTimeout(60_000);
+    page.setDefaultTimeout(120_000);
     await page.setViewport({
         width: 1_440,
         height: 900
@@ -26,6 +26,11 @@ function delay(milliseconds) {
     await delay(1_000);
     await page.click('button[id="loginbutton"]');
     await page.waitForNavigation({ waitUntil: 'networkidle2' });
+
+    if (await page.$('button[id="checkpointSubmitButton"]') !== null) {
+        await page.click('button[id="checkpointSubmitButton"]');
+        await page.waitForNavigation({ waitUntil: 'networkidle2' });
+    }
 
     // Select JSON
     await page.waitForSelector('label[aria-label="Format"]');
