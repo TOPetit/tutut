@@ -15,10 +15,10 @@ function delay(milliseconds) {
         width: 1_440,
         height: 900
     });
-    await page.goto(file_URL);
-    if (await page.$('button[data-testid="cookie-policy-manage-dialog-accept-button"]') !== null) {
-        await page.click('button[data-testid="cookie-policy-manage-dialog-accept-button"]');
-    }
+    await page.goto(file_URL, { waitUntil: 'networkidle2' });
+    await page.waitForSelector('button[data-testid="cookie-policy-manage-dialog-accept-button"]');
+    await page.click('button[data-testid="cookie-policy-manage-dialog-accept-button"]');
+    await page.waitForSelector('button[id="loginbutton"]');
     await page.type('input[id="email"]', process.env.FACEBOOK_EMAIL);
     await page.type('input[id="pass"]', process.env.FACEBOOK_PASS);
     await delay(1_000);
