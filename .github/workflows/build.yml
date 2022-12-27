@@ -16,13 +16,13 @@ jobs:
   # Data scraping job
   scraping:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./data_scraping
     steps:
 
       - name: Checkout
         uses: actions/checkout@v3
-
-      - name: Change directory
-        run: cd data_scraping
 
       - name: Install dependencies
         run: npm i
