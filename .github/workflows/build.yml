@@ -1,0 +1,52 @@
+name: Stutustiques weekly build
+
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+
+# Set concurrency: running as a workflow queue.
+concurrency:
+  group: "pages"
+
+jobs:
+  # Data scraping job
+  scraping:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Change directory
+        run: cd data_scraping
+
+      - name: Install dependencies
+        run: npm i
+
+      - name: Request data
+        run: npm run request:data
+
+      - name: Wait for generated data
+        run: sleep 300
+
+      - name: Download data
+        run: npm run download:data
+
+      - name: Unzip data
+        run: npm run unzip:data
+
+      - name: Sanitize data
+        run: npm run sanitize:data
+
+      - name: Merge data
+        run: npm run merge:data
+
+      - name: Commit new data
+        uses: EndBug/add-and-commit@v9
+        with:
+          add: src/data/data.json
+          message: 'AutoCommit: Added new data.'
