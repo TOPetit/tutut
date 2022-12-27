@@ -7,7 +7,7 @@ function delay(milliseconds) {
 }
 
 (async () => {
-    const browser = await launch({ headless: false });
+    const browser = await launch({ headless: true });
     const context = browser.defaultBrowserContext();
     context.overridePermissions("https://www.facebook.com", ["geolocation", "notifications"]);
     const page = await browser.newPage();
