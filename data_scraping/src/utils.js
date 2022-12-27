@@ -40,3 +40,7 @@ export function writeJSON(content, path) {
         }
     })
 }
+
+export function compareMessage(message1, message2) {
+    return message1.timestamp - message2.timestamp;
+}

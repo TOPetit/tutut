@@ -1,4 +1,4 @@
-import { parseJSON, writeJSON, isMessageEqual } from './utils.js';
+import { parseJSON, writeJSON, isMessageEqual, compareMessage } from './utils.js';
 
 const new_content = parseJSON('downloads/output.json');
 const new_messages = new_content.messages;
@@ -10,5 +10,7 @@ new_messages.forEach(new_message => {
         old_content.messages.push(new_message);
     }
 });
+
+old_content.messages.sort(compareMessage)
 
 writeJSON(old_content, 'src/data/data.json');
