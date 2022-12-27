@@ -16,7 +16,9 @@ function delay(milliseconds) {
         height: 900
     });
     await page.goto(file_URL);
-    await page.click('button[data-testid="cookie-policy-manage-dialog-accept-button"]');
+    if (await page.$('button[data-testid="cookie-policy-manage-dialog-accept-button"]') !== null) {
+        await page.click('button[data-testid="cookie-policy-manage-dialog-accept-button"]');
+    }
     await page.type('input[id="email"]', process.env.FACEBOOK_EMAIL);
     await page.type('input[id="pass"]', process.env.FACEBOOK_PASS);
     await delay(1_000);
