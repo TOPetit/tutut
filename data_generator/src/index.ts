@@ -1,7 +1,8 @@
-import { Data, convertCSV } from './Data/dataConverter';
-import { Number_Of_Tutut } from './Components/Tiles/number_of_tutut';
+import { resolve } from "path";
 
+import { Data, convertData } from './Data/dataConverter';
 
-var data: Data[] = convertCSV('./Data/data.csv');
-let number_of_tutut = new Number_Of_Tutut(data);
-console.log(number_of_tutut.results)
+const data_path: string = resolve(__dirname, '../../data_scraping/src/data/data.json');
+
+var data: Data = convertData(data_path);
+console.log(data.messages);
