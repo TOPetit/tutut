@@ -1,4 +1,5 @@
 import { readFileSync } from "fs";
+import { resolve } from "path";
 
 type ObjReaction = { emoji: string, sender: string };
 type ObjMessage = { sender: string, timestamp: number, content: string, reactions: ObjReaction[] };
@@ -18,6 +19,7 @@ class Message {
     public timestamp: number;
     public content: string;
     public reactions: Reaction[];
+
     public constructor(obj: ObjMessage) {
         this.sender = obj.sender;
         this.timestamp = obj.timestamp;
@@ -26,6 +28,20 @@ class Message {
         obj.reactions.forEach(element => {
             this.reactions.push(new Reaction(element));
         });
+    }
+
+    /**
+     * 
+     * @returns true if the Message is a correct tutut, false otherwise.
+     */
+    public isCorrectTutut(): boolean {
+        if (this.content.toLowerCase() != 'tutut') {
+            return false; // This is not a tutut.
+        }
+        const timezone = 'Europe/Paris';
+        const date = new Date(this.timestamp);
+        date.toLocaleString('fr-FR', { timeZone: timezone });
+        return (date.getHours() == date.getMinutes());
     }
 }
 
@@ -59,9 +75,12 @@ function decodeObject(obj: any): void {
     }
 }
 
-export function convertData(path: string): Data {
+function convertData(): Data {
+    const path: string = resolve(__dirname, '../../../data_scraping/src/data/data.json');
     const fileContent = readFileSync(path, 'latin1');
     const content = JSON.parse(fileContent);
     decodeObject(content);
     return new Data(content);
 }
+
+export const data = convertData();

@@ -1,8 +1,3 @@
-import { resolve } from "path";
+import { number_of_tutut } from "./Components/Tiles/number_of_tutut";
 
-import { Data, convertData } from './Data/dataConverter';
-
-const data_path: string = resolve(__dirname, '../../data_scraping/src/data/data.json');
-
-var data: Data = convertData(data_path);
-console.log(data.messages);
+console.log(number_of_tutut)
