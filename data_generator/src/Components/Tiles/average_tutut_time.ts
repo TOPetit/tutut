@@ -1,5 +1,5 @@
 import { data, Data } from "../../Data/dataConverter";
-import { Tile, Values } from "../components";
+import { SortedValues, Tile, Values } from "../components";
 
 function compute(data: Data) {
     let values: Values = {};
@@ -20,9 +20,19 @@ function compute(data: Data) {
     })
     data.participants.forEach(element => {
         values[element] = Number(accumulator[element]) / Number(number_of_tutut[element]);
-        values[element] = String(Number(values[element]).toFixed(3)) + 's';
+        values[element] = Number(values[element]).toFixed(3);
     })
     return values;
 }
 
-export const average_tutut_time = new Tile('Tutut le plus rapide', compute, data)
+function sort(values: Values): SortedValues {
+    let tmp_array: SortedValues = [];
+    Object.keys(values).forEach(element => {
+        tmp_array.push({ user: element, value: String(values[element]) })
+    })
+    tmp_array.sort((a, b) => { return (Number(a.value) - Number(b.value)) });
+    tmp_array.map(element => element.value += 's');
+    return tmp_array;
+}
+
+export const average_tutut_time = new Tile('Temps de Tutut moyen', compute, sort, data)

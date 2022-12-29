@@ -1,6 +1,6 @@
 import { data, Data } from "../../Data/dataConverter";
 import { date_to_string } from "../../Utils/time";
-import { Tile, Values } from "../components";
+import { SortedValues, Tile, Values } from "../components";
 
 function compute(data: Data) {
     let values: Values = {};
@@ -21,4 +21,13 @@ function compute(data: Data) {
     return values;
 }
 
-export const fastest_tutut = new Tile('Tutut le plus rapide', compute, data)
+function sort(values: Values): SortedValues {
+    let tmp_array: SortedValues = [];
+    Object.keys(values).forEach(element => {
+        tmp_array.push({ user: element, value: String(values[element]) })
+    })
+    tmp_array.sort((a, b) => { return (Number(a.value.slice(-6)) - Number(b.value.slice(-6))) });
+    return tmp_array;
+}
+
+export const fastest_tutut = new Tile('Tutut le plus rapide', compute, sort, data)

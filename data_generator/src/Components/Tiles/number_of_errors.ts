@@ -1,5 +1,5 @@
 import { data, Data } from "../../Data/dataConverter";
-import { Tile, Values } from "../components";
+import { SortedValues, Tile, Values } from "../components";
 
 function compute(data: Data) {
     let values: Values = {};
@@ -14,4 +14,13 @@ function compute(data: Data) {
     return values;
 }
 
-export const number_of_errors = new Tile("Nombre d'erreur", compute, data)
+function sort(values: Values): SortedValues {
+    let tmp_array: SortedValues = [];
+    Object.keys(values).forEach(element => {
+        tmp_array.push({ user: element, value: String(values[element]) })
+    })
+    tmp_array.sort((a, b) => { return (Number(a.value) - Number(b.value)) });
+    return tmp_array;
+}
+
+export const number_of_errors = new Tile("Nombre d'erreur", compute, sort, data)
