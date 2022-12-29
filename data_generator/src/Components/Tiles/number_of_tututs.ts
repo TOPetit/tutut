@@ -1,4 +1,3 @@
-import { userInfo } from "os";
 import { data, Data } from "../../Data/dataConverter";
 import { SortedValues, Tile, Values } from "../components";
 
