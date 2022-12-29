@@ -14,4 +14,4 @@ function compute(data: Data) {
     return values;
 }
 
-export const number_of_errors = new Tile('Nombre de Tutut', compute, data)
+export const number_of_errors = new Tile("Nombre d'erreur", compute, data)

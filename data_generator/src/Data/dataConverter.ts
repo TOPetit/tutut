@@ -32,7 +32,7 @@ class Message {
 
     /**
      * 
-     * @returns true if the Message is a correct tutut, false otherwise.
+     * @returns {boolean} true if the Message is a correct tutut, false otherwise.
      */
     public isCorrectTutut(): boolean {
         if (this.content.toLowerCase() != 'tutut') {
