@@ -1,6 +1,3 @@
 <script lang="ts">
-  import Greeting from "./lib/Greeting.svelte";
-  const name: string = "TOPetit";
+  import Tile from "./components/tile/Tile.svelte";
 </script>
-
-<Greeting {name} />
