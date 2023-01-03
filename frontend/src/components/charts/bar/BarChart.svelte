@@ -16,6 +16,7 @@ Optional parameters are:
 <script lang="ts">
     import XAxis from "./xAxis.svelte";
     import YAxis from "./yAxis.svelte";
+    import Tooltip from "./Tooltip.svelte";
     export let width: number = 500;
     export let height: number = 500;
 
@@ -63,9 +64,17 @@ Optional parameters are:
     }
 
     let selected_user: string;
+    let hovered_data: { user: string; value: number; x: number; y: number };
 </script>
 
-<svg {height} {width}>
+<svg
+    {height}
+    {width}
+    on:mouseleave={() => {
+        hovered_data = null;
+        console.log("out");
+    }}
+>
     <XAxis
         {width}
         {height}
@@ -76,6 +85,7 @@ Optional parameters are:
         {bar_width}
         nb_users={data.length}
     />
+    <YAxis {width} {height} {data_max} {margins} {yScaling} />
     {#each formatted_data as bar, i}
         {#each bar as subBar, j}
             <rect
@@ -97,9 +107,33 @@ Optional parameters are:
                     : 0.5}
                 on:mouseover={() => {
                     selected_user = subBar.user;
+                    hovered_data = {
+                        user: subBar.user,
+                        value: subBar.value,
+                        x:
+                            margins.left +
+                            gap +
+                            bar_width * (data.length * i + j) +
+                            i * gap +
+                            ((data.length - 1) * i + j) * small_gap +
+                            bar_width,
+                        y: height - margins.bottom - yScaling * subBar.value,
+                    };
                 }}
                 on:focus={() => {
                     selected_user = subBar.user;
+                    hovered_data = {
+                        user: subBar.user,
+                        value: subBar.value,
+                        x:
+                            margins.left +
+                            gap +
+                            bar_width * (data.length * i + j) +
+                            i * gap +
+                            ((data.length - 1) * i + j) * small_gap +
+                            bar_width,
+                        y: height - margins.bottom - yScaling * subBar.value,
+                    };
                 }}
                 on:mouseout={() => {
                     selected_user = null;
@@ -116,6 +150,14 @@ Optional parameters are:
         {/each}
     {/each}
 </svg>
+{#if hovered_data}
+    <Tooltip
+        user={hovered_data.user}
+        value={hovered_data.value}
+        x={hovered_data.x}
+        y={hovered_data.y}
+    />
+{/if}
 
 <style>
     rect {

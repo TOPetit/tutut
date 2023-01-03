@@ -34,7 +34,7 @@
     <text
         x={tick}
         y={height - margins.bottom + 20}
-        stroke={"#aeaeae"}
+        fill={"#aeaeae"}
         text-anchor="middle">{labels[i]}</text
     >
 {/each}
