@@ -87,7 +87,7 @@ Optional parameters are:
         nb_users={data.length}
     />
     <YAxis {width} {height} {data_max} {margins} {yScaling} />
-    <Legend {width} {height} {margins} {data} bind:selected_user />
+    <Legend {width} {data} bind:selected_user />
     {#each formatted_data as bar, i}
         {#each bar as subBar, j}
             <rect

@@ -7,7 +7,7 @@
 </script>
 
 <div class="tooltip" style="position: absolute; top:{y}px; left:{x}px">
-    <p>{user} - {value}</p>
+    <p>{user}: {value}</p>
 </div>
 
 <style>

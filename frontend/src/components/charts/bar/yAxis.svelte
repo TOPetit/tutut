@@ -22,7 +22,6 @@
                 Math.round((i + 1) * yScaling * tick_gap),
         });
     }
-    console.log(ticks);
 </script>
 
 <g>

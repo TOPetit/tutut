@@ -1,12 +1,5 @@
 <script lang="ts">
     export let width: number;
-    export let height: number;
-    export let margins: {
-        left: number;
-        top: number;
-        right: number;
-        bottom: number;
-    };
     export let data: { user: string; color: string; data: number[] }[];
     export let selected_user: string;
 
@@ -22,6 +15,18 @@
         <g
             class="element"
             opacity={selected_user ? (selected_user == user.user ? 1 : 0.5) : 1}
+            on:mouseover={() => {
+                selected_user = user.user;
+            }}
+            on:focus={() => {
+                selected_user = user.user;
+            }}
+            on:mouseout={() => {
+                selected_user = null;
+            }}
+            on:blur={() => {
+                selected_user = null;
+            }}
         >
             <rect
                 x={i * (element_size + gap)}
