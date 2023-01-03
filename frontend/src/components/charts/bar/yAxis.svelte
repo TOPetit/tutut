@@ -25,26 +25,34 @@
     console.log(ticks);
 </script>
 
-{#each ticks as tick}
+<g>
+    {#each ticks as tick}
+        <line
+            x1={margins.left - 5}
+            y1={tick.value}
+            x2={margins.left}
+            y2={tick.value}
+            stroke={"#8e8e8e"}
+        />
+        <line
+            x1={margins.left - 5}
+            y1={tick.value}
+            x2={width}
+            y2={tick.value}
+            stroke={"#eeeeee"}
+        />
+        <text
+            x={margins.left - 15}
+            y={tick.value + 4}
+            fill="#aeaeae"
+            text-anchor="middle">{tick.label}</text
+        >
+    {/each}
     <line
-        x1={margins.left - 5}
-        y1={tick.value}
+        x1={margins.left}
+        y1={margins.top / 2}
         x2={margins.left}
-        y2={tick.value}
-        stroke={"#8e8e8e"}
+        y2={height - margins.bottom / 2}
+        stroke="#cecece"
     />
-    <line
-        x1={margins.left - 5}
-        y1={tick.value}
-        x2={width}
-        y2={tick.value}
-        stroke={"#eeeeee"}
-    />
-    <text
-        x={margins.left - 15}
-        y={tick.value + 4}
-        fill="#aeaeae"
-        text-anchor="middle">{tick.label}</text
-    >
-{/each}
-<line x1={margins.left} y1={0} x2={margins.left} y2={height} stroke="#cecece" />
+</g>

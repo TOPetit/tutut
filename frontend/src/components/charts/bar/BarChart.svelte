@@ -17,6 +17,7 @@ Optional parameters are:
     import XAxis from "./xAxis.svelte";
     import YAxis from "./yAxis.svelte";
     import Tooltip from "./Tooltip.svelte";
+    import Legend from "./Legend.svelte";
     export let width: number = 500;
     export let height: number = 500;
 
@@ -26,7 +27,7 @@ Optional parameters are:
         { user: "Walter White", color: "#aaaace", data: [6, 13, 7] },
     ];
 
-    const margins = { left: 40, top: 20, right: 10, bottom: 20 };
+    const margins = { left: 40, top: 40, right: 10, bottom: 25 };
 
     const allData: number[] = data.flatMap((item) => item.data);
     const data_max: number = Math.max(...allData);
@@ -65,6 +66,7 @@ Optional parameters are:
 
     let selected_user: string;
     let hovered_data: { user: string; value: number; x: number; y: number };
+    $: selected_user = selected_user;
 </script>
 
 <svg
@@ -72,7 +74,6 @@ Optional parameters are:
     {width}
     on:mouseleave={() => {
         hovered_data = null;
-        console.log("out");
     }}
 >
     <XAxis
@@ -86,6 +87,7 @@ Optional parameters are:
         nb_users={data.length}
     />
     <YAxis {width} {height} {data_max} {margins} {yScaling} />
+    <Legend {width} {height} {margins} {data} bind:selected_user />
     {#each formatted_data as bar, i}
         {#each bar as subBar, j}
             <rect

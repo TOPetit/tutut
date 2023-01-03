@@ -23,18 +23,20 @@
     }
 </script>
 
-<line
-    x1="0"
-    y1={height - margins.bottom}
-    x2={width}
-    y2={height - margins.bottom}
-    stroke="#cecece"
-/>
-{#each ticks as tick, i}
-    <text
-        x={tick}
-        y={height - margins.bottom + 20}
-        fill={"#aeaeae"}
-        text-anchor="middle">{labels[i]}</text
-    >
-{/each}
+<g>
+    <line
+        x1={margins.left / 2}
+        y1={height - margins.bottom}
+        x2={width}
+        y2={height - margins.bottom}
+        stroke="#cecece"
+    />
+    {#each ticks as tick, i}
+        <text
+            x={tick}
+            y={height - margins.bottom + 16}
+            fill={"#aeaeae"}
+            text-anchor="middle">{labels[i]}</text
+        >
+    {/each}
+</g>

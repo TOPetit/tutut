@@ -17,7 +17,7 @@
         background: #fafafa;
         border: 1px solid rgba(0, 0, 0, 0.5);
         pointer-events: none;
-        transition: top 300ms ease, left 300ms ease;
+        transition: all 300ms ease;
     }
 
     p {
