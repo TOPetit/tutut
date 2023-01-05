@@ -18,6 +18,7 @@ Optional parameters are:
     import YAxis from "./yAxis.svelte";
     import Tooltip from "./Tooltip.svelte";
     import Legend from "./Legend.svelte";
+    import Bar from "./Bar.svelte";
     export let width: number = 500;
     export let height: number = 500;
 
@@ -66,7 +67,6 @@ Optional parameters are:
 
     let selected_user: string;
     let hovered_data: { user: string; value: number; x: number; y: number };
-    $: selected_user = selected_user;
 </script>
 
 <svg
@@ -88,66 +88,20 @@ Optional parameters are:
     />
     <YAxis {width} {height} {data_max} {margins} {yScaling} />
     <Legend {width} {data} bind:selected_user />
-    {#each formatted_data as bar, i}
-        {#each bar as subBar, j}
-            <rect
-                class={"rect-" + subBar.user}
+    {#each formatted_data as barGroup, i}
+        {#each barGroup as bar, j}
+            <Bar
+                {bar}
                 x={margins.left +
                     gap +
                     bar_width * (data.length * i + j) +
                     i * gap +
                     ((data.length - 1) * i + j) * small_gap}
-                y={height - margins.bottom - yScaling * subBar.value}
-                height={yScaling * subBar.value}
+                y={height - margins.bottom - yScaling * bar.value}
                 width={bar_width}
-                fill={subBar.color}
-                stroke="black"
-                stroke-opacity={selected_user
-                    ? selected_user == subBar.user
-                        ? 1
-                        : 0.5
-                    : 0.5}
-                on:mouseover={() => {
-                    selected_user = subBar.user;
-                    hovered_data = {
-                        user: subBar.user,
-                        value: subBar.value,
-                        x:
-                            margins.left +
-                            gap +
-                            bar_width * (data.length * i + j) +
-                            i * gap +
-                            ((data.length - 1) * i + j) * small_gap +
-                            bar_width,
-                        y: height - margins.bottom - yScaling * subBar.value,
-                    };
-                }}
-                on:focus={() => {
-                    selected_user = subBar.user;
-                    hovered_data = {
-                        user: subBar.user,
-                        value: subBar.value,
-                        x:
-                            margins.left +
-                            gap +
-                            bar_width * (data.length * i + j) +
-                            i * gap +
-                            ((data.length - 1) * i + j) * small_gap +
-                            bar_width,
-                        y: height - margins.bottom - yScaling * subBar.value,
-                    };
-                }}
-                on:mouseout={() => {
-                    selected_user = null;
-                }}
-                on:blur={() => {
-                    selected_user = null;
-                }}
-                opacity={selected_user
-                    ? selected_user == subBar.user
-                        ? 1
-                        : 0.5
-                    : 1}
+                height={yScaling * bar.value}
+                bind:selected_user
+                bind:hovered_data
             />
         {/each}
     {/each}
@@ -160,10 +114,3 @@ Optional parameters are:
         y={hovered_data.y}
     />
 {/if}
-
-<style>
-    rect {
-        transition: all 300ms ease;
-        cursor: pointer;
-    }
-</style>
