@@ -1,3 +1,18 @@
+<!--
+    @component
+
+This compent embbed a pie graph with svg.
+
+Mandatory parameters are:
+
+- width: number
+- height: number
+- data: { user: string; color: string; data: number }[]
+
+Optional parameters are:
+
+- TBD
+-->
 <script lang="ts">
     export let width: number;
     export let height: number;
@@ -19,6 +34,7 @@
 <svg {width} {height}>
     {#each data as circle, index}
         <path
+            class="pie-chunk"
             cursor="pointer"
             fill={circle.color}
             opacity={selected_user ? (selected_user == circle ? 1 : 0.5) : 1}
@@ -86,3 +102,10 @@
         >
     {/each}
 </svg>
+
+<style>
+    .pie-chunk {
+        transition: all 300ms ease;
+        cursor: pointer;
+    }
+</style>
