@@ -13,7 +13,7 @@ Optional parameters are:
 -->
 <script lang="ts">
     export let title: string = "Blank Title";
-    export let values: { user: string; color: string; value: string }[] = [
+    export let values: { user: string; color?: string; value: string }[] = [
         { user: "Toto", color: "#cecece", value: "1234" },
         { user: "Albert", color: "#ceaaaa", value: "1234" },
         { user: "Walter White", color: "#aaaace", value: "1234" },
@@ -23,7 +23,11 @@ Optional parameters are:
     );
 </script>
 
-<div style="background-color: {values[0].color}">
+<div
+    style="background-color: {values[0].color
+        ? values[0].color
+        : 'rgba(0, 0, 0, 0)'}"
+>
     <h1>{title}</h1>
     <ul>
         {#each values as { user, value }}
@@ -96,7 +100,7 @@ Optional parameters are:
     }
 
     .user {
-        width: 35%;
+        width: 20%;
     }
 
     .value {
