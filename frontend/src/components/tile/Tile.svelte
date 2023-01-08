@@ -47,13 +47,23 @@ Optional parameters are:
         cursor: pointer;
         display: flex;
         flex-direction: column;
-        gap: 5px;
+        gap: 10px;
         justify-content: center;
+        opacity: 0.9;
+        border: 2px solid rgba(0, 0, 0, 0.2);
+        transition: all ease 0.3s;
+    }
+
+    div:hover {
+        opacity: 1;
+        stroke-opacity: 1;
+        border: 2px solid rgba(0, 0, 0, 1);
     }
 
     h1 {
         text-align: center;
         font-size: 1.2rem;
+        font-weight: bold;
         margin: 0;
         letter-spacing: 0.5px;
     }
@@ -80,7 +90,9 @@ Optional parameters are:
         width: 100%;
         margin: auto;
         display: flex;
-        justify-content: space-evenly;
+        justify-content: center;
+        gap: 10px;
+        font-size: 0.8rem;
     }
 
     .user {
