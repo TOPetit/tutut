@@ -1,13 +1,29 @@
+<!--
+    @component
+
+This compent embbed a bar graph with svg.
+
+Mandatory parameters are:
+
+- title: string.
+- values: { user: string; color: string; value: string }[].
+Optional parameters are:
+
+- TBD
+-->
 <script lang="ts">
     export let title: string = "Blank Title";
-    export let values: { user: string; value: string }[] = [
-        { user: "Toto", value: "1234" },
-        { user: "Albert", value: "Not really interesting" },
-        { user: "Walter White", value: "abc" },
+    export let values: { user: string; color: string; value: string }[] = [
+        { user: "Toto", color: "#cecece", value: "1234" },
+        { user: "Albert", color: "#ceaaaa", value: "1234" },
+        { user: "Walter White", color: "#aaaace", value: "1234" },
     ];
+    const maxChar: number = Math.max(
+        ...values.map((tile) => tile.value.length)
+    );
 </script>
 
-<div>
+<div style="background-color: {values[0].color}">
     <h1>{title}</h1>
     <ul>
         {#each values as { user, value }}
@@ -21,17 +37,25 @@
 
 <style>
     div {
-        width: 300px;
-        height: 150px;
-        border: 1px solid #cecece;
-        border-radius: 10px;
+        width: 250px;
+        height: 120px;
+        min-width: 250px;
+        min-height: 120px;
+        background-color: #334756;
+        border-radius: 5px;
+        transition: box-shadow 0.3s ease-in-out;
+        cursor: pointer;
         display: flex;
-        align-items: center;
         flex-direction: column;
+        gap: 5px;
+        justify-content: center;
     }
 
     h1 {
-        margin-top: 5px;
+        text-align: center;
+        font-size: 1.2rem;
+        margin: 0;
+        letter-spacing: 0.5px;
     }
 
     ul,
@@ -42,26 +66,28 @@
     }
 
     ul {
-        width: 90%;
         list-style-type: none;
+        margin-top: 10px;
+        width: 100%;
         display: flex;
         flex-direction: column;
         justify-content: center;
-        gap: 5px;
+        flex-wrap: wrap;
+        font-size: 0.8rem;
     }
 
     li {
+        width: 100%;
+        margin: auto;
         display: flex;
         justify-content: space-evenly;
-        gap: 15px;
     }
 
     .user {
-        width: 40%;
-        margin-left: 20px;
+        width: 35%;
     }
 
     .value {
-        width: 55%;
+        padding-left: 5%;
     }
 </style>
