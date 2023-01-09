@@ -1,5 +1,6 @@
 <script lang="ts">
   import "./style/font.css";
+  import "./style/body.css";
   import Title from "./lib/Title.svelte";
   import Tile from "./components/tile/Tile.svelte";
   import PieChart from "./components/charts/pie/PieChart.svelte";
