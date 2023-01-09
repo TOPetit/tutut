@@ -26,8 +26,22 @@
   ];
 </script>
 
-{#each data.tiles as tile}
-  <Tile title={tile.name} values={tile.values} {color} />
-{/each}
+<div class="tile-container">
+  {#each data.tiles as tile}
+    <Tile title={tile.name} values={tile.values} {color} />
+  {/each}
+</div>
+
 <BarChart />
 <PieChart />
+
+<style>
+  .tile-container {
+    width: 70%;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    flex-wrap: wrap;
+  }
+</style>
