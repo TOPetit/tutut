@@ -1,6 +1,7 @@
 <script lang="ts">
     export let width: number;
-    export let data: { user: string; color: string; data: number[] }[];
+    export let data: { user: string; data: number[] }[];
+    export let color: { [key: string]: string };
     export let selected_user: string;
 
     let legend_size: number = 400;
@@ -34,7 +35,7 @@
                 width={rect_size.dx}
                 height={rect_size.dy}
                 stroke="black"
-                fill={user.color}
+                fill={color[user.user]}
             />
             <text
                 x={i * (element_size + gap) + rect_size.dx + 5}

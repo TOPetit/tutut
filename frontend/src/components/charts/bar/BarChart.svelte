@@ -19,13 +19,29 @@ Optional parameters are:
     import Tooltip from "./Tooltip.svelte";
     import Legend from "./Legend.svelte";
     import Bar from "./Bar.svelte";
-    export let width: number = 500;
-    export let height: number = 500;
+    export let width: number = 700;
+    export let height: number = 400;
 
-    export let data: { user: string; color: string; data: number[] }[] = [
-        { user: "Toto", color: "#cecece", data: [12, 3, 4] },
-        { user: "Albert", color: "#ceaaaa", data: [2, 13, 14] },
-        { user: "Walter White", color: "#aaaace", data: [6, 13, 7] },
+    export let data: { user: string; data: number[] }[] = [
+        { user: "Toto", data: [12, 3, 4] },
+        { user: "Albert", data: [2, 13, 14] },
+        { user: "Walter White", data: [6, 13, 7] },
+    ];
+
+    export let color: { [key: string]: string } = {
+        Toto: "#aaffaa",
+        Albert: "#aaaaff",
+        "Walter White": "#ffaaaa",
+    };
+
+    export let labels: string[] = [
+        "01/01/2023",
+        "02/01/2023",
+        "03/01/2023",
+        "04/01/2023",
+        "05/01/2023",
+        "06/01/2023",
+        "07/01/2023",
     ];
 
     const margins = { left: 40, top: 40, right: 10, bottom: 25 };
@@ -37,8 +53,6 @@ Optional parameters are:
     );
 
     const length: number = data[0].data.length;
-
-    export let labels: string[];
 
     const gap: number = 15; // gap between groups
     const small_gap: number = 5; // gap between bars in same group
@@ -52,13 +66,12 @@ Optional parameters are:
             small_gap * (data.length - 1) * length) /
         (length * data.length);
 
-    let formatted_data: { user: string; color: string; value: number }[][] = [];
+    let formatted_data: { user: string; value: number }[][] = [];
     for (let i = 0; i < length; i++) {
-        let tmp: { user: string; color: string; value: number }[] = [];
+        let tmp: { user: string; value: number }[] = [];
         data.forEach((element) => {
             tmp.push({
                 user: element.user,
-                color: element.color,
                 value: element.data[i],
             });
         });
@@ -87,11 +100,12 @@ Optional parameters are:
         nb_users={data.length}
     />
     <YAxis {width} {height} {data_max} {margins} {yScaling} />
-    <Legend {width} {data} bind:selected_user />
+    <Legend {width} {data} {color} bind:selected_user />
     {#each formatted_data as barGroup, i}
         {#each barGroup as bar, j}
             <Bar
                 {bar}
+                {color}
                 x={margins.left +
                     gap +
                     bar_width * (data.length * i + j) +

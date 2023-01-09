@@ -2,8 +2,8 @@
     export let bar: {
         user: string;
         value: number;
-        color: string;
     };
+    export let color: { [key: string]: string };
     export let x: number;
     export let y: number;
     export let width: number;
@@ -24,7 +24,7 @@
     {y}
     {width}
     {height}
-    fill={bar.color}
+    fill={color[bar.user]}
     stroke="black"
     stroke-opacity={selected_user ? (selected_user == bar.user ? 1 : 0.5) : 0.5}
     on:mouseover={() => {

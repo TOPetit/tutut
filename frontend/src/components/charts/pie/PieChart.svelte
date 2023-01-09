@@ -14,9 +14,18 @@ Optional parameters are:
 - TBD
 -->
 <script lang="ts">
-    export let width: number;
-    export let height: number;
-    export let data: { user: string; color: string; data: number }[];
+    export let width: number = 300;
+    export let height: number = 300;
+    export let data: { user: string; data: number }[] = [
+        { user: "Toto", data: 134 },
+        { user: "Albert", data: 234 },
+        { user: "Walter White", data: 16 },
+    ];
+    export let color: { [key: string]: string } = {
+        Toto: "#aaffaa",
+        Albert: "#aaaaff",
+        "Walter White": "#ffaaaa",
+    };
 
     let total: number = data.reduce((acc, curr) => {
         return acc + curr.data;
@@ -28,7 +37,7 @@ Optional parameters are:
         (element) => ((element.data * 100) / total).toFixed(2) + "%"
     );
 
-    let selected_user: { user: string; color: string; data: number };
+    let selected_user: { user: string; data: number };
 </script>
 
 <svg {width} {height}>
@@ -36,7 +45,7 @@ Optional parameters are:
         <path
             class="pie-chunk"
             cursor="pointer"
-            fill={circle.color}
+            fill={color[circle.user]}
             opacity={selected_user ? (selected_user == circle ? 1 : 0.5) : 1}
             stroke="black"
             stroke-linejoin="round"

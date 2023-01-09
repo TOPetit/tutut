@@ -13,21 +13,18 @@ Optional parameters are:
 -->
 <script lang="ts">
     export let title: string = "Blank Title";
-    export let values: { user: string; color?: string; value: string }[] = [
-        { user: "Toto", color: "#cecece", value: "1234" },
-        { user: "Albert", color: "#ceaaaa", value: "1234" },
-        { user: "Walter White", color: "#aaaace", value: "1234" },
+    export let values: { user: string; value: string }[] = [
+        { user: "Toto", value: "1234" },
+        { user: "Albert", value: "1234" },
+        { user: "Walter White", value: "1234" },
     ];
+    export let color: { [key: string]: string };
     const maxChar: number = Math.max(
         ...values.map((tile) => tile.value.length)
     );
 </script>
 
-<div
-    style="background-color: {values[0].color
-        ? values[0].color
-        : 'rgba(0, 0, 0, 0)'}"
->
+<div style="background-color: {color[values[0].user]}">
     <h1>{title}</h1>
     <ul>
         {#each values as { user, value }}
