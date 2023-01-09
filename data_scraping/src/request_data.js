@@ -48,7 +48,7 @@ function delay(milliseconds) {
     // Select time period
     await page.click('[aria-label="Période (obligatoire)"]');
     await page.evaluate(() => {
-        [...document.querySelectorAll('span')].find(element => element.textContent === 'Semaine dernière').click();
+        [...document.querySelectorAll('span')].find(element => element.textContent === 'Mois dernier').click();
     });
 
     // Unselect everything

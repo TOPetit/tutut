@@ -10,7 +10,7 @@ const fct = async () => {
         const item = result.files[key];
         item.name = 'downloads/' + item.name;
         if (item.dir) {
-            mkdirSync(item.name);
+            mkdirSync(item.name, { recursive: true });
         }
         else {
             writeFileSync(item.name, Buffer.from(await item.async('arraybuffer')));
