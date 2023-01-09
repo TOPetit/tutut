@@ -22,9 +22,20 @@ Optional parameters are:
     const maxChar: number = Math.max(
         ...values.map((tile) => tile.value.length)
     );
+    let highlight: boolean = false;
 </script>
 
-<div style="background-color: {color[values[0].user]}">
+<div
+    style="background-color: {highlight
+        ? color[values[0].user]
+        : 'rgba(240, 240, 240)'}"
+    on:mouseenter={() => {
+        highlight = true;
+    }}
+    on:mouseleave={() => {
+        highlight = false;
+    }}
+>
     <h1>{title}</h1>
     <ul>
         {#each values as { user, value }}
@@ -50,15 +61,14 @@ Optional parameters are:
         flex-direction: column;
         gap: 10px;
         justify-content: center;
-        opacity: 0.9;
         border: 2px solid rgba(0, 0, 0, 0.2);
         transition: all ease 0.3s;
     }
 
     div:hover {
-        opacity: 1;
         stroke-opacity: 1;
         border: 2px solid rgba(0, 0, 0, 1);
+        scale: 1.05;
     }
 
     h1 {
