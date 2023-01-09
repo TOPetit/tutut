@@ -3,9 +3,9 @@ import { resolve } from "path";
 import { Tile } from "../Components/components";
 
 const standard_colors: { [key: string]: string } = {
-    "Théo": "#d2ddee",
+    "Théo": "#dfe7fe",
     "Matthieu": "#e6f1e1",
-    "Jodie": "#efbcc0"
+    "Jodie": "#ffdede"
 }
 
 export class Writer {
