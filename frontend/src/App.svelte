@@ -6,11 +6,21 @@
   import PieChart from "./components/charts/pie/PieChart.svelte";
   import BarChart from "./components/charts/bar/BarChart.svelte";
   import data from "../../data_generator/build/Data/data.json";
+
+  const tututs_per_day = data.charts.bar["Tututs par jour de la semaine"];
+  console.log(tututs_per_day);
 </script>
 
 <div class="page">
   <Title content="Stutustiques du Voyage au centre de la terre" />
   <TileContainer tiles={data.tiles} color={data.color} />
+  <!-- <BarChart
+    width={1000}
+    height={1000}
+    data={tututs_per_day.data.data}
+    labels={tututs_per_day.data.labels}
+    color={data.color}
+  /> -->
   <BarChart />
   <PieChart />
 </div>
