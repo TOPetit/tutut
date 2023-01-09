@@ -2,6 +2,12 @@ import { writeFileSync } from "fs";
 import { resolve } from "path";
 import { Tile } from "../Components/components";
 
+const standard_colors: { [key: string]: string } = {
+    "Théo": "#d2ddee",
+    "Matthieu": "#e6f1e1",
+    "Jodie": "#efbcc0"
+}
+
 export class Writer {
     private participants: string[] = [];
     private color: { [key: string]: string } = {};
@@ -9,7 +15,7 @@ export class Writer {
     public constructor(participants: string[]) {
         this.participants = participants;
         participants.forEach((user) => {
-            this.color[user] = this.getRandomHexColor()
+            this.color[user] = standard_colors[user] ? standard_colors[user] : this.color[user] = this.getRandomHexColor()
         })
     }
 
