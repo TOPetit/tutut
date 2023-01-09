@@ -4,12 +4,12 @@ import { Tile } from "../Components/components";
 
 export class Writer {
     private participants: string[] = [];
-    private colors: { [key: string]: string } = {};
+    private color: { [key: string]: string } = {};
     private tiles: Tile[] = [];
     public constructor(participants: string[]) {
         this.participants = participants;
         participants.forEach((user) => {
-            this.colors[user] = this.getRandomHexColor()
+            this.color[user] = this.getRandomHexColor()
         })
     }
 
