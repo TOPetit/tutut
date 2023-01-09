@@ -8,7 +8,7 @@
 
 <style>
     div {
-        width: 80%;
+        width: 98%;
         margin: auto;
         background-color: rgba(240, 240, 240);
         padding: 5px;

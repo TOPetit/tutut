@@ -54,7 +54,7 @@ Optional parameters are:
         min-width: 250px;
         min-height: 120px;
         background-color: #334756;
-        border-radius: 5px;
+        border-radius: 10px;
         transition: box-shadow 0.3s ease-in-out;
         cursor: pointer;
         display: flex;
