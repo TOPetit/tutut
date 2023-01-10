@@ -20,6 +20,8 @@ class Message {
     public content: string;
     public reactions: Reaction[];
 
+    public date: Date;
+
     public constructor(obj: ObjMessage) {
         this.sender = obj.sender;
         this.timestamp = obj.timestamp;
@@ -28,6 +30,8 @@ class Message {
         obj.reactions.forEach(element => {
             this.reactions.push(new Reaction(element));
         });
+        this.date = new Date(this.timestamp);
+        this.date.toLocaleString('fr-FR', { timeZone: 'Europe/Paris' });
     }
 
     /**
@@ -38,10 +42,7 @@ class Message {
         if (this.content.toLowerCase() != 'tutut') {
             return false; // This is not a tutut.
         }
-        const timezone = 'Europe/Paris';
-        const date = new Date(this.timestamp);
-        date.toLocaleString('fr-FR', { timeZone: timezone });
-        return (date.getHours() == date.getMinutes());
+        return (this.date.getHours() == this.date.getMinutes());
     }
 }
 

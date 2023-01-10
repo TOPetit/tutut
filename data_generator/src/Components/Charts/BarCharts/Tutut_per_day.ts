@@ -8,8 +8,7 @@ function compute(data: Data): { data: BarChartData, labels: string[] } {
     })
     data.messages.forEach(message => {
         if (message.isCorrectTutut()) {
-            const date = new Date(message.timestamp * 1000);
-            const dayOfWeek = date.getDay();
+            const dayOfWeek = message.date.getDay();
             tmp_ChartData[message.sender][dayOfWeek == 0 ? 6 : dayOfWeek - 1] += 1;
         }
     })
