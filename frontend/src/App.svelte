@@ -11,7 +11,10 @@
   let width: number = 300;
   let height: number = 1080;
 
-  const tututs_per_day = data.charts.bar["Tututs par jour de la semaine"];
+  const tututs_per_day =
+    data.charts.bar["Fréquence des tututs dans la semaine"];
+  const tututs_per_second =
+    data.charts.bar["Fréquence des tututs dans la minute"];
 </script>
 
 <div class="page" bind:clientWidth={width} bind:clientHeight={height}>
@@ -22,6 +25,13 @@
     height={500}
     data={tututs_per_day.data.data}
     labels={tututs_per_day.data.labels}
+    color={data.color}
+  />
+  <StackedBarChart
+    width={0.9 * width}
+    height={500}
+    data={tututs_per_second.data.data}
+    labels={tututs_per_second.data.labels}
     color={data.color}
   />
   <BarChart />
