@@ -48,9 +48,7 @@ Optional parameters are:
 
     const allData: number[] = data.flatMap((item) => item.data);
     const data_max: number = Math.max(...allData);
-    const yScaling: number = Math.floor(
-        (height - margins.bottom - margins.top) / data_max
-    );
+    const yScaling: number = (height - margins.bottom - margins.top) / data_max;
 
     const length: number = data[0].data.length;
 
