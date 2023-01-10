@@ -3,6 +3,7 @@
     export let data: { user: string; data: number[] }[];
     export let color: { [key: string]: string };
     export let selected_user: string;
+    export let display_user: string[];
 
     let legend_size: number = 400;
     let gap: number = 20;
@@ -13,6 +14,7 @@
 
 <g transform="translate({width / 2 - legend_size / 2}, {5})">
     {#each data as user, i}
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
         <g
             class="element"
             opacity={selected_user ? (selected_user == user.user ? 1 : 0.5) : 1}
@@ -28,6 +30,15 @@
             on:blur={() => {
                 selected_user = null;
             }}
+            on:click={() => {
+                if (display_user.includes(user.user)) {
+                    display_user = display_user.filter(
+                        (elem) => elem !== user.user
+                    );
+                } else {
+                    display_user = [...display_user, user.user];
+                }
+            }}
         >
             <rect
                 x={i * (element_size + gap)}
@@ -41,7 +52,10 @@
                 x={i * (element_size + gap) + rect_size.dx + 5}
                 y={0}
                 dy={15}
-                fill="#555555">{user.user}</text
+                fill="#555555"
+                style="text-decoration: {display_user.includes(user.user)
+                    ? 'none'
+                    : 'line-through'}">{user.user}</text
             >
         </g>
     {/each}

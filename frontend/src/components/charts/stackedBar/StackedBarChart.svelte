@@ -36,17 +36,46 @@ Optional parameters are:
 
     export let labels: string[] = ["01/01/2023", "02/01/2023", "03/01/2023"];
 
+    const length: number = data[0].data.length;
     const margins = { left: 70, top: 40, right: 10, bottom: 25 };
 
-    let allData: number[] = data
-        .map((x) => x.data)
-        .reduce((acc, val) => {
-            return acc.map((a, i) => a + val[i]);
-        }, Array(data[0].data.length).fill(0));
-    const data_max: number = Math.max(...allData);
-    const yScaling: number = (height - margins.bottom - margins.top) / data_max;
+    let display_user: string[] = data.map((element) => element.user);
 
-    const length: number = data[0].data.length;
+    function getData(
+        data: { user: string; data: number[] }[],
+        display_user: string[]
+    ): { user: string; value: number }[][] {
+        let result: { user: string; value: number }[][] = [];
+        for (let i = 0; i < length; i++) {
+            let tmp: { user: string; value: number }[] = [];
+            data.forEach((element) => {
+                if (display_user.includes(element.user)) {
+                    tmp.push({
+                        user: element.user,
+                        value: element.data[i],
+                    });
+                }
+            });
+            result.push(tmp);
+        }
+        return result;
+    }
+
+    let formatted_data: { user: string; value: number }[][] = getData(
+        data,
+        display_user
+    );
+    $: formatted_data = getData(data, display_user);
+
+    let data_max: number;
+    $: data_max = Math.max(
+        ...formatted_data
+            .map((element) => element.map((element2) => element2.value))
+            .map((element) => element.reduce((acc, curr) => acc + curr, 0))
+    );
+
+    let yScaling: number;
+    $: yScaling = (height - margins.bottom - margins.top) / data_max;
 
     let gap: number; // gap between bars
     $: gap = width / (40 * Math.sqrt(length));
@@ -54,18 +83,6 @@ Optional parameters are:
     let bar_width: number;
     $: bar_width =
         (width - margins.left - margins.right - length * gap) / length;
-
-    let formatted_data: { user: string; value: number }[][] = [];
-    for (let i = 0; i < length; i++) {
-        let tmp: { user: string; value: number }[] = [];
-        data.forEach((element) => {
-            tmp.push({
-                user: element.user,
-                value: element.data[i],
-            });
-        });
-        formatted_data.push(tmp);
-    }
 
     let selected_user: string;
     let hovered_data: { user: string; value: number; x: number; y: number };
@@ -81,7 +98,7 @@ Optional parameters are:
     >
         <XAxis {width} {height} {labels} {margins} {gap} {bar_width} />
         <YAxis {width} {height} {data_max} {margins} {yScaling} />
-        <Legend {width} {data} {color} bind:selected_user />
+        <Legend {width} {data} {color} bind:selected_user bind:display_user />
         {#each formatted_data as stackedBar, i}
             <StackedBar
                 {stackedBar}
