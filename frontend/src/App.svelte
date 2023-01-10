@@ -3,8 +3,7 @@
   import "./style/body.css";
   import Title from "./lib/Title.svelte";
   import TileContainer from "./components/tile/TileContainer.svelte";
-  import PieChart from "./components/charts/pie/PieChart.svelte";
-  import BarChart from "./components/charts/bar/BarChart.svelte";
+  import LineChart from "./components/charts/line/LineChart.svelte";
   import StackedBarChart from "./components/charts/stackedBar/StackedBarChart.svelte";
   import data from "../../data_generator/build/Data/data.json";
 
@@ -35,6 +34,14 @@
     labels={tututs_per_second.data.labels}
     color={data.color}
     name={tututs_per_second.name}
+  />
+  <LineChart
+    width={0.9 * width}
+    height={500}
+    data={tututs_per_day.data.data}
+    labels={tututs_per_day.data.labels}
+    color={data.color}
+    name={tututs_per_day.name}
   />
 </div>
 
