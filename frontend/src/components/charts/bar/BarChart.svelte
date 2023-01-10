@@ -82,49 +82,57 @@ Optional parameters are:
     let hovered_data: { user: string; value: number; x: number; y: number };
 </script>
 
-<svg
-    {height}
-    {width}
-    on:mouseleave={() => {
-        hovered_data = null;
-    }}
->
-    <XAxis
-        {width}
+<div>
+    <svg
         {height}
-        {labels}
-        {margins}
-        {small_gap}
-        {gap}
-        {bar_width}
-        nb_users={data.length}
-    />
-    <YAxis {width} {height} {data_max} {margins} {yScaling} />
-    <Legend {width} {data} {color} bind:selected_user />
-    {#each formatted_data as barGroup, i}
-        {#each barGroup as bar, j}
-            <Bar
-                {bar}
-                {color}
-                x={margins.left +
-                    gap +
-                    bar_width * (data.length * i + j) +
-                    i * gap +
-                    ((data.length - 1) * i + j) * small_gap}
-                y={height - margins.bottom - yScaling * bar.value}
-                width={bar_width}
-                height={yScaling * bar.value}
-                bind:selected_user
-                bind:hovered_data
-            />
+        {width}
+        on:mouseleave={() => {
+            hovered_data = null;
+        }}
+    >
+        <XAxis
+            {width}
+            {height}
+            {labels}
+            {margins}
+            {small_gap}
+            {gap}
+            {bar_width}
+            nb_users={data.length}
+        />
+        <YAxis {width} {height} {data_max} {margins} {yScaling} />
+        <Legend {width} {data} {color} bind:selected_user />
+        {#each formatted_data as barGroup, i}
+            {#each barGroup as bar, j}
+                <Bar
+                    {bar}
+                    {color}
+                    x={margins.left +
+                        gap +
+                        bar_width * (data.length * i + j) +
+                        i * gap +
+                        ((data.length - 1) * i + j) * small_gap}
+                    y={height - margins.bottom - yScaling * bar.value}
+                    width={bar_width}
+                    height={yScaling * bar.value}
+                    bind:selected_user
+                    bind:hovered_data
+                />
+            {/each}
         {/each}
-    {/each}
-</svg>
-{#if hovered_data}
-    <Tooltip
-        user={hovered_data.user}
-        value={hovered_data.value}
-        x={hovered_data.x}
-        y={hovered_data.y}
-    />
-{/if}
+    </svg>
+    {#if hovered_data}
+        <Tooltip
+            user={hovered_data.user}
+            value={hovered_data.value}
+            x={hovered_data.x}
+            y={hovered_data.y}
+        />
+    {/if}
+</div>
+
+<style>
+    div {
+        position: relative;
+    }
+</style>
