@@ -47,7 +47,9 @@ Optional parameters are:
     const yScaling: number = (height - margins.bottom - margins.top) / data_max;
 
     const length: number = data[0].data.length;
-    const gap: number = 15; // gap between bars
+
+    let gap: number; // gap between bars
+    $: gap = width / (40 * Math.sqrt(length));
 
     let bar_width: number;
     $: bar_width =
