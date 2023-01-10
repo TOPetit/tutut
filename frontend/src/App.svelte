@@ -36,8 +36,6 @@
     color={data.color}
     name={tututs_per_second.name}
   />
-  <BarChart />
-  <PieChart />
 </div>
 
 <style>
