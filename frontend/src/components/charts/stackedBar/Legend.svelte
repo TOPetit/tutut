@@ -41,16 +41,16 @@
             }}
         >
             <rect
-                x={i * (element_size + gap)}
-                y={0}
+                x={i * (element_size + gap) + 20}
+                y={35}
                 width={rect_size.dx}
                 height={rect_size.dy}
                 stroke="black"
                 fill={color[user.user]}
             />
             <text
-                x={i * (element_size + gap) + rect_size.dx + 5}
-                y={0}
+                x={i * (element_size + gap) + rect_size.dx + 25}
+                y={35}
                 dy={15}
                 fill="#555555"
                 style="text-decoration: {display_user.includes(user.user)
@@ -65,5 +65,8 @@
     .element {
         transition: all 300ms ease;
         cursor: pointer;
+    }
+    * {
+        outline: none;
     }
 </style>

@@ -26,6 +26,7 @@
     data={tututs_per_day.data.data}
     labels={tututs_per_day.data.labels}
     color={data.color}
+    name={tututs_per_day.name}
   />
   <StackedBarChart
     width={0.9 * width}
@@ -33,6 +34,7 @@
     data={tututs_per_second.data.data}
     labels={tututs_per_second.data.labels}
     color={data.color}
+    name={tututs_per_second.name}
   />
   <BarChart />
   <PieChart />

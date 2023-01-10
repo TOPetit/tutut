@@ -19,6 +19,7 @@ Optional parameters are:
     import Tooltip from "./Tooltip.svelte";
     import Legend from "./Legend.svelte";
     import StackedBar from "./StackedBar.svelte";
+    import Title from "./Title.svelte";
     export let width: number = 700;
     export let height: number = 400;
 
@@ -35,9 +36,10 @@ Optional parameters are:
     };
 
     export let labels: string[] = ["01/01/2023", "02/01/2023", "03/01/2023"];
+    export let name: string;
 
     const length: number = data[0].data.length;
-    const margins = { left: 70, top: 40, right: 10, bottom: 25 };
+    const margins = { left: 70, top: 70, right: 20, bottom: 25 };
 
     let display_user: string[] = data.map((element) => element.user);
 
@@ -113,6 +115,7 @@ Optional parameters are:
                 bind:hovered_data
             />
         {/each}
+        <Title {name} {width} />
     </svg>
     {#if hovered_data}
         <Tooltip
@@ -127,5 +130,6 @@ Optional parameters are:
 <style>
     div {
         position: relative;
+        border: 1px solid black;
     }
 </style>

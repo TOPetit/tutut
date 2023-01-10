@@ -22,7 +22,7 @@
     <line
         x1={margins.left / 2}
         y1={height - margins.bottom}
-        x2={width}
+        x2={width - margins.right / 2}
         y2={height - margins.bottom}
         stroke="#cecece"
     />
