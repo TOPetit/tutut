@@ -41,7 +41,7 @@
             stroke={"#eeeeee"}
         />
         <text
-            x={margins.left - 15}
+            x={margins.left - 25}
             y={tick.value + 4}
             fill="#aeaeae"
             text-anchor="middle">{tick.label}</text

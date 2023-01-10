@@ -14,10 +14,8 @@
     const length: number = labels.length;
 
     let ticks: number[] = [];
-    const tick_gap: number = bar_width + gap;
-    for (let i = 0; i < length; i++) {
-        ticks.push(margins.left + gap / 2 + (0.5 + i) * tick_gap);
-    }
+    let tick_gap: number;
+    $: tick_gap = bar_width + gap;
 </script>
 
 <g>
@@ -28,12 +26,18 @@
         y2={height - margins.bottom}
         stroke="#cecece"
     />
-    {#each ticks as tick, i}
+    {#each labels as label, i}
         <text
-            x={tick}
+            x={margins.left + gap / 2 + (0.5 + i) * tick_gap}
             y={height - margins.bottom + 16}
             fill={"#aeaeae"}
-            text-anchor="middle">{labels[i]}</text
+            text-anchor="middle">{label}</text
         >
     {/each}
 </g>
+
+<style>
+    * {
+        transition: all ease 0.3s;
+    }
+</style>

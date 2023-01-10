@@ -8,15 +8,17 @@
   import StackedBarChart from "./components/charts/stackedBar/StackedBarChart.svelte";
   import data from "../../data_generator/build/Data/data.json";
 
+  let width: number = 300;
+  let height: number = 1080;
+
   const tututs_per_day = data.charts.bar["Tututs par jour de la semaine"];
 </script>
 
-<div class="page">
+<div class="page" bind:clientWidth={width} bind:clientHeight={height}>
   <Title content="Stutustiques du Voyage au centre de la terre" />
-  <StackedBarChart />
   <TileContainer tiles={data.tiles} color={data.color} />
-  <BarChart
-    width={1000}
+  <StackedBarChart
+    width={0.9 * width}
     height={500}
     data={tututs_per_day.data.data}
     labels={tututs_per_day.data.labels}

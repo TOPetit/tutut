@@ -36,17 +36,34 @@ Optional parameters are:
 
     export let labels: string[] = ["01/01/2023", "02/01/2023", "03/01/2023"];
 
-    const margins = { left: 40, top: 40, right: 10, bottom: 25 };
+    const margins = { left: 70, top: 40, right: 10, bottom: 25 };
 
-    const allData: number[] = data.flatMap((item) => item.data);
+    let allData: number[] = data
+        .map((x) => x.data)
+        .reduce((acc, val) => {
+            return acc.map((a, i) => a + val[i]);
+        }, Array(data[0].data.length).fill(0));
     const data_max: number = Math.max(...allData);
     const yScaling: number = (height - margins.bottom - margins.top) / data_max;
 
     const length: number = data[0].data.length;
     const gap: number = 15; // gap between bars
 
-    const bar_width: number =
+    let bar_width: number;
+    $: bar_width =
         (width - margins.left - margins.right - length * gap) / length;
+
+    let formatted_data: { user: string; value: number }[][] = [];
+    for (let i = 0; i < length; i++) {
+        let tmp: { user: string; value: number }[] = [];
+        data.forEach((element) => {
+            tmp.push({
+                user: element.user,
+                value: element.data[i],
+            });
+        });
+        formatted_data.push(tmp);
+    }
 
     let selected_user: string;
     let hovered_data: { user: string; value: number; x: number; y: number };
@@ -63,6 +80,20 @@ Optional parameters are:
         <XAxis {width} {height} {labels} {margins} {gap} {bar_width} />
         <YAxis {width} {height} {data_max} {margins} {yScaling} />
         <Legend {width} {data} {color} bind:selected_user />
+        {#each formatted_data as stackedBar, i}
+            <StackedBar
+                {stackedBar}
+                {i}
+                {color}
+                {margins}
+                {gap}
+                {height}
+                {bar_width}
+                {yScaling}
+                bind:selected_user
+                bind:hovered_data
+            />
+        {/each}
     </svg>
     {#if hovered_data}
         <Tooltip
