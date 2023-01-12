@@ -1,9 +1,4 @@
-const puppeteer = require('puppeteer-extra')
-const StealthPlugin = require('puppeteer-extra-plugin-stealth')
-puppeteer.use(StealthPlugin())
-const AdblockerPlugin = require('puppeteer-extra-plugin-adblocker')
-puppeteer.use(AdblockerPlugin({ blockTrackers: true }))
-const { executablePath } = require('puppeteer')
+import { launch } from 'puppeteer';
 
 const file_URL = "https://www.facebook.com/dyi/";
 
@@ -12,7 +7,7 @@ function delay(milliseconds) {
 }
 
 (async () => {
-    const browser = await puppeteer.launch({ headless: true, executablePath: executablePath() });
+    const browser = await launch({ headless: true });
     const context = browser.defaultBrowserContext();
     context.overridePermissions("https://www.facebook.com", ["geolocation", "notifications"]);
     const page = await browser.newPage();
