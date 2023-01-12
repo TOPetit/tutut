@@ -1,4 +1,7 @@
-const fs = require('fs')
+import { readFileSync, writeFileSync } from 'fs';
+import { parseJSON } from './utils.js';
+
+const content = parseJSON('downloads/messages/inbox/safespacevoyageaucentredelaterre_4567795139935838/message_1.json')
 
 var sanitized_data = {
     messages: []
@@ -43,7 +46,7 @@ const fct = async () => {
     })
     const jsonData = JSON.stringify(sanitized_data);
 
-    fs.writeFileSync('downloads/output.json', jsonData, 'utf8', (err) => {
+    writeFileSync('downloads/output.json', jsonData, 'utf8', (err) => {
         if (err) {
             console.error(err);
             return;
@@ -135,29 +138,6 @@ function generateKeyboard(layout) {
     }
 
     return keyboard;
-}
-
-function decode(s) {
-    let d = new TextDecoder;
-    let a = s.split('').map(r => r.charCodeAt());
-    return d.decode(new Uint8Array(a));
-}
-
-function decodeObject(obj) {
-    for (const key in obj) {
-        if (typeof obj[key] === 'string') {
-            obj[key] = decode(obj[key]);
-        } else if (typeof obj[key] === 'object') {
-            decodeObject(obj[key]);
-        }
-    }
-}
-
-function parseJSON(path) {
-    const fileContent = fs.readFileSync(path, 'latin1');
-    const content = JSON.parse(fileContent);
-    decodeObject(content);
-    return content;
 }
 
 fct()
