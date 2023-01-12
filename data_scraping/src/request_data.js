@@ -12,7 +12,7 @@ function delay(milliseconds) {
 }
 
 (async () => {
-    const browser = await puppeteer.launch({ headless: true, executablePath: executablePath() });
+    const browser = await puppeteer.launch({ headless: false, executablePath: executablePath() });
     const context = browser.defaultBrowserContext();
     context.overridePermissions("https://www.facebook.com", ["geolocation", "notifications"]);
     const page = await browser.newPage();
