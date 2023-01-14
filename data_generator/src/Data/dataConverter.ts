@@ -5,7 +5,7 @@ type ObjReaction = { emoji: string, sender: string };
 type ObjMessage = { sender: string, timestamp: number, content: string, reactions: ObjReaction[] };
 type ObjData = { participants: string[], messages: ObjMessage[] }
 
-class Reaction {
+export class Reaction {
     public emoji: string;
     public sender: string;
     public constructor(obj: ObjReaction) {
@@ -14,13 +14,13 @@ class Reaction {
     }
 }
 
-class Message {
+export class Message {
     public sender: string;
     public timestamp: number;
     public content: string;
     public reactions: Reaction[];
-
     public date: Date;
+    public formattedDate: string;
 
     public constructor(obj: ObjMessage) {
         this.sender = obj.sender;
@@ -32,6 +32,7 @@ class Message {
         });
         this.date = new Date(this.timestamp);
         this.date.toLocaleString('fr-FR', { timeZone: 'Europe/Paris' });
+        this.formattedDate = String(this.date.getDate()).padStart(2, '0') + '.' + String(this.date.getMonth() + 1).padStart(2, '0') + '.' + String(this.date.getFullYear()).padStart(4, '0') + ' ' + String(this.date.getHours()).padStart(2, '0') + ':' + String(this.date.getMinutes()).padStart(2, '0') + ':' + String(this.date.getSeconds()).padStart(2, '0') + "." + String(this.date.getMilliseconds()).padStart(3, '0');
     }
 
     /**
@@ -43,6 +44,10 @@ class Message {
             return false; // This is not a tutut.
         }
         return (this.date.getHours() == this.date.getMinutes());
+    }
+
+    public getSecMilli(): number {
+        return this.date.getMilliseconds() / 1000 + this.date.getSeconds()
     }
 }
 

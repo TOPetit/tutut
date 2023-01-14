@@ -1,6 +1,7 @@
 import { writeFileSync } from "fs";
 import { resolve } from "path";
 import { Tile, Chart, BarChart, ChartType } from "../Components/components";
+import { Top } from "../Components/Tops/Top";
 
 const standard_colors: { [key: string]: string } = {
     "Théo": "#dfe7fe",
@@ -13,6 +14,7 @@ export class Writer {
     private color: { [key: string]: string } = {};
     private tiles: Tile[] = [];
     private charts: { bar: { [key: string]: BarChart } } = { bar: {} };
+    private tops: { [key: string]: Top } = {};
     public constructor(participants: string[]) {
         this.participants = participants;
         participants.forEach((user) => {
@@ -25,19 +27,15 @@ export class Writer {
     }
 
     public addTile(tile: Tile | Tile[]): void {
-        if (tile instanceof Tile) {
-            tile = [tile];
-        }
-        tile.forEach(element => {
+        let temp: Tile[] = tile instanceof Tile ? [tile] : tile;
+        temp.forEach(element => {
             this.tiles.push(element);
         })
     }
 
     public addChart(chart: Chart | Chart[]): void {
-        if (chart instanceof Chart) {
-            chart = [chart]
-        }
-        chart.forEach(element => {
+        let temp: Chart[] = chart instanceof Chart ? [chart] : chart;
+        temp.forEach(element => {
             switch (element.type) {
                 case ChartType.BAR:
                     this.charts.bar[element.name] = element as BarChart;
@@ -46,6 +44,13 @@ export class Writer {
                 default:
                     break;
             }
+        })
+    }
+
+    public addTop(top: Top | Top[]): void {
+        let temp: Top[] = top instanceof Top ? [top] : top;
+        temp.forEach(element => {
+            this.tops[element.name] = element;
         })
     }
 
