@@ -31,6 +31,7 @@ jobs:
         run: npm run generate:data
 
   Deployement:
+    needs: Generation
     runs-on: ubuntu-latest
     defaults:
       run:
