@@ -1,5 +1,6 @@
 import { readFileSync } from "fs";
 import { resolve } from "path";
+import moment, { Moment } from 'moment-timezone';
 
 type ObjReaction = { emoji: string, sender: string };
 type ObjMessage = { sender: string, timestamp: number, content: string, reactions: ObjReaction[] };
@@ -19,7 +20,7 @@ export class Message {
     public timestamp: number;
     public content: string;
     public reactions: Reaction[];
-    public date: Date;
+    public date: Moment;
     public formattedDate: string;
 
     public constructor(obj: ObjMessage) {
@@ -30,10 +31,8 @@ export class Message {
         obj.reactions.forEach(element => {
             this.reactions.push(new Reaction(element));
         });
-        this.date = new Date(this.timestamp);
-        this.date.toLocaleString('fr-FR', { timeZone: 'Europe/Paris' });
-        this.date.setHours(this.date.getHours() + 1);
-        this.formattedDate = String(this.date.getDate()).padStart(2, '0') + '.' + String(this.date.getMonth() + 1).padStart(2, '0') + '.' + String(this.date.getFullYear()).padStart(4, '0') + ' ' + String(this.date.getHours()).padStart(2, '0') + ':' + String(this.date.getMinutes()).padStart(2, '0') + ':' + String(this.date.getSeconds()).padStart(2, '0') + "." + String(this.date.getMilliseconds()).padStart(3, '0');
+        this.date = moment(this.timestamp, 'x').tz("Europe/Paris");
+        this.formattedDate = String(this.date.day()).padStart(2, '0') + '.' + String(this.date.month() + 1).padStart(2, '0') + '.' + String(this.date.year()).padStart(4, '0') + ' ' + String(this.date.hour()).padStart(2, '0') + ':' + String(this.date.minute()).padStart(2, '0') + ':' + String(this.date.second()).padStart(2, '0') + "." + String(this.date.millisecond()).padStart(3, '0');
     }
 
     /**
@@ -44,11 +43,11 @@ export class Message {
         if (this.content.toLowerCase() != 'tutut') {
             return false; // This is not a tutut.
         }
-        return (this.date.getHours() == this.date.getMinutes());
+        return (this.date.hour() == this.date.minute());
     }
 
     public getSecMilli(): number {
-        return this.date.getMilliseconds() / 1000 + this.date.getSeconds()
+        return this.date.millisecond() / 1000 + this.date.second()
     }
 }
 

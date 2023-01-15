@@ -8,7 +8,7 @@ function compute(data: Data): { data: BarChartData, labels: string[] } {
     })
     data.messages.forEach(message => {
         if (message.isCorrectTutut()) {
-            const seconds = message.date.getSeconds();
+            const seconds = message.date.second();
             tmp_ChartData[message.sender][seconds] += 1;
         }
     })
