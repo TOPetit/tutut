@@ -35,37 +35,37 @@ jobs:
           name: data
           path: ./build/Data/data.json
 
-  Deployement:
-    needs: Generation
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./frontend
-    steps:
+  # Deployement:
+  #   needs: Generation
+  #   runs-on: ubuntu-latest
+  #   defaults:
+  #     run:
+  #       working-directory: ./frontend
+  #   steps:
 
-      - name: Checkout
-        uses: actions/checkout@v3
+  #     - name: Checkout
+  #       uses: actions/checkout@v3
 
-      - uses: actions/download-artifact@v2
-        with:
-          name: data
-          path: ../data_generator/build/Data/
+  #     - uses: actions/download-artifact@v2
+  #       with:
+  #         name: data
+  #         path: ../data_generator/build/Data/
 
-      - name: Install dependencies
-        run: npm i
+  #     - name: Install dependencies
+  #       run: npm i
 
-      - name: Generating data
-        run: npm run build
+  #     - name: Generating data
+  #       run: npm run build
       
-      - name: Setup Pages
-        uses: actions/configure-pages@v2
+  #     - name: Setup Pages
+  #       uses: actions/configure-pages@v2
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
-        with:
-          # Upload only fronted/ folder
-          path: './dist/'
+  #     - name: Upload artifact
+  #       uses: actions/upload-pages-artifact@v1
+  #       with:
+  #         # Upload only fronted/ folder
+  #         path: './dist/'
 
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v1
+  #     - name: Deploy to GitHub Pages
+  #       id: deployment
+  #       uses: actions/deploy-pages@v1
