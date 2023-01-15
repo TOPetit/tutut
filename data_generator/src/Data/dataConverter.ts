@@ -31,7 +31,8 @@ export class Message {
             this.reactions.push(new Reaction(element));
         });
         this.date = new Date(this.timestamp);
-        this.date.setHours(this.date.getHours() + 2);
+        this.date.toLocaleString('fr-FR', { timeZone: 'Europe/Paris' });
+        this.date.setHours(this.date.getHours() + 1);
         this.formattedDate = String(this.date.getDate()).padStart(2, '0') + '.' + String(this.date.getMonth() + 1).padStart(2, '0') + '.' + String(this.date.getFullYear()).padStart(4, '0') + ' ' + String(this.date.getHours()).padStart(2, '0') + ':' + String(this.date.getMinutes()).padStart(2, '0') + ':' + String(this.date.getSeconds()).padStart(2, '0') + "." + String(this.date.getMilliseconds()).padStart(3, '0');
     }
 
