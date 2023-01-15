@@ -71,7 +71,6 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
-          # Upload only fronted/ folder
           path: './frontend/dist/'
 
       - name: Deploy to GitHub Pages
