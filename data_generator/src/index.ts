@@ -8,6 +8,8 @@ import { top_first_tututs } from "./Components/Tops/first_tututs";
 import { Writer } from "./Data/dataWriter";
 import { data } from "./Data/dataConverter";
 
+console.log(`Found ${data.messages.length} messages and ${data.participants.length} users.`)
+
 const writer = new Writer(data.participants);
 writer.addTile([Tiles.number_of_tutut, Tiles.number_of_errors, Tiles.slowest_tutut, Tiles.fastest_tutut, Tiles.average_tutut_time, Tiles.number_of_blue_hearts]);
 writer.addChart([chart_tutut_per_day, chart_tutut_per_minute]);
