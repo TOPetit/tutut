@@ -1,0 +1,16 @@
+name: Test
+
+on:
+  release:
+    types: created
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  # Data generation job
+  Generation:
+    if: contains('Deploy', GITHUB_REF)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Say Hi
+        run: echo "Hi !"
