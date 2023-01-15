@@ -14,7 +14,7 @@ export class Writer {
     private color: { [key: string]: string } = {};
     private tiles: Tile[] = [];
     private charts: { bar: { [key: string]: BarChart } } = { bar: {} };
-    private tops: { [key: string]: Top } = {};
+    private tops: Top[] = [];
     public constructor(participants: string[]) {
         this.participants = participants;
         participants.forEach((user) => {
@@ -50,7 +50,7 @@ export class Writer {
     public addTop(top: Top | Top[]): void {
         let temp: Top[] = top instanceof Top ? [top] : top;
         temp.forEach(element => {
-            this.tops[element.name] = element;
+            this.tops.push(element);
         })
     }
 

@@ -5,6 +5,7 @@
   import TileContainer from "./components/tile/TileContainer.svelte";
   import LineChart from "./components/charts/line/LineChart.svelte";
   import StackedBarChart from "./components/charts/stackedBar/StackedBarChart.svelte";
+  import Top from "./components/tops/Top.svelte";
   import data from "../../data_generator/build/Data/data.json";
 
   let width: number = 300;
@@ -43,6 +44,7 @@
     color={data.color}
     name={tututs_per_day.name}
   />
+  <Top width={0.9 * width} tops={data.tops} color={data.color} />
 </div>
 
 <style>

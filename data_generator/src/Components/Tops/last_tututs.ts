@@ -20,7 +20,7 @@ function last_tututs(data: Data, nb: number): Message[] {
             result.sort(compareMessage);
         }
     })
-    return result
+    return result.reverse();
 }
 
-export let top_last_tututs = new Top("Last 10 tututs", last_tututs(data, 10));
+export let top_last_tututs = new Top("Derniers", last_tututs(data, 10));

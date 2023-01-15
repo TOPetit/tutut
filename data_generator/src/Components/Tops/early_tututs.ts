@@ -20,7 +20,7 @@ function early_tututs(data: Data, nb: number): Message[] {
             result.sort(compareMessage);
         }
     })
-    return result
+    return result.reverse();
 }
 
-export let top_early_tututs = new Top("10 earliest tututs", early_tututs(data, 10));
+export let top_early_tututs = new Top("Tôts", early_tututs(data, 10));
