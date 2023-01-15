@@ -53,7 +53,9 @@ jobs:
           name: data
 
       - name: Check artifact
-        run: ls ../data_generator/build/Data/
+        run: |
+          pwd
+          ls ../data_generator/build/Data/
 
       - name: Install dependencies
         run: npm i
