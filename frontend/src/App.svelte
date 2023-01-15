@@ -36,14 +36,14 @@
     color={data.color}
     name={tututs_per_second.name}
   />
-  <LineChart
+  <!-- <LineChart
     width={0.9 * width}
     height={500}
     data={tututs_per_day.data.data}
     labels={tututs_per_day.data.labels}
     color={data.color}
     name={tututs_per_day.name}
-  />
+  /> -->
   <Top width={0.9 * width} tops={data.tops} color={data.color} />
 </div>
 
@@ -55,6 +55,6 @@
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
+    gap: 20px;
   }
 </style>
