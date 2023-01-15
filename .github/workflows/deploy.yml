@@ -71,7 +71,7 @@ jobs:
         uses: actions/upload-pages-artifact@v1
         with:
           # Upload only fronted/ folder
-          path: './dist/'
+          path: './frontend/dist/'
 
       - name: Deploy to GitHub Pages
         id: deployment
