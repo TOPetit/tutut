@@ -9,8 +9,7 @@ on:
 jobs:
   # Data generation job
   Generation:
-    if: contains('Deploy', GITHUB_REF)
     runs-on: ubuntu-latest
     steps:
       - name: Say Hi
-        run: echo "Hi !"
+        run: echo ${{GITHUB_REF}}
