@@ -63,7 +63,7 @@ jobs:
         run: npm i
 
       - name: Generating data
-        run: npm run build
+        run: npm run build -- --base=/tutut/
       
       - name: Setup Pages
         uses: actions/configure-pages@v2
