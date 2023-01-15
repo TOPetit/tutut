@@ -30,7 +30,8 @@ jobs:
       - name: Generating data
         run: npm run generate:data
 
-      - uses: actions/upload-artifact@v2
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
         with:
           name: data
           path: ./data_generator/build/Data/data.json
@@ -46,9 +47,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - uses: actions/download-artifact@v2
+      - name: Download artifact
+        uses: actions/download-artifact@v2
         with:
           name: data
+
+      - name: Check artifact
+        run: ls ../data_generator/build/Data/
 
       - name: Install dependencies
         run: npm i
