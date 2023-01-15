@@ -1,0 +1,60 @@
+name: Stutustiques weekly build
+
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+
+# Set concurrency: running as a workflow queue.
+concurrency:
+  group: "pages"
+
+jobs:
+  # Data generation job
+  Generation:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./data_generator
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: npm i
+
+      - name: Generating data
+        run: npm run generate:data
+
+  Deployement:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./frontend
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: npm i
+
+      - name: Generating data
+        run: npm run build
+      
+      - name: Setup Pages
+        uses: actions/configure-pages@v2
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          # Upload only fronted/ folder
+          path: './dist/'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
