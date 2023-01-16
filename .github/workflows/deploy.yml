@@ -3,6 +3,11 @@ name: Stutustiques Build & Deploy
 on:
   release:
     types: created
+  push:
+    branches:
+      - master
+    paths:
+      - data_scraping/src/data/data.json
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
