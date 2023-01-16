@@ -32,7 +32,7 @@ export class Message {
             this.reactions.push(new Reaction(element));
         });
         this.date = moment(this.timestamp, 'x').tz("Europe/Paris");
-        this.formattedDate = String(this.date.day()).padStart(2, '0') + '.' + String(this.date.month() + 1).padStart(2, '0') + '.' + String(this.date.year()).padStart(4, '0') + ' ' + String(this.date.hour()).padStart(2, '0') + ':' + String(this.date.minute()).padStart(2, '0') + ':' + String(this.date.second()).padStart(2, '0') + "." + String(this.date.millisecond()).padStart(3, '0');
+        this.formattedDate = String(this.date.date()).padStart(2, '0') + '.' + String(this.date.month() + 1).padStart(2, '0') + '.' + String(this.date.year()).padStart(4, '0') + ' ' + String(this.date.hour()).padStart(2, '0') + ':' + String(this.date.minute()).padStart(2, '0') + ':' + String(this.date.second()).padStart(2, '0') + "." + String(this.date.millisecond()).padStart(3, '0');
     }
 
     /**
