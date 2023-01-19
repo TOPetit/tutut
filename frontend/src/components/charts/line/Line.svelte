@@ -171,7 +171,7 @@
         <circle
             cx={points[index].x}
             cy={points[index].y}
-            r={4}
+            r={3}
             stroke="none"
             fill={darken(color[line.user], 0.9)}
             stroke-opacity={selected_user
