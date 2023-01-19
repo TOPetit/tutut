@@ -24,6 +24,20 @@
         y: number;
     }
 
+    /**
+     * Darken a color by a given percentage
+     * @param color hexa color in the format '#aaaaaa'
+     * @param percentage must be in [0, 1] where 0 is black and 1 does not affect the color
+     */
+    function darken(color: string, percentage: number): string {
+        let tmp: number[] = [
+            Number(percentage * parseInt(color.substring(1, 3), 16)),
+            Number(percentage * parseInt(color.substring(3, 5), 16)),
+            Number(percentage * parseInt(color.substring(5, 7), 16)),
+        ];
+        return `rgb(${String(tmp[0])}, ${String(tmp[1])}, ${String(tmp[2])})`;
+    }
+
     function createPoints(
         line: { user: string; data: number[] },
         yScaling: number,
@@ -137,17 +151,29 @@
 
     let path: string;
     $: path = createPath(lines);
-    $: console.log(path);
 </script>
 
-<g>
+<g
+    on:mouseover={() => {
+        selected_user = line.user;
+    }}
+    on:focus={() => {
+        selected_user = line.user;
+    }}
+    on:mouseout={() => {
+        selected_user = null;
+    }}
+    on:blur={() => {
+        selected_user = null;
+    }}
+>
     {#each line.data as value, index}
         <circle
             cx={points[index].x}
             cy={points[index].y}
             r={4}
             stroke="none"
-            fill={color[line.user]}
+            fill={darken(color[line.user], 0.9)}
             stroke-opacity={selected_user
                 ? selected_user == line.user
                     ? 1
@@ -155,7 +181,6 @@
                 : 0.5}
             opacity={selected_user ? (selected_user == line.user ? 1 : 0.5) : 1}
             on:mouseover={() => {
-                selected_user = line.user;
                 hovered_data = {
                     user: line.user,
                     value: value,
@@ -168,7 +193,6 @@
                 };
             }}
             on:focus={() => {
-                selected_user = line.user;
                 hovered_data = {
                     user: line.user,
                     value: value,
@@ -180,24 +204,28 @@
                     y: height - margins.bottom - yScaling * value - 35,
                 };
             }}
-            on:mouseout={() => {
-                selected_user = null;
-            }}
-            on:blur={() => {
-                selected_user = null;
-            }}
         />
     {/each}
-        <path
-            d={path}
-            stroke={color[line.user]}
-            stroke-width={3}
-            fill="none"
-        />
+    <path
+        d={path}
+        stroke={darken(color[line.user], 0.9)}
+        stroke-width={3}
+        fill="none"
+        stroke-opacity={selected_user
+            ? selected_user == line.user
+                ? 1
+                : 0.5
+            : 1}
+    />
 </g>
 
 <style>
-    circle {
+    circle,
+    path {
         cursor: pointer;
+    }
+
+    * {
+        outline: none;
     }
 </style>
