@@ -4,7 +4,7 @@ import { BarChart, BarChartData, ChartType } from "../../components";
 function compute(data: Data): { data: BarChartData, labels: string[] } {
     let tmp_ChartData: { [key: string]: number[] } = {};
     data.participants.forEach(user => {
-        tmp_ChartData[user] = new Array(60).fill(0);;
+        tmp_ChartData[user] = new Array(60).fill(0);
     })
     data.messages.forEach(message => {
         if (message.isCorrectTutut()) {

@@ -43,6 +43,7 @@
 
     .message {
         width: 100%;
+        min-height: 30px;
         margin: auto;
         display: flex;
         justify-content: space-around;
@@ -57,6 +58,9 @@
 
     div > div {
         text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .index {

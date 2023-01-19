@@ -15,6 +15,7 @@
     data.charts.bar["Fréquence des tututs dans la semaine"];
   const tututs_per_second =
     data.charts.bar["Fréquence des tututs dans la minute"];
+  const cumulative_tututs = data.charts.bar["Nombre de tutut cumulé"];
 </script>
 
 <div class="page" bind:clientWidth={width} bind:clientHeight={height}>
@@ -36,14 +37,14 @@
     color={data.color}
     name={tututs_per_second.name}
   />
-  <!-- <LineChart
+  <LineChart
     width={0.9 * width}
     height={500}
-    data={tututs_per_day.data.data}
-    labels={tututs_per_day.data.labels}
+    data={cumulative_tututs.data.data}
+    labels={cumulative_tututs.data.labels}
     color={data.color}
-    name={tututs_per_day.name}
-  /> -->
+    name={cumulative_tututs.name}
+  />
   <Top width={0.9 * width} tops={data.tops} color={data.color} />
 </div>
 
