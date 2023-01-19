@@ -99,7 +99,7 @@ Optional parameters are:
                 {color}
                 {height}
                 {margins}
-                {bar_width}
+                bind:bar_width
                 {gap}
                 {yScaling}
                 bind:selected_user

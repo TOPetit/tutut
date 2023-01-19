@@ -18,6 +18,14 @@
 </script>
 
 <div class="page" bind:clientWidth={width} bind:clientHeight={height}>
+  <LineChart
+    width={0.9 * width}
+    height={500}
+    data={tututs_per_day.data.data}
+    labels={tututs_per_day.data.labels}
+    color={data.color}
+    name={tututs_per_day.name}
+  />
   <Title content="Stutustiques du Voyage au centre de la terre" />
   <TileContainer tiles={data.tiles} color={data.color} />
   <StackedBarChart
