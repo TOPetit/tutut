@@ -19,6 +19,11 @@
         y: number;
     };
 
+    interface Point {
+        x: number;
+        y: number;
+    }
+
     function createPoints(
         line: { user: string; data: number[] },
         yScaling: number,
@@ -31,8 +36,8 @@
         },
         bar_width: number,
         gap: number
-    ): { x: number; y: number }[] {
-        function point(index: number): { x: number; y: number } {
+    ): Point[] {
+        function point(index: number): Point {
             return {
                 x:
                     margins.left +
@@ -41,139 +46,155 @@
                 y: height - margins.bottom - yScaling * line.data[index],
             };
         }
-
-        let points = [point(0)];
+        let points: Point[] = [];
         line.data.forEach((_, index) => {
             points.push(point(index));
         });
-
-        points.push(point(line.data.length - 1));
         return points;
     }
 
-    let points: { x: number; y: number }[] = [];
+    let points: Point[] = [];
     $: points = createPoints(line, yScaling, height, margins, bar_width, gap);
 
-    function cubicSplineInterpolation(
-        points: { x: number; y: number }[]
-    ): { x: number; y: number }[] {
-        const n = points.length - 1;
-        const h = new Array(n);
-        const b = new Array(n);
-        const u = new Array(n);
-        const v = new Array(n);
+    interface Line {
+        start: Point;
+        end: Point;
+        anchor_left: Point;
+        anchor_right: Point;
+    }
 
-        for (let i = 0; i < n; i++) {
-            h[i] = points[i + 1].x - points[i].x;
-            b[i] = (points[i + 1].y - points[i].y) / h[i];
+    /**
+     * Get line equation with slope (p1, p3) passing through p2
+     * @param p1 First point for slope
+     * @param p2 Line goes through that point
+     * @param p3 Second point for slope
+     */
+    function line_equation(
+        p1: Point,
+        p2: Point,
+        p3: Point
+    ): { (x: number): number } {
+        let m: number = (p1.y - p3.y) / (p1.x - p3.x);
+        let c: number = p2.y - m * p2.x;
+
+        return (x: number): number => {
+            return m * x + c;
+        };
+    }
+
+    function left_anchor(p1: Point, p2: Point, p3: Point): Point {
+        let line = line_equation(p1, p2, p3);
+        let x: number = p2.x + ((p3.x - p2.x) * 1) / 2;
+        return { x: x, y: line(x) };
+    }
+
+    function right_anchor(p1: Point, p2: Point, p3: Point): Point {
+        let line = line_equation(p1, p2, p3);
+        let x: number = p1.x + ((p2.x - p1.x) * 1) / 2;
+        return { x: x, y: line(x) };
+    }
+
+    function createLines(points: Point[]): Line[] {
+        let lines: Line[] = [];
+        for (let index = 0; index < points.length - 1; index++) {
+            let line: Line = {} as Line;
+            line.start = points[index];
+            line.end = points[index + 1];
+            line.anchor_left =
+                index == 0
+                    ? points[0]
+                    : left_anchor(
+                          points[index - 1],
+                          points[index],
+                          points[index + 1]
+                      );
+            line.anchor_right =
+                index == points.length - 2
+                    ? points[index + 1]
+                    : right_anchor(
+                          points[index],
+                          points[index + 1],
+                          points[index + 2]
+                      );
+
+            lines = [...lines, line];
         }
+        return lines;
+    }
 
-        u[1] = 2 * (h[0] + h[1]);
-        v[1] = 6 * (b[1] - b[0]);
+    let lines: Line[] = [];
+    $: lines = createLines(points);
 
-        for (let i = 2; i < n; i++) {
-            u[i] = 2 * (h[i] + h[i - 1]) - (h[i - 1] * h[i - 1]) / u[i - 1];
-            v[i] = 6 * (b[i] - b[i - 1]) - (h[i - 1] * v[i - 1]) / u[i - 1];
-        }
-
-        const z = new Array(n);
-        z[n - 1] = 0;
-
-        for (let i = n - 2; i > 0; i--) {
-            z[i] = (v[i] - h[i] * z[i + 1]) / u[i];
-        }
-
-        z[0] = 0;
-        z[n] = 0;
-
-        const result = new Array<{ x: number; y: number }>();
-
-        for (let i = 0; i < n; i++) {
-            const p0 = points[i];
-            const p1 = points[i + 1];
-            const hh = h[i];
-            const bb = b[i];
-            const zz = z[i];
-            const zz1 = z[i + 1];
-
-            for (let x = p0.x; x <= p1.x; x++) {
-                const t = (x - p0.x) / hh;
-                const a = p0.y;
-                const b = bb - (hh / 6) * (zz + 2 * zz1);
-                const c = zz / 2;
-                const d = (zz1 - zz) / (6 * hh);
-                result.push({ x, y: a + (b + (c + d * t) * t) * t });
-            }
-        }
-
+    function createPath(lines: Line[]): string {
+        let result: string = `M ${lines[0].start.x} ${lines[0].start.y}`;
+        lines.forEach((e) => {
+            result =
+                result +
+                ` C ${e.anchor_left.x} ${e.anchor_left.y} ${e.anchor_right.x} ${e.anchor_right.y} ${e.end.x} ${e.end.y}`;
+        });
         return result;
     }
 
-    let splinePoints = [];
-    $: splinePoints =
-        points.length == 0 ? [] : cubicSplineInterpolation(points);
-    let pathData;
-    $: pathData = splinePoints
-        .map((point, index) => {
-            if (index === 0) {
-                return `M ${point.x} ${point.y}`;
-            } else {
-                return `L ${point.x} ${point.y}`;
-            }
-        })
-        .join(" ");
+    let path: string;
+    $: path = createPath(lines);
+    $: console.log(path);
 </script>
 
-{#each line.data as value, index}
-    <circle
-        cx={points[index + 1].x}
-        cy={points[index + 1].y}
-        r={5}
-        stroke="black"
-        fill={color[line.user]}
-        stroke-opacity={selected_user
-            ? selected_user == line.user
-                ? 1
-                : 0.5
-            : 0.5}
-        opacity={selected_user ? (selected_user == line.user ? 1 : 0.5) : 1}
-        on:mouseover={() => {
-            selected_user = line.user;
-            hovered_data = {
-                user: line.user,
-                value: value,
-                x:
-                    margins.left +
-                    (index + 1) * gap +
-                    (index + 1 / 2) * bar_width +
-                    10,
-                y: height - margins.bottom - yScaling * value - 35,
-            };
-        }}
-        on:focus={() => {
-            selected_user = line.user;
-            hovered_data = {
-                user: line.user,
-                value: value,
-                x:
-                    margins.left +
-                    (index + 1) * gap +
-                    (index + 1 / 2) * bar_width +
-                    10,
-                y: height - margins.bottom - yScaling * value - 35,
-            };
-        }}
-        on:mouseout={() => {
-            selected_user = null;
-        }}
-        on:blur={() => {
-            selected_user = null;
-        }}
-    />
-    {#if index > 1 && index < 3}
-        <path d={pathData} stroke="black" fill="none" />
-    {/if}
-{/each}
+<g>
+    {#each line.data as value, index}
+        <circle
+            cx={points[index].x}
+            cy={points[index].y}
+            r={4}
+            stroke="none"
+            fill={color[line.user]}
+            stroke-opacity={selected_user
+                ? selected_user == line.user
+                    ? 1
+                    : 0.5
+                : 0.5}
+            opacity={selected_user ? (selected_user == line.user ? 1 : 0.5) : 1}
+            on:mouseover={() => {
+                selected_user = line.user;
+                hovered_data = {
+                    user: line.user,
+                    value: value,
+                    x:
+                        margins.left +
+                        (index + 1) * gap +
+                        (index + 1 / 2) * bar_width +
+                        10,
+                    y: height - margins.bottom - yScaling * value - 35,
+                };
+            }}
+            on:focus={() => {
+                selected_user = line.user;
+                hovered_data = {
+                    user: line.user,
+                    value: value,
+                    x:
+                        margins.left +
+                        (index + 1) * gap +
+                        (index + 1 / 2) * bar_width +
+                        10,
+                    y: height - margins.bottom - yScaling * value - 35,
+                };
+            }}
+            on:mouseout={() => {
+                selected_user = null;
+            }}
+            on:blur={() => {
+                selected_user = null;
+            }}
+        />
+    {/each}
+        <path
+            d={path}
+            stroke={color[line.user]}
+            stroke-width={3}
+            fill="none"
+        />
+</g>
 
 <style>
     circle {
