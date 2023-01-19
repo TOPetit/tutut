@@ -98,13 +98,13 @@
 
     function left_anchor(p1: Point, p2: Point, p3: Point): Point {
         let line = line_equation(p1, p2, p3);
-        let x: number = p2.x + ((p3.x - p2.x) * 1) / 2;
+        let x: number = (p3.x + p2.x) / 2;
         return { x: x, y: line(x) };
     }
 
     function right_anchor(p1: Point, p2: Point, p3: Point): Point {
         let line = line_equation(p1, p2, p3);
-        let x: number = p1.x + ((p2.x - p1.x) * 1) / 2;
+        let x: number = (p2.x + p1.x) / 2;
         return { x: x, y: line(x) };
     }
 
