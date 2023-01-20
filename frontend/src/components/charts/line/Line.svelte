@@ -167,11 +167,22 @@
         selected_user = null;
     }}
 >
+    <path
+        d={path}
+        stroke={darken(color[line.user], 0.9)}
+        stroke-width={3}
+        fill="none"
+        stroke-opacity={selected_user
+            ? selected_user == line.user
+                ? 1
+                : 0.5
+            : 1}
+    />
     {#each line.data as value, index}
         <circle
             cx={points[index].x}
             cy={points[index].y}
-            r={3}
+            r={4}
             stroke="none"
             fill={darken(color[line.user], 0.9)}
             stroke-opacity={selected_user
@@ -206,17 +217,6 @@
             }}
         />
     {/each}
-    <path
-        d={path}
-        stroke={darken(color[line.user], 0.9)}
-        stroke-width={3}
-        fill="none"
-        stroke-opacity={selected_user
-            ? selected_user == line.user
-                ? 1
-                : 0.5
-            : 1}
-    />
 </g>
 
 <style>
