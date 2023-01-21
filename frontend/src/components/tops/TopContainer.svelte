@@ -27,7 +27,6 @@
         <div class="index"><p>{index + 1}</p></div>
         <div class="sender"><p>{message.sender}</p></div>
         <div class="date"><p>{message.formattedDate}</p></div>
-        <div class="content"><p>{message.content}</p></div>
         <div class="reactions">
             {#each message.reactions as reaction}
                 <div class="reaction"><p>{reaction.emoji}</p></div>
@@ -73,11 +72,7 @@
     }
 
     .date {
-        width: 40%;
-    }
-
-    .content {
-        width: 10%;
+        width: 50%;
     }
 
     .reactions {

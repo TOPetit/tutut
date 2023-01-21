@@ -46,20 +46,8 @@ export class Message {
         return (this.date.hour() == this.date.minute());
     }
 
-    /**
-     * 
-     * @returns number corresponding to seconds & milliseconds.
-     */
     public getSecMilli(): number {
         return this.date.millisecond() / 1000 + this.date.second()
-    }
-
-    /**
-     * 
-     * @returns true if message is a blue heart, false otherwise.
-     */
-    public isBlueHeart(): boolean {
-        return this.content == '💙';
     }
 }
 

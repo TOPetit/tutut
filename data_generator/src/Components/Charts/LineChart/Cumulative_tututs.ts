@@ -29,4 +29,4 @@ function compute(data: Data): { data: BarChartData, labels: string[] } {
     return { data: chartData, labels: labels }
 }
 
-export const line_cumulated_tutut = new BarChart(ChartType.BAR, 'Nombre de tututs cumulé', compute, data);
+export const line_cumulated_tutut = new BarChart(ChartType.BAR, 'Nombre de tutut cumulé', compute, data);

@@ -23,4 +23,4 @@ function late_tututs(data: Data, nb: number): Message[] {
     return result.reverse();
 }
 
-export let top_late_tututs = new Top("Lents", late_tututs(data, 10));
+export let top_late_tututs = new Top("Tards", late_tututs(data, 10));

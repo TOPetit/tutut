@@ -21,7 +21,6 @@
 <div class="page" bind:clientWidth={width} bind:clientHeight={height}>
   <Title content="Stutustiques du Voyage au centre de la terre" />
   <TileContainer tiles={data.tiles} color={data.color} />
-  <Top width={0.9 * width} tops={data.tops} color={data.color} />
   <StackedBarChart
     width={0.9 * width}
     height={500}
@@ -46,6 +45,7 @@
     color={data.color}
     name={cumulative_tututs.name}
   />
+  <Top width={0.9 * width} tops={data.tops} color={data.color} />
 </div>
 
 <style>
