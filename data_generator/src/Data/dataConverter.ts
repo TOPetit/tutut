@@ -15,6 +15,14 @@ export class Reaction {
     }
 }
 
+export enum MessageType {
+    UNDEFINED,
+    CORRECT,
+    ERROR,
+    BLUE_HEART,
+    DUPLICATE
+}
+
 export class Message {
     public sender: string;
     public timestamp: number;
@@ -22,6 +30,7 @@ export class Message {
     public reactions: Reaction[];
     public date: Moment;
     public formattedDate: string;
+    public type: MessageType = MessageType.UNDEFINED;
 
     public constructor(obj: ObjMessage) {
         this.sender = obj.sender;
@@ -40,6 +49,7 @@ export class Message {
      * @returns {boolean} true if the Message is a correct tutut, false otherwise.
      */
     public isCorrectTutut(): boolean {
+        if (this.type != MessageType.UNDEFINED) { return this.type == MessageType.CORRECT }
         if (this.content.toLowerCase() != 'tutut') {
             return false; // This is not a tutut.
         }
@@ -59,6 +69,7 @@ export class Message {
      * @returns true if the message is a bleu heart, false otherwise.
      */
     public isBlueHeart(): boolean {
+        if (this.type != MessageType.UNDEFINED) { return this.type == MessageType.BLUE_HEART }
         return this.content == '💙';
     }
 
@@ -69,8 +80,8 @@ export class Message {
      */
     public containsReaction(reaction: Reaction): boolean {
         let result: boolean = false;
-        this.reactions.forEach( element => {
-            if (reaction.sender == element.sender && reaction.emoji == element.emoji) {result = true}
+        this.reactions.forEach(element => {
+            if (reaction.sender == element.sender && reaction.emoji == element.emoji) { result = true }
         })
         return result;
     }
@@ -114,4 +125,23 @@ function convertData(): Data {
     return new Data(content);
 }
 
-export const data = convertData();
+function computeTypedData(): Data {
+    let data: Data = convertData();
+    data.messages.forEach((message, index) => {
+        if (message.isBlueHeart()) { message.type = MessageType.BLUE_HEART; };
+        if (!message.isCorrectTutut() && !message.isBlueHeart()) { message.type = MessageType.ERROR; };
+        if (message.isCorrectTutut()) {
+            let signature: string = message.date.format("DD:MM:YYYYTHH:MM");
+            data.messages.slice(0, index).forEach(message2 => {
+                if (message.sender == message2.sender && message2.type == MessageType.CORRECT && signature == message2.date.format("DD:MM:YYYYTHH:MM")) {
+                    message.type = MessageType.DUPLICATE;
+                }
+            })
+            if (message.type == MessageType.UNDEFINED) { message.type = MessageType.CORRECT; }
+        }
+        if (message.type == MessageType.UNDEFINED) { console.log("Could not resolve the type of this message :", message) }
+    })
+    return data;
+}
+
+export const data: Data = computeTypedData();
