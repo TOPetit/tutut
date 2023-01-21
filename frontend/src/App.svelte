@@ -15,7 +15,7 @@
     data.charts.bar["Fréquence des tututs dans la semaine"];
   const tututs_per_second =
     data.charts.bar["Fréquence des tututs dans la minute"];
-  const cumulative_tututs = data.charts.bar["Nombre de tututs cumulé"];
+  const cumulative_tututs = data.charts.bar["Nombre de tutut cumulé"];
 </script>
 
 <div class="page" bind:clientWidth={width} bind:clientHeight={height}>
