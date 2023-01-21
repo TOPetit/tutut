@@ -61,6 +61,19 @@ export class Message {
     public isBlueHeart(): boolean {
         return this.content == '💙';
     }
+
+    /**
+     * 
+     * @param reaction a Reaction object
+     * @returns true if this reaction exists for that message, false otherwise.
+     */
+    public containsReaction(reaction: Reaction): boolean {
+        let result: boolean = false;
+        this.reactions.forEach( element => {
+            if (reaction.sender == element.sender && reaction.emoji == element.emoji) {result = true}
+        })
+        return result;
+    }
 }
 
 export class Data {
