@@ -23,4 +23,4 @@ function early_tututs(data: Data, nb: number): Message[] {
     return result.reverse();
 }
 
-export let top_early_tututs = new Top("Tôts", early_tututs(data, 10));
+export let top_early_tututs = new Top("Rapides", early_tututs(data, 10));
