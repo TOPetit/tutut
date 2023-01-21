@@ -59,7 +59,6 @@ Optional parameters are:
         cursor: pointer;
         display: flex;
         flex-direction: column;
-        gap: 10px;
         justify-content: center;
         border: 2px solid rgba(0, 0, 0, 0.2);
         transition: all ease 0.3s;
