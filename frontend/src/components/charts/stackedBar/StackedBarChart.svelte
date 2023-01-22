@@ -87,17 +87,15 @@ Optional parameters are:
         (width - margins.left - margins.right - length * gap) / length;
 
     let selected_user: string;
-    let hovered_data: { user: string; value: number; x: number; y: number };
+    let hovered_data: {
+        data: { user: string; value: number }[];
+        x: number;
+        y: number;
+    };
 </script>
 
 <div>
-    <svg
-        {height}
-        {width}
-        on:mouseleave={() => {
-            hovered_data = null;
-        }}
-    >
+    <svg {height} {width}>
         <XAxis {width} {height} {labels} {margins} {gap} {bar_width} />
         <YAxis {width} {height} {data_max} {margins} {yScaling} />
         <Legend {width} {data} {color} bind:selected_user bind:display_user />
@@ -119,8 +117,7 @@ Optional parameters are:
     </svg>
     {#if hovered_data}
         <Tooltip
-            user={hovered_data.user}
-            value={hovered_data.value}
+            data={hovered_data.data}
             x={hovered_data.x}
             y={hovered_data.y}
         />
