@@ -2,6 +2,7 @@
   import "./style/font.css";
   import "./style/body.css";
   import Title from "./lib/Title.svelte";
+  import Footer from "./lib/Footer.svelte";
   import TileContainer from "./components/tile/TileContainer.svelte";
   import LineChart from "./components/charts/line/LineChart.svelte";
   import StackedBarChart from "./components/charts/stackedBar/StackedBarChart.svelte";
@@ -46,6 +47,7 @@
     color={data.color}
     name={cumulative_tututs.name}
   />
+  <Footer />
 </div>
 
 <style>
