@@ -1,4 +1,7 @@
 <script lang="ts">
+  import { Router, Route } from "svelte-routing";
+  import Data from "./routes/Data.svelte";
+  export let url: string = "";
   import "./style/font.css";
   import "./style/body.css";
   import Title from "./lib/Title.svelte";
@@ -19,45 +22,50 @@
   const cumulative_tututs = data.charts.bar["Nombre de tututs cumulé"];
 </script>
 
-<div class="page" bind:clientWidth={width} bind:clientHeight={height}>
-  <Title content="Stutustiques du Voyage au centre de la terre" />
-  <TileContainer tiles={data.tiles} color={data.color} />
-  <Top width={0.9 * width} tops={data.tops} color={data.color} />
-  <StackedBarChart
-    width={0.9 * width}
-    height={500}
-    data={tututs_per_day.data.data}
-    labels={tututs_per_day.data.labels}
-    color={data.color}
-    name={tututs_per_day.name}
-  />
-  <StackedBarChart
-    width={0.9 * width}
-    height={500}
-    data={tututs_per_second.data.data}
-    labels={tututs_per_second.data.labels}
-    color={data.color}
-    name={tututs_per_second.name}
-  />
-  <LineChart
-    width={0.9 * width}
-    height={500}
-    data={cumulative_tututs.data.data}
-    labels={cumulative_tututs.data.labels}
-    color={data.color}
-    name={cumulative_tututs.name}
-  />
-  <Footer />
-</div>
+<Router {url}>
+  <Route path="data" component={Data} />
+  <Route path="/">
+    <div class="page" bind:clientWidth={width} bind:clientHeight={height}>
+      <Title content="Stutustiques du Voyage au centre de la terre" />
+      <TileContainer tiles={data.tiles} color={data.color} />
+      <Top width={0.9 * width} tops={data.tops} color={data.color} />
+      <StackedBarChart
+        width={0.9 * width}
+        height={500}
+        data={tututs_per_day.data.data}
+        labels={tututs_per_day.data.labels}
+        color={data.color}
+        name={tututs_per_day.name}
+      />
+      <StackedBarChart
+        width={0.9 * width}
+        height={500}
+        data={tututs_per_second.data.data}
+        labels={tututs_per_second.data.labels}
+        color={data.color}
+        name={tututs_per_second.name}
+      />
+      <LineChart
+        width={0.9 * width}
+        height={500}
+        data={cumulative_tututs.data.data}
+        labels={cumulative_tututs.data.labels}
+        color={data.color}
+        name={cumulative_tututs.name}
+      />
+      <Footer />
+    </div>
 
-<style>
-  .page {
-    width: 90%;
-    margin: auto;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-  }
-</style>
+    <style>
+      .page {
+        width: 90%;
+        margin: auto;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+      }
+    </style>
+  </Route>
+</Router>
