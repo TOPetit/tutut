@@ -6,8 +6,15 @@ const new_messages = new_content.messages;
 const old_content = parseJSON('src/data/data.json');
 
 new_messages.forEach(new_message => {
-    if (old_content.messages.filter(old_message => isMessageEqual(new_message, old_message)).length == 0) {
+    let index = -1;
+    for (let i = 0; i < old_content.messages.length; i++) {
+        index = isMessageEqual(old_content.messages[i], new_message) ? i : index;
+    }
+    if (index == -1) {
         old_content.messages.push(new_message);
+    }
+    else {
+        old_content.messages[index] = new_message;
     }
 });
 
