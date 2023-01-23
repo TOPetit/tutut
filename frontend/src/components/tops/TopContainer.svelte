@@ -11,6 +11,7 @@
     export let color: { [key: string]: string };
 
     let hovered: Message;
+    let tooltip: string;
 </script>
 
 {#each data as message, index}
@@ -30,7 +31,23 @@
         <div class="content"><p>{message.content}</p></div>
         <div class="reactions">
             {#each message.reactions as reaction}
-                <div class="reaction"><p>{reaction.emoji}</p></div>
+                <div class="reaction">
+                    <!-- svelte-ignore a11y-mouse-events-have-key-events -->
+                    <p
+                        on:mouseover={() => {
+                            tooltip = message.formattedDate + reaction.sender;
+                        }}
+                        on:mouseleave={() => {
+                            tooltip = undefined;
+                        }}
+                    >
+                        {#if tooltip == message.formattedDate + reaction.sender}
+                            {reaction.sender}
+                        {:else}
+                            {reaction.emoji}
+                        {/if}
+                    </p>
+                </div>
             {/each}
         </div>
     </div>
@@ -49,12 +66,13 @@
         display: flex;
         justify-content: space-around;
         cursor: pointer;
-        transition: all ease 0.3s;
+        transition: all ease 0.6s;
         outline: 1px solid rgba(169, 169, 169, 1);
     }
 
     .message:hover {
-        scale: 1.05;
+        min-height: 60px;
+        font-size: larger;
     }
 
     div > div {
