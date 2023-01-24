@@ -19,6 +19,10 @@
     const cumulative_tututs = data.charts.bar["Nombre de tututs cumulé"];
 </script>
 
+<svelte:head>
+    <title>Stutustiques</title>
+</svelte:head>
+
 <div class="page" bind:clientWidth={width} bind:clientHeight={height}>
     <Title content="Stutustiques du Voyage au centre de la terre" />
     <TileContainer tiles={data.tiles} color={data.color} />
