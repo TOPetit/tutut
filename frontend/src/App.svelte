@@ -7,6 +7,6 @@
 </script>
 
 <Router {url} {basepath}>
-  <Route path="data" component={Data} />
-  <Route path="/" component={Home} />
+  <Route path="data"><Data /></Route>
+  <Route path="/"><Home /></Route>
 </Router>
