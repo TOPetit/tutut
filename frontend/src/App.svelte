@@ -1,71 +1,11 @@
 <script lang="ts">
   import { Router, Route } from "svelte-routing";
-  import Data from "./routes/Data.svelte";
+  import Data from "./routes/data/Data.svelte";
+  import Home from "./routes/Home.svelte";
   export let url: string = "";
-  import "./style/font.css";
-  import "./style/body.css";
-  import Title from "./lib/Title.svelte";
-  import Footer from "./lib/Footer.svelte";
-  import TileContainer from "./components/tile/TileContainer.svelte";
-  import LineChart from "./components/charts/line/LineChart.svelte";
-  import StackedBarChart from "./components/charts/stackedBar/StackedBarChart.svelte";
-  import Top from "./components/tops/Top.svelte";
-  import data from "../../data_generator/build/Data/data.json";
-
-  let width: number = 300;
-  let height: number = 1080;
-
-  const tututs_per_day =
-    data.charts.bar["Fréquence des tututs dans la semaine"];
-  const tututs_per_second =
-    data.charts.bar["Fréquence des tututs dans la minute"];
-  const cumulative_tututs = data.charts.bar["Nombre de tututs cumulé"];
 </script>
 
 <Router {url}>
   <Route path="data" component={Data} />
-  <Route path="/">
-    <div class="page" bind:clientWidth={width} bind:clientHeight={height}>
-      <Title content="Stutustiques du Voyage au centre de la terre" />
-      <TileContainer tiles={data.tiles} color={data.color} />
-      <Top width={0.9 * width} tops={data.tops} color={data.color} />
-      <StackedBarChart
-        width={0.9 * width}
-        height={500}
-        data={tututs_per_day.data.data}
-        labels={tututs_per_day.data.labels}
-        color={data.color}
-        name={tututs_per_day.name}
-      />
-      <StackedBarChart
-        width={0.9 * width}
-        height={500}
-        data={tututs_per_second.data.data}
-        labels={tututs_per_second.data.labels}
-        color={data.color}
-        name={tututs_per_second.name}
-      />
-      <LineChart
-        width={0.9 * width}
-        height={500}
-        data={cumulative_tututs.data.data}
-        labels={cumulative_tututs.data.labels}
-        color={data.color}
-        name={cumulative_tututs.name}
-      />
-      <Footer />
-    </div>
-
-    <style>
-      .page {
-        width: 90%;
-        margin: auto;
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-        align-items: center;
-        gap: 20px;
-      }
-    </style>
-  </Route>
+  <Route path="/" component={Home} />
 </Router>
