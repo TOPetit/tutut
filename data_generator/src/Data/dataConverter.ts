@@ -1,4 +1,4 @@
-import { readFileSync } from "fs";
+import { readFileSync, writeFileSync } from "fs";
 import { resolve } from "path";
 import moment, { Moment } from 'moment-timezone';
 
@@ -145,3 +145,5 @@ function computeTypedData(): Data {
 }
 
 export const data: Data = computeTypedData();
+const jsonData: string = JSON.stringify(data);
+writeFileSync(resolve(__dirname, 'complete_data.json'), jsonData, 'utf8');
