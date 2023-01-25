@@ -8,6 +8,7 @@
         type: number;
         sender: string;
         timestamp: number;
+        content: string;
         reactions: Reaction[];
         date: string;
         formattedDate: string;
@@ -18,6 +19,13 @@
 
 <div class="message">
     <div class="item" id="sender"><p>{message.sender}</p></div>
+    <div class="item" id="date"><p>{message.formattedDate}</p></div>
+    <div class="item" id="content"><p>{message.content}</p></div>
+    <div class="item" id="reactions">
+        {#each message.reactions as reaction}
+            <p>{reaction.emoji}</p>
+        {/each}
+    </div>
 </div>
 
 <style>
@@ -32,6 +40,7 @@
         text-align: center;
         display: flex;
         align-items: center;
+        justify-content: space-around;
     }
 
     .message:hover {
@@ -46,7 +55,19 @@
     }
 
     #sender {
-        width: 100%;
+        width: 25%;
+    }
+
+    #date {
+        width: 25%;
+    }
+
+    #content {
+        width: 25%;
+    }
+
+    #reactions {
+        width: 25%;
     }
 
     p {
