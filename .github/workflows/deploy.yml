@@ -42,7 +42,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: data
-          path: ./data_generator/build/Data/data.json
+          path: ./data_generator/build/Data/*data.json
 
   Deployement:
     needs: Generation
