@@ -5,7 +5,7 @@
 </script>
 
 <div class="data-page">
-    <MessageContainer messages={complete_data.messages} />
+    <MessageContainer messages={complete_data.messages.reverse()} />
 </div>
 
 <style>
