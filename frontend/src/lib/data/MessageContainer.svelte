@@ -22,14 +22,29 @@
         type: { [key: string]: boolean };
         content: string;
         dateWindow: { start: string; end: string };
+        page_number: number;
+        page_size: number;
     };
 
     export let messages: Message[];
 
-    let displayed_messages: Message[] = messages.slice(0, 10);
+    let options: Options = {
+        senders: { Jodie: true, Matthieu: true, Théo: true },
+        type: { 1: true, 2: true, 3: true, 4: true },
+        content: "*",
+        dateWindow: { start: "*", end: "*" },
+        page_number: 1,
+        page_size: 10,
+    };
+
+    let displayed_messages: Message[] = [];
+    $: displayed_messages = messages.slice(
+        options.page_size * (options.page_number - 1),
+        options.page_size * options.page_number
+    );
 </script>
 
-<Sorter />
+<Sorter bind:options />
 
 <div class="messages_container">
     {#each displayed_messages as message}
