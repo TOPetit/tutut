@@ -32,10 +32,13 @@
         senders: { Jodie: true, Matthieu: true, Théo: true },
         type: { 0: true, 1: true, 2: true, 3: true, 4: true },
         content: "",
-        dateWindow: { start: "*", end: "*" },
+        dateWindow: { start: "", end: "" },
         page_number: 1,
         page_size: 10,
     };
+    function compareDate(date1: string, date2: string): boolean {
+        return true;
+    }
 
     function filter(messages: Message[], options: Options): Message[] {
         let displayed_data: Message[] = [];
@@ -47,6 +50,9 @@
                 display_this &&
                 (options.content == "" || options.content == message.content);
             display_this = display_this && options.type[message.type];
+            display_this =
+                options.dateWindow.start == "" ||
+                compareDate(options.dateWindow.start, message.formattedDate);
             if (display_this) {
                 displayed_data = [...displayed_data, message];
             }

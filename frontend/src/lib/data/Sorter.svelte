@@ -17,8 +17,6 @@
     };
 
     export let options: Options;
-
-    $: options.page_number = options.page_number < 1 ? 1 : options.page_number;
 </script>
 
 <div class="sorter">
@@ -33,6 +31,20 @@
     </div>
     <div class="filter" id="content">
         Contenu du message : <input type="text" bind:value={options.content} />
+    </div>
+    <div id="date">
+        <label
+            >Entre le <input
+                type="date"
+                bind:value={options.dateWindow.start}
+            /></label
+        >
+        <label>
+            et le <input
+                type="date"
+                bind:value={options.dateWindow.end}
+            /></label
+        >
     </div>
     <div class="filter" id="type">
         {#each Object.keys(options.type) as type}
