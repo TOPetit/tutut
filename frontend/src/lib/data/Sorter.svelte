@@ -23,9 +23,12 @@
             >
         {/each}
     </div>
+    <div id="content">
+        Contenu du message : <input type="text" bind:value={options.content} />
+    </div>
     <div id="page_manager">
         <div class="item" id="page_size">
-            Items per page : <input
+            Nombre de lignes affichées : <input
                 type="number"
                 min={10}
                 max={200}
@@ -35,7 +38,7 @@
             />
         </div>
         <div class="item" id="page_number">
-            Page number : <input
+            Numéro de page : <input
                 type="number"
                 style="width:40px"
                 bind:value={options.page_number}

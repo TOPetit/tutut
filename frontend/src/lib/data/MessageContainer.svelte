@@ -31,7 +31,7 @@
     let options: Options = {
         senders: { Jodie: true, Matthieu: true, Théo: true },
         type: { 1: true, 2: true, 3: true, 4: true },
-        content: "*",
+        content: "",
         dateWindow: { start: "*", end: "*" },
         page_number: 1,
         page_size: 10,
@@ -41,7 +41,12 @@
         let displayed_data: Message[] = [];
         // Filter data
         messages.forEach((message) => {
-            if (options.senders[message.sender]) {
+            let display_this = true;
+            display_this = display_this && options.senders[message.sender];
+            display_this =
+                display_this &&
+                (options.content == "" || options.content == message.content);
+            if (display_this) {
                 displayed_data = [...displayed_data, message];
             }
         });
