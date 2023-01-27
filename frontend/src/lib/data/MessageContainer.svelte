@@ -41,7 +41,9 @@
         let displayed_data: Message[] = [];
         // Filter data
         messages.forEach((message) => {
-            displayed_data = [...displayed_data, message];
+            if (options.senders[message.sender]) {
+                displayed_data = [...displayed_data, message];
+            }
         });
 
         // Display by page

@@ -14,6 +14,15 @@
 </script>
 
 <div class="sorter">
+    <div id="senders">
+        {#each Object.keys(options.senders) as sender}
+            <label>
+                <input type="checkbox" bind:checked={options.senders[sender]} />
+                <!-- svelte-ignore a11y-label-has-associated-control -->
+                {sender}</label
+            >
+        {/each}
+    </div>
     <div id="page_manager">
         <div class="item" id="page_size">
             Items per page : <input
@@ -43,6 +52,7 @@
         outline: 1px solid black;
         margin: 20px 0 30px 0;
         display: flex;
+        flex-direction: column;
         align-items: center;
         justify-content: center;
         gap: 15px;
