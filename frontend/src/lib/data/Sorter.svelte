@@ -8,13 +8,21 @@
         page_size: number;
     };
 
+    const types: { [key: number]: string } = {
+        0: "Non défini",
+        1: "Correct",
+        2: "Erreur",
+        3: "Coeur Bleu",
+        4: "Duplicat",
+    };
+
     export let options: Options;
 
     $: options.page_number = options.page_number < 1 ? 1 : options.page_number;
 </script>
 
 <div class="sorter">
-    <div id="senders">
+    <div class="filter" id="senders">
         {#each Object.keys(options.senders) as sender}
             <label>
                 <input type="checkbox" bind:checked={options.senders[sender]} />
@@ -23,10 +31,19 @@
             >
         {/each}
     </div>
-    <div id="content">
+    <div class="filter" id="content">
         Contenu du message : <input type="text" bind:value={options.content} />
     </div>
-    <div id="page_manager">
+    <div class="filter" id="type">
+        {#each Object.keys(options.type) as type}
+            <label>
+                <input type="checkbox" bind:checked={options.type[type]} />
+                <!-- svelte-ignore a11y-label-has-associated-control -->
+                {types[Number(type)]}</label
+            >
+        {/each}
+    </div>
+    <div class="filter" id="page_manager">
         <div class="item" id="page_size">
             Nombre de lignes affichées : <input
                 type="number"
@@ -46,7 +63,7 @@
             <!-- svelte-ignore a11y-click-events-have-key-events -->
         </div>
     </div>
-    <div id="reset">
+    <div class="filter" id="reset">
         <button
             on:click={() => {
                 options = {
@@ -73,6 +90,19 @@
         align-items: center;
         justify-content: center;
         gap: 15px;
+    }
+
+    .filter {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .filter > label {
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     #page_manager {

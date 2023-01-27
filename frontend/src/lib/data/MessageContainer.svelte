@@ -30,7 +30,7 @@
 
     let options: Options = {
         senders: { Jodie: true, Matthieu: true, Théo: true },
-        type: { 1: true, 2: true, 3: true, 4: true },
+        type: { 0: true, 1: true, 2: true, 3: true, 4: true },
         content: "",
         dateWindow: { start: "*", end: "*" },
         page_number: 1,
@@ -46,6 +46,7 @@
             display_this =
                 display_this &&
                 (options.content == "" || options.content == message.content);
+            display_this = display_this && options.type[message.type];
             if (display_this) {
                 displayed_data = [...displayed_data, message];
             }
