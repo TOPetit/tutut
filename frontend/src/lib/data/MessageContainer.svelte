@@ -63,25 +63,27 @@
                 (options.content == "" || options.content == message.content);
             display_this = display_this && options.type[message.type];
             display_this =
-                options.dateWindow.start == "" ||
-                compareDate(
-                    options.dateWindow.start,
-                    message.formattedDate
-                        .split(" ")[0]
-                        .split(".")
-                        .reverse()
-                        .join("-")
-                ) <= 0;
+                display_this &&
+                (options.dateWindow.start == "" ||
+                    compareDate(
+                        options.dateWindow.start,
+                        message.formattedDate
+                            .split(" ")[0]
+                            .split(".")
+                            .reverse()
+                            .join("-")
+                    ) <= 0);
             display_this =
-                options.dateWindow.end == "" ||
-                compareDate(
-                    options.dateWindow.end,
-                    message.formattedDate
-                        .split(" ")[0]
-                        .split(".")
-                        .reverse()
-                        .join("-")
-                ) >= 0;
+                display_this &&
+                (options.dateWindow.end == "" ||
+                    compareDate(
+                        options.dateWindow.end,
+                        message.formattedDate
+                            .split(" ")[0]
+                            .split(".")
+                            .reverse()
+                            .join("-")
+                    ) >= 0);
             if (display_this) {
                 displayed_data = [...displayed_data, message];
             }
@@ -96,7 +98,6 @@
 
     let displayed_messages: Message[] = filter(messages, options);
     $: displayed_messages = filter(messages, options);
-    $: console.log(options.dateWindow);
 </script>
 
 <Sorter bind:options />
