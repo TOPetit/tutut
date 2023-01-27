@@ -36,8 +36,20 @@
         page_number: 1,
         page_size: 10,
     };
-    function compareDate(date1: string, date2: string): boolean {
-        return true;
+
+    /**
+     * Returns -1 if date1 < date2, 0 if equal and 1 if date1 > date2
+     * @param date1 date to format YYYY/MM/DD
+     * @param date2 date to format YYYY/MM/DD
+     */
+    function compareDate(date1: string, date2: string): number {
+        if (date1 == date2) {
+            return 0;
+        }
+        if (date1 < date2) {
+            return -1;
+        }
+        return 1;
     }
 
     function filter(messages: Message[], options: Options): Message[] {
@@ -52,7 +64,24 @@
             display_this = display_this && options.type[message.type];
             display_this =
                 options.dateWindow.start == "" ||
-                compareDate(options.dateWindow.start, message.formattedDate);
+                compareDate(
+                    options.dateWindow.start,
+                    message.formattedDate
+                        .split(" ")[0]
+                        .split(".")
+                        .reverse()
+                        .join("-")
+                ) <= 0;
+            display_this =
+                options.dateWindow.end == "" ||
+                compareDate(
+                    options.dateWindow.end,
+                    message.formattedDate
+                        .split(" ")[0]
+                        .split(".")
+                        .reverse()
+                        .join("-")
+                ) >= 0;
             if (display_this) {
                 displayed_data = [...displayed_data, message];
             }
@@ -67,6 +96,7 @@
 
     let displayed_messages: Message[] = filter(messages, options);
     $: displayed_messages = filter(messages, options);
+    $: console.log(options.dateWindow);
 </script>
 
 <Sorter bind:options />

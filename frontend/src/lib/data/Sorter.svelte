@@ -82,7 +82,7 @@
                     senders: { Jodie: true, Matthieu: true, Théo: true },
                     type: { 1: true, 2: true, 3: true, 4: true },
                     content: "",
-                    dateWindow: { start: "*", end: "*" },
+                    dateWindow: { start: "", end: "" },
                     page_number: 1,
                     page_size: 10,
                 };
