@@ -46,12 +46,26 @@
             <!-- svelte-ignore a11y-click-events-have-key-events -->
         </div>
     </div>
+    <div id="reset">
+        <button
+            on:click={() => {
+                options = {
+                    senders: { Jodie: true, Matthieu: true, Théo: true },
+                    type: { 1: true, 2: true, 3: true, 4: true },
+                    content: "",
+                    dateWindow: { start: "*", end: "*" },
+                    page_number: 1,
+                    page_size: 10,
+                };
+            }}>Reset</button
+        >
+    </div>
 </div>
 
 <style>
     .sorter {
         width: 90%;
-        height: 200px;
+        height: 250px;
         outline: 1px solid black;
         margin: 20px 0 30px 0;
         display: flex;
