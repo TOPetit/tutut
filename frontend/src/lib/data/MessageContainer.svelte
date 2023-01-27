@@ -37,11 +37,22 @@
         page_size: 10,
     };
 
-    let displayed_messages: Message[] = [];
-    $: displayed_messages = messages.slice(
-        options.page_size * (options.page_number - 1),
-        options.page_size * options.page_number
-    );
+    function filter(messages: Message[], options: Options): Message[] {
+        let displayed_data: Message[] = [];
+        // Filter data
+        messages.forEach((message) => {
+            displayed_data = [...displayed_data, message];
+        });
+
+        // Display by page
+        return displayed_data.slice(
+            options.page_size * (options.page_number - 1),
+            options.page_size * options.page_number
+        );
+    }
+
+    let displayed_messages: Message[] = filter(messages, options);
+    $: displayed_messages = filter(messages, options);
 </script>
 
 <Sorter bind:options />

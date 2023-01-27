@@ -59,15 +59,15 @@
     }
 
     #date {
-        width: 25%;
+        width: 30%;
     }
 
     #content {
-        width: 25%;
+        width: 20%;
     }
 
     #reactions {
-        width: 25%;
+        width: 20%;
     }
 
     p {

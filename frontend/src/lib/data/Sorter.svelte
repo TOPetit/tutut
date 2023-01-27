@@ -1,6 +1,4 @@
 <script lang="ts">
-    import { page } from "$app/stores";
-
     type Options = {
         senders: { [key: string]: boolean };
         type: { [key: string]: boolean };
@@ -11,51 +9,29 @@
     };
 
     export let options: Options;
+
+    $: options.page_number = options.page_number < 1 ? 1 : options.page_number;
 </script>
 
 <div class="sorter">
     <div id="page_manager">
         <div class="item" id="page_size">
-            Items per page : {options.page_size}
-            <!-- svelte-ignore a11y-click-events-have-key-events -->
-            <div
-                class="button"
-                on:click={() => {
-                    options.page_size += 5;
-                }}
-            >
-                +
-            </div>
-            <!-- svelte-ignore a11y-click-events-have-key-events -->
-            <div
-                class="button"
-                on:click={() => {
-                    options.page_size = Math.max(10, options.page_size - 5);
-                }}
-            >
-                -
-            </div>
+            Items per page : <input
+                type="number"
+                min={10}
+                max={200}
+                step={10}
+                style="width:40px"
+                bind:value={options.page_size}
+            />
         </div>
         <div class="item" id="page_number">
-            Page number : {options.page_number}
+            Page number : <input
+                type="number"
+                style="width:40px"
+                bind:value={options.page_number}
+            />
             <!-- svelte-ignore a11y-click-events-have-key-events -->
-            <div
-                class="button"
-                on:click={() => {
-                    options.page_number += 1;
-                }}
-            >
-                +
-            </div>
-            <!-- svelte-ignore a11y-click-events-have-key-events -->
-            <div
-                class="button"
-                on:click={() => {
-                    options.page_number = Math.max(1, options.page_number - 1);
-                }}
-            >
-                -
-            </div>
         </div>
     </div>
 </div>
@@ -79,7 +55,7 @@
         flex-direction: column;
     }
 
-    .button {
+    /* .button {
         width: 20px;
         aspect-ratio: 1;
         background-color: aquamarine;
@@ -87,7 +63,7 @@
         border-radius: 10px;
         border: 1px solid grey;
         cursor: pointer;
-    }
+    } */
 
     .item {
         display: flex;
