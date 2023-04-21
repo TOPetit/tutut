@@ -1,7 +1,9 @@
 {
   "type": "module",
   "dependencies": {
+    "imap": "^0.8.19",
     "jszip": "^3.10.1",
+    "mailparser": "^3.6.4",
     "puppeteer": "^19.4.1"
   },
   "name": "data_scraping",
@@ -14,7 +16,8 @@
     "unzip:data": "node src/unzip_file.js",
     "sanitize:data": "node src/sanitize_data.js",
     "merge:data": "node src/merge_data.js",
-    "start": "npm run request:data && sleep 300 && npm run download:data && npm run unzip:data && npm run sanitize:data && npm run merge:data"
+    "start": "npm run request:data && sleep 300 && npm run download:data && npm run unzip:data && npm run sanitize:data && npm run merge:data",
+    "get:attachment": "node src/whatsapp/get_last_email.js"
   },
   "author": "",
   "license": "ISC",
