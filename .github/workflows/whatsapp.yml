@@ -30,6 +30,9 @@ jobs:
       - name: Install dependencies
         run: npm i
 
+      - name: Create empty download dir
+        run: mkdir downloads
+
       - name: Get email
         run: node index.js
         env:
