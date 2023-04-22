@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync } from 'fs';
+const { readFileSync, writeFileSync } = require('fs');
 
 var sanitized_data = {
     messages: []

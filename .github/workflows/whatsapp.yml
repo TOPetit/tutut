@@ -20,12 +20,12 @@ jobs:
   # Get the data
   Parsing:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./data_generator
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-
-      - name: Move to whatsapp dir
-        run: cd whatsapp_files
 
       - name: Install dependencies
         run: npm i
@@ -36,26 +36,17 @@ jobs:
           GMAIL_USER: ${{ secrets.GMAIL_USER }}
           GMAIL_PASS: ${{ secrets.GMAIL_PASS }}
 
-      - name: Move to data_scraping dir
-        run: cd ../data_scraping
-
-      - name: Install dependencies
-        run: npm i
-
-      - name: Generating data
-        run: node index.js
-        env:
-          GMAIL_USER: ${{ secrets.GMAIL_USER }}
-          GMAIL_PASS: ${{ secrets.GMAIL_PASS }}
-
-      - name: Install dependencies
-        run: npm i
-
       - name: Sanitize whatsapp file
         run: npm run sanitize:whatsapp
 
       - name: Merge whatsapp file
         run: npm run merge:whatsapp
+
+      # - name: Commit new data
+      #   uses: EndBug/add-and-commit@v9
+      #   with:
+      #     add: data_scraping/src/data/data.json
+      #     message: "AutoCommit: Added new data."
 
   # Data generation job
   Generation:

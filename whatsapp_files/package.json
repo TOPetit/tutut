@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "get:email": "node index.js"
+    "get:email": "node index.js",
+    "sanitize:data": "node sanitize_whatsapp.js",
+    "merge:data": "node merge_whatsapp.js"
   },
   "keywords": [],
   "author": "",
