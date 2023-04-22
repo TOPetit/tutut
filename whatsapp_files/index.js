@@ -19,8 +19,8 @@ const logger = require('pino')({
 async function run(subject) {
     const config = {
         imap: {
-            user: 'stutustiques@gmail.com',
-            password: 'dxremncvzqjiqhad',
+            user: process.env.GMAIL_USER,
+            password: process.env.GMAIL_PASS,
             host: 'imap.gmail.com',
             port: 993,
             tls: true,
