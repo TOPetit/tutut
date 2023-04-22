@@ -45,7 +45,7 @@ async function run(subject) {
     logger.info(`email: ${email.date}`);
     for (const file of email.files) {
         const lines = Buffer.from(file.buffer).toString().split('\n');
-        fs.writeFileSync(resolve(__dirname, 'downloads/raw_data.txt'), lines.join('\n'), 'utf8', (err) => {
+        fs.writeFileSync('downloads/raw_data.txt', lines.join('\n'), 'utf8', (err) => {
             if (err) {
                 console.error(err);
                 return;
