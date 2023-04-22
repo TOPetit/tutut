@@ -45,11 +45,11 @@ jobs:
       - name: Merge whatsapp file
         run: npm run merge:data
 
-      # - name: Commit new data
-      #   uses: EndBug/add-and-commit@v9
-      #   with:
-      #     add: data_scraping/src/data/data.json
-      #     message: "AutoCommit: Added new data."
+      - name: Commit new data
+        uses: EndBug/add-and-commit@v9
+        with:
+          add: data_scraping/src/data/data.json
+          message: "AutoCommit: Added new whatsapp data."
 
   # Data generation job
   Generation:
