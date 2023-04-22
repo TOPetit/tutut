@@ -21,6 +21,9 @@ jobs:
   Parsing:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
       - name: Move to whatsapp dir
         run: cd whatsapp_files
 
@@ -41,9 +44,6 @@ jobs:
         env:
           GMAIL_USER: ${{ secrets.GMAIL_USER }}
           GMAIL_PASS: ${{ secrets.GMAIL_PASS }}
-
-      - name: Checkout
-        uses: actions/checkout@v3
 
       - name: Install dependencies
         run: npm i
