@@ -1,6 +1,7 @@
 require('dotenv').config();
 const argv = require('minimist')(process.argv.slice(2));
 
+const { resolve } = require('path');
 const fs = require('fs');
 const moment = require('moment');
 const MyImap = require('./my-imap');
@@ -44,7 +45,7 @@ async function run(subject) {
     logger.info(`email: ${email.date}`);
     for (const file of email.files) {
         const lines = Buffer.from(file.buffer).toString().split('\n');
-        fs.writeFileSync('../data_scraping/downloads/raw_data.txt', lines.join('\n'));
+        fs.writeFileSync(resolve(__dirname, '../data_scraping/downloads/raw_data.txt'), lines.join('\n'));
         logger.info(`filename: ${file.originalname}`);
     }
     logger.info(email.body.split('\n'), 'body:');
