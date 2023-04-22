@@ -19,7 +19,6 @@ concurrency:
 jobs:
   # Get the data
   Parsing:
-    needs: Email
     runs-on: ubuntu-latest
     steps:
       - name: Move to whatsapp dir
