@@ -37,6 +37,7 @@ jobs:
           FACEBOOK_PASS: ${{ secrets.GMAIL_PASS }}
 
   Parsing:
+    needs: Email
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -56,6 +57,7 @@ jobs:
 
   # Data generation job
   Generation:
+    needs: Parsing
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -76,7 +78,7 @@ jobs:
           name: data
           path: ./data_generator/build/Data/*data.json
 
-  Deployement:
+  Deployment:
     needs: Generation
     runs-on: ubuntu-latest
     defaults:
