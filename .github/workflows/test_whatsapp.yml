@@ -1,12 +1,42 @@
-name: Get whatsapp data
+name: WhatsApp Stutustiques Build & Deploy
 
 on:
+  push:
+    branches:
+      - master
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Set concurrency: running as a workflow queue.
+concurrency:
+  group: "pages"
+
 jobs:
-  # Data scraping job
-  Scraping:
+  # Get the data
+  Email:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./whatsapp_files
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: npm i
+
+      - name: Generating data
+        run: node index.js
+        env:
+          FACEBOOK_EMAIL: ${{ secrets.GMAIL_USER }}
+          FACEBOOK_PASS: ${{ secrets.GMAIL_PASS }}
+
+  Parsing:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -18,8 +48,69 @@ jobs:
       - name: Install dependencies
         run: npm i
 
-      - name: Get attachment
-        run: npm run get:attachment
-        env:
-          FACEBOOK_EMAIL: ${{ secrets.GMAIL_USER }}
-          FACEBOOK_PASS: ${{ secrets.GMAIL_PASS }}
+      - name: Sanitize whatsapp file
+        run: npm run sanitize:whatsapp
+
+      - name: Merge whatsapp file
+        run: npm run merge:whatsapp
+
+  # Data generation job
+  Generation:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./data_generator
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: npm i
+
+      - name: Generating data
+        run: npm run generate:data
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: data
+          path: ./data_generator/build/Data/*data.json
+
+  Deployement:
+    needs: Generation
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./frontend
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: data
+          path: ./data_generator/build/Data/
+
+      - name: Check artifact
+        run: |
+          pwd
+          ls ../data_generator/build/Data/
+
+      - name: Install dependencies
+        run: npm i
+
+      - name: Generating data
+        run: npm run build -- --base=/tutut/
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v2
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: "./frontend/build/"
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1

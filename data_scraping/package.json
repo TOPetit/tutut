@@ -17,7 +17,8 @@
     "sanitize:data": "node src/sanitize_data.js",
     "merge:data": "node src/merge_data.js",
     "start": "npm run request:data && sleep 300 && npm run download:data && npm run unzip:data && npm run sanitize:data && npm run merge:data",
-    "get:attachment": "node src/whatsapp/get_last_email.js"
+    "sanitize:whatsapp": "node src/whatsapp/sanitize_whatsapp.js",
+    "merge:whatsapp": "node src/whatsapp/merge_whatsapp.js"
   },
   "author": "",
   "license": "ISC",
