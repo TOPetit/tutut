@@ -19,8 +19,8 @@ const logger = require('pino')({
 async function run(subject) {
     const config = {
         imap: {
-            user: process.env.GMAIL_USER,
-            password: process.env.GMAIL_PASS,
+            user: process.env.EMAIL_USER,
+            password: process.env.EMAIL_PASS,
             host: 'imap.gmail.com',
             port: 993,
             tls: true,
@@ -45,7 +45,12 @@ async function run(subject) {
     logger.info(`email: ${email.date}`);
     for (const file of email.files) {
         const lines = Buffer.from(file.buffer).toString().split('\n');
-        fs.writeFileSync(resolve(__dirname, '../data_scraping/downloads/raw_data.txt'), lines.join('\n'));
+        fs.writeFileSync(resolve(__dirname, '../data_scraping/downloads/raw_data.txt'), lines.join('\n'), 'utf8', (err) => {
+            if (err) {
+                console.error(err);
+                return;
+            }
+        })
         logger.info(`filename: ${file.originalname}`);
     }
     logger.info(email.body.split('\n'), 'body:');
