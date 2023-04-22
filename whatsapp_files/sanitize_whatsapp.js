@@ -4,7 +4,7 @@ var sanitized_data = {
     messages: []
 };
 
-const regex = /^(\d{2})\/(\d{2})\/(\d{4}),\s(\d{2}):(\d{2})\s-\s([a-zA-Z0-9]+\s[a-zA-Z0-9]+):\s(.*)$/;
+const regex = /^(\d{2})\/(\d{2})\/(\d{4}),\s(\d{2}):(\d{2})\s-\s([\p{L}\d\s\W]+):\s(.*)/u;
 
 function getRandomArbitrary(min, max) {
     return Math.random() * (max - min) + min;
@@ -23,8 +23,8 @@ function parseWAtxt(lines) {
                 parseInt(matches[1]), // Day
                 parseInt(matches[4]), // Hour
                 parseInt(matches[5]), // Minute
-                getRandomArbitrary(1, 58), // Seconds
-                getRandomArbitrary(0, 999) // Milliseconds
+                30, //getRandomArbitrary(1, 58), // Seconds
+                000 //getRandomArbitrary(0, 999) // Milliseconds
             );
             const timestamp = date.getTime()
             const message = {
