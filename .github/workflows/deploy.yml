@@ -1,13 +1,13 @@
 name: Stutustiques Build & Deploy
 
 on:
-  release:
-    types: created
-  push:
-    branches:
-      - master
-    paths:
-      - data_scraping/src/data/data.json
+  # release:
+  #   types: created
+  # push:
+  #   branches:
+  #     - master
+  #   paths:
+  #     - data_scraping/src/data/data.json
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -28,7 +28,6 @@ jobs:
       run:
         working-directory: ./data_generator
     steps:
-
       - name: Checkout
         uses: actions/checkout@v3
 
@@ -51,7 +50,6 @@ jobs:
       run:
         working-directory: ./frontend
     steps:
-
       - name: Checkout
         uses: actions/checkout@v3
 
@@ -71,14 +69,14 @@ jobs:
 
       - name: Generating data
         run: npm run build -- --base=/tutut/
-      
+
       - name: Setup Pages
         uses: actions/configure-pages@v2
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
-          path: './frontend/build/'
+          path: "./frontend/build/"
 
       - name: Deploy to GitHub Pages
         id: deployment
