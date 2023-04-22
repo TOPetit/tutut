@@ -18,17 +18,24 @@ concurrency:
 
 jobs:
   # Get the data
-  Email:
+  Parsing:
+    needs: Email
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./whatsapp_files
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+      - name: Move to whatsapp dir
+        run: cd whatsapp_files
+
+      - name: Get email
+        run: node index.js
+        env:
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_PASS: ${{ secrets.GMAIL_PASS }}
 
       - name: Install dependencies
         run: npm i
+
+      - name: Move to data_scraping dir
+        run: cd ../data_scraping
 
       - name: Generating data
         run: node index.js
@@ -36,13 +43,6 @@ jobs:
           GMAIL_USER: ${{ secrets.GMAIL_USER }}
           GMAIL_PASS: ${{ secrets.GMAIL_PASS }}
 
-  Parsing:
-    needs: Email
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./data_scraping
-    steps:
       - name: Checkout
         uses: actions/checkout@v3
 
