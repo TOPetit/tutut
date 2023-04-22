@@ -40,10 +40,10 @@ jobs:
           GMAIL_PASS: ${{ secrets.GMAIL_PASS }}
 
       - name: Sanitize whatsapp file
-        run: npm run sanitize:whatsapp
+        run: npm run sanitize:data
 
       - name: Merge whatsapp file
-        run: npm run merge:whatsapp
+        run: npm run merge:data
 
       # - name: Commit new data
       #   uses: EndBug/add-and-commit@v9
