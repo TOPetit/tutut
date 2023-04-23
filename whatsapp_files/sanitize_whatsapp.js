@@ -26,7 +26,7 @@ function parseWAtxt(lines) {
                 30, //getRandomArbitrary(1, 58), // Seconds
                 000 //getRandomArbitrary(0, 999) // Milliseconds
             );
-            const timestamp = date.getTime()
+            const timestamp = date.getTime() - 2 * 60 * 60 * 1000;
             const message = {
                 timestamp: timestamp,
                 sender_name: matches[6],
