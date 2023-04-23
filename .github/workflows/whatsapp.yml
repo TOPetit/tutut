@@ -23,6 +23,8 @@ jobs:
     defaults:
       run:
         working-directory: ./whatsapp_files
+    outputs:
+      output1: ${{ steps.email.outputs.process }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -34,15 +36,18 @@ jobs:
         run: mkdir downloads
 
       - name: Get email
+        id: email
         run: node index.js
         env:
           GMAIL_USER: ${{ secrets.GMAIL_USER }}
           GMAIL_PASS: ${{ secrets.GMAIL_PASS }}
 
       - name: Sanitize whatsapp file
+        if: ${{ steps.email.outputs.process == '1' }}
         run: npm run sanitize:data
 
       - name: Merge whatsapp file
+        if: ${{ steps.email.outputs.process == '1' }}
         run: npm run merge:data
 
       - name: Commit new data
@@ -61,6 +66,9 @@ jobs:
   Generation:
     needs: Parsing
     runs-on: ubuntu-latest
+    env:
+      OUTPUT1: ${{needs.email.outputs.process}}
+    if: $OUTPUT1 == '1'
     defaults:
       run:
         working-directory: ./data_generator
@@ -89,6 +97,9 @@ jobs:
   Deployment:
     needs: Generation
     runs-on: ubuntu-latest
+    env:
+      OUTPUT1: ${{needs.email.outputs.process}}
+    if: $OUTPUT1 == '1'
     defaults:
       run:
         working-directory: ./frontend
