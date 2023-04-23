@@ -48,7 +48,7 @@ jobs:
       - name: Commit new data
         uses: EndBug/add-and-commit@v9
         with:
-          add: data_scraping/src/data/data.json
+          add: data_scraping/src/data/data.json whatsapp_files/version
           message: "AutoCommit: Added new whatsapp data."
 
       - name: Upload artifact
