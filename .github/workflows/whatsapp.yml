@@ -68,7 +68,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       OUTPUT1: ${{needs.email.outputs.process}}
-    if: $OUTPUT1 == '1'
+    if: ${{ $OUTPUT1 }} == '1'
     defaults:
       run:
         working-directory: ./data_generator
@@ -99,7 +99,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       OUTPUT1: ${{needs.email.outputs.process}}
-    if: $OUTPUT1 == '1'
+    if: ${{ $OUTPUT1 }} == '1'
     defaults:
       run:
         working-directory: ./frontend
