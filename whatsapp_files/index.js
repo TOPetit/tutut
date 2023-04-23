@@ -16,8 +16,12 @@ const logger = require('pino')({
 });
 
 function get_version() {
-    const version = fs.readFileSync('version', 'utf-8').split('\n')[0]
+    const version = fs.readFileSync('version', 'utf-8').split('\n')[0];
     return version
+}
+
+function set_version(version) {
+    fs.writeFileSync('version', `${version}\n`, 'utf-8');
 }
 
 async function run(subject) {
@@ -47,12 +51,14 @@ async function run(subject) {
 
     const email = emails[0]
     logger.info(`Found an email from ${email.date}.`);
-    if (Date(get_version()) >= email.date) {
+    new_date = `${email.date}`
+    if (get_version() == new_date) {
         logger.info(`Email found is not more recent that what has been processed already.`);
         logger.info(`Date of last version : ${get_version()}`);
         exit(1)
     }
     else {
+        set_version(new_date);
         for (const file of email.files) {
             const lines = Buffer.from(file.buffer).toString().split('\n');
             fs.writeFileSync('downloads/raw_data.txt', lines.join('\n'), 'utf8', (err) => {
