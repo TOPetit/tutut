@@ -2,8 +2,8 @@ require('dotenv').config();
 const argv = require('minimist')(process.argv.slice(2));
 
 const fs = require('fs');
-const os = require("os")
 const MyImap = require('./my-imap');
+const { exit } = require('process');
 const logger = require('pino')({
     transport: {
         target: 'pino-pretty',
@@ -14,12 +14,6 @@ const logger = require('pino')({
         },
     },
 });
-
-function setOutput(key, value) {
-    // Temporary hack until core actions library catches up with github new recommendations
-    const output = process.env['GITHUB_OUTPUT']
-    fs.appendFileSync(output, `${key}=${value}${os.EOL}`)
-}
 
 function get_version() {
     const version = fs.readFileSync('version', 'utf-8').split('\n')[0]
@@ -54,12 +48,11 @@ async function run(subject) {
     const email = emails[0]
     logger.info(`Found an email from ${email.date}.`);
     if (Date(get_version()) >= email.date) {
-        setOutput('process', '0');
         logger.info(`Email found is not more recent that what has been processed already.`);
         logger.info(`Date of last version : ${get_version()}`);
+        exit(1)
     }
     else {
-        setOutput('process', '1');
         for (const file of email.files) {
             const lines = Buffer.from(file.buffer).toString().split('\n');
             fs.writeFileSync('downloads/raw_data.txt', lines.join('\n'), 'utf8', (err) => {
