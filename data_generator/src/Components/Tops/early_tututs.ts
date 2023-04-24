@@ -8,7 +8,7 @@ function compareMessage(message1: Message, message2: Message): number {
 function early_tututs(data: Data, nb: number): Message[] {
     let result: Message[] = [];
     data.messages.forEach(message => {
-        if (message.isCorrectTutut()) {
+        if (message.isCorrectTutut() && message.source != "whatsapp") {
             if (result.length < nb) {
                 result.push(message);
             }

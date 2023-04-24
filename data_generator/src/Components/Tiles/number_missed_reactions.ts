@@ -7,12 +7,12 @@ function compute(data: Data) {
         values[element] = 0;
     })
     data.messages.forEach(message => {
-        if (message.isCorrectTutut()) {
+        if (message.isCorrectTutut() && message.source != "whatsapp") {
             // if (message.reactions.length != 2) console.log(message.reactions)
-            data.participants.forEach( user => {
-                if (user != message.sender && !message.containsReaction(new Reaction({sender: user, emoji: '❤'}))) {
+            data.participants.forEach(user => {
+                if (user != message.sender && !message.containsReaction(new Reaction({ sender: user, emoji: '❤' }))) {
                     values[message.sender] = (values[message.sender] as number) + 1;
-                    
+
                 }
             })
         }

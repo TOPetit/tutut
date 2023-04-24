@@ -28,6 +28,7 @@ const fct = async () => {
                     sender: message.sender_name.split(' ')[0],
                     timestamp: message.timestamp_ms,
                     content: message.content,
+                    source: "messenger",
                     reactions: []
                 };
                 if (message.reactions) {

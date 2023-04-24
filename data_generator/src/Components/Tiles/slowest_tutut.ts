@@ -12,7 +12,7 @@ function compute(data: Data) {
     data.messages.forEach(element => {
         const date = new Date(element.timestamp);
         date.toLocaleString('fr-FR', { timeZone: 'Europe/Paris' });
-        if (element.isCorrectTutut() && comparator[element.sender] < date.getMilliseconds() + 1000 * date.getSeconds()) {
+        if (element.isCorrectTutut() && element.source != "whatsapp" && comparator[element.sender] < date.getMilliseconds() + 1000 * date.getSeconds()) {
             // We have found a slower tutut that what we previoulsy had
             comparator[element.sender] = date.getMilliseconds() + 1000 * date.getSeconds();
             values[element.sender] = date_to_string(date);

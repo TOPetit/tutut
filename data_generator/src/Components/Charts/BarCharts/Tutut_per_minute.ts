@@ -7,7 +7,7 @@ function compute(data: Data): { data: BarChartData, labels: string[] } {
         tmp_ChartData[user] = new Array(60).fill(0);
     })
     data.messages.forEach(message => {
-        if (message.isCorrectTutut()) {
+        if (message.isCorrectTutut() && message.source != "whatsapp") {
             const seconds = message.date.second();
             tmp_ChartData[message.sender][seconds] += 1;
         }

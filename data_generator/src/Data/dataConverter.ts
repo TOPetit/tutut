@@ -3,7 +3,7 @@ import { resolve } from "path";
 import moment, { Moment } from 'moment-timezone';
 
 type ObjReaction = { emoji: string, sender: string };
-type ObjMessage = { sender: string, timestamp: number, content: string, reactions: ObjReaction[] };
+type ObjMessage = { sender: string, timestamp: number, content: string, source: string, reactions: ObjReaction[] };
 type ObjData = { participants: string[], messages: ObjMessage[] }
 
 export class Reaction {
@@ -27,6 +27,7 @@ export class Message {
     public sender: string;
     public timestamp: number;
     public content: string;
+    public source: string;
     public reactions: Reaction[];
     public date: Moment;
     public formattedDate: string;
@@ -36,12 +37,13 @@ export class Message {
         this.sender = obj.sender;
         this.timestamp = obj.timestamp;
         this.content = obj.content;
+        this.source = obj.source;
         this.reactions = [];
         obj.reactions.forEach(element => {
             this.reactions.push(new Reaction(element));
         });
         this.date = moment(this.timestamp, 'x').tz("Europe/Paris");
-        this.formattedDate = String(this.date.date()).padStart(2, '0') + '.' + String(this.date.month() + 1).padStart(2, '0') + '.' + String(this.date.year()).padStart(4, '0') + ' ' + String(this.date.hour()).padStart(2, '0') + ':' + String(this.date.minute()).padStart(2, '0') + ':' + String(this.date.second()).padStart(2, '0') + "." + String(this.date.millisecond()).padStart(3, '0');
+        this.formattedDate = this.source == "whatsapp" ? String(this.date.date()).padStart(2, '0') + '.' + String(this.date.month() + 1).padStart(2, '0') + '.' + String(this.date.year()).padStart(4, '0') + ' ' + String(this.date.hour()).padStart(2, '0') + ':' + String(this.date.minute()).padStart(2, '0') : String(this.date.date()).padStart(2, '0') + '.' + String(this.date.month() + 1).padStart(2, '0') + '.' + String(this.date.year()).padStart(4, '0') + ' ' + String(this.date.hour()).padStart(2, '0') + ':' + String(this.date.minute()).padStart(2, '0') + ':' + String(this.date.second()).padStart(2, '0') + "." + String(this.date.millisecond()).padStart(3, '0');
     }
 
     /**

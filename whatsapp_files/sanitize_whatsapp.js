@@ -63,6 +63,7 @@ const fct = async () => {
                     sender: message.sender_name.split(' ')[0],
                     timestamp: message.timestamp,
                     content: message.content,
+                    source: "whatsapp",
                     reactions: [],
                 };
                 sanitized_data.messages.push(cured_message);

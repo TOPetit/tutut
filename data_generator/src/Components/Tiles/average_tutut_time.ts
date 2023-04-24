@@ -11,7 +11,7 @@ function compute(data: Data) {
         accumulator[element] = 0;
     })
     data.messages.forEach(element => {
-        if (element.isCorrectTutut()) {
+        if (element.isCorrectTutut() && element.source != "whatsapp") {
             const date = new Date(element.timestamp);
             date.toLocaleString('fr-FR', { timeZone: 'Europe/Paris' });
             number_of_tutut[element.sender] = (number_of_tutut[element.sender] as number) + 1;

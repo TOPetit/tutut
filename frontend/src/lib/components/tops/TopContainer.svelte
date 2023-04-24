@@ -3,6 +3,7 @@
         sender: string;
         timestamp: number;
         content: string;
+        source: string;
         date: string;
         formattedDate: string;
         reactions: { emoji: string; sender: string }[];
@@ -26,6 +27,19 @@
         }}
     >
         <div class="index"><p>{index + 1}</p></div>
+        <div class="source_logo">
+            {#if message.source == "messenger"}
+                <img
+                    src="https://upload.wikimedia.org/wikipedia/commons/b/be/Facebook_Messenger_logo_2020.svg"
+                    alt="messenger"
+                />
+            {:else if message.source == "whatsapp"}
+                <img
+                    src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
+                    alt="whatsapp"
+                />
+            {/if}
+        </div>
         <div class="sender"><p>{message.sender}</p></div>
         <div class="date"><p>{message.formattedDate}</p></div>
         <div class="content"><p>{message.content}</p></div>
@@ -86,12 +100,22 @@
         width: 10%;
     }
 
+    .source_logo {
+        width: 5%;
+    }
+
+    .source_logo img {
+        padding: 5px;
+        width: 40%;
+        aspect-ratio: 1;
+    }
+
     .sender {
         width: 25%;
     }
 
     .date {
-        width: 40%;
+        width: 35%;
     }
     .content {
         width: 10%;
