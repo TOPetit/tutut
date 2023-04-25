@@ -37,13 +37,20 @@ async function run(subject) {
         debug: logger.info.bind(logger),
     };
 
+    // Get email date filter (1 week ago)
+    const today = new Date();
+    const nextWeek = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const formattedDate = nextWeek.toLocaleDateString('en-US', options);
+    logger.info(`Looking for emails since ${formattedDate}.`);
+
     const imap = new MyImap(config);
     const result = await imap.connect();
     logger.info(`result: ${result}`);
     const boxName = await imap.openBox();
     logger.info(`boxName: ${boxName}`);
 
-    const criteria = [['FROM', 'theo.p83@gmail.com']];
+    const criteria = [['FROM', 'theo.p83@gmail.com'], ['SINCE', formattedDate]];
 
     let emails = await imap.fetchEmails(criteria);
 
