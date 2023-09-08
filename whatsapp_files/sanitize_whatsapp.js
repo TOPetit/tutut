@@ -23,8 +23,8 @@ function parseWAtxt(lines) {
                 parseInt(matches[1]), // Day
                 parseInt(matches[4]), // Hour
                 parseInt(matches[5]), // Minute
-                30, //getRandomArbitrary(1, 58), // Seconds
-                000 //getRandomArbitrary(0, 999) // Milliseconds
+                30, // Seconds
+                0 // Milliseconds
             );
             const timestamp = date.getTime() - 2 * 60 * 60 * 1000;
             const message = {
@@ -32,7 +32,8 @@ function parseWAtxt(lines) {
                 sender_name: matches[6],
                 content: matches[7]
             };
-            return [message, ...parseWAtxt(lines.slice(1))]
+            const restOfMessages = parseWAtxt(lines.slice(1));
+            return [message, ...restOfMessages];
         }
         else {
             return parseWAtxt(lines.slice(1))
@@ -40,10 +41,38 @@ function parseWAtxt(lines) {
     }
 }
 
+// DEPRECATED recursive stack explosion
+function parseWAtxt2(lines) {
+    res = [];
+    for (let i = 0; i < lines.length; i++) {
+        if (regex.test(lines[i])) {
+            const matches = lines[i].match(regex);
+            const date = new Date(
+                parseInt(matches[3]), // Year
+                parseInt(matches[2]) - 1, // Month (subtract 1 since months are zero-indexed)
+                parseInt(matches[1]), // Day
+                parseInt(matches[4]), // Hour
+                parseInt(matches[5]), // Minute
+                30, // Seconds
+                0 // Milliseconds
+            );
+            const timestamp = date.getTime() - 2 * 60 * 60 * 1000;
+            const message = {
+                timestamp: timestamp,
+                sender_name: matches[6],
+                content: matches[7]
+            };
+            res.push(message);
+        }
+    }
+    return res;
+}
+
+
 const fct = async () => {
     const path = 'downloads/raw_data.txt';
     const fileContent = readFileSync(path, 'utf-8');
-    const messages = parseWAtxt(fileContent.split('\n'))
+    const messages = parseWAtxt2(fileContent.split('\n'))
 
     const layout = `
     1234567890
