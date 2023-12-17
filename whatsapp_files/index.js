@@ -57,6 +57,10 @@ async function run(subject) {
     emails.sort((a, b) => b.date - a.date);
 
     const email = emails[0]
+    if (email === undefined) {
+        throw new Error("No email found matching the criteria.");
+    }
+
     logger.info(`Found an email from ${email.date}.`);
     new_date = `${email.date}`
     if (get_version() == new_date) {
@@ -65,7 +69,6 @@ async function run(subject) {
         exit(1)
     }
     else {
-        set_version(new_date);
         for (const file of email.files) {
             const lines = Buffer.from(file.buffer).toString().split('\n');
             fs.writeFileSync('downloads/raw_data.txt', lines.join('\n'), 'utf8', (err) => {
@@ -77,6 +80,7 @@ async function run(subject) {
             logger.info(`Saved file: ${file.originalname}`);
             logger.info(`With ${lines.length} lines.`)
         }
+        set_version(new_date);
     }
     await imap.end();
 }

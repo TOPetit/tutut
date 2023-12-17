@@ -10,6 +10,7 @@ function getRandomArbitrary(min, max) {
     return Math.random() * (max - min) + min;
 }
 
+// DEPRECATED recursive stack explosion
 function parseWAtxt(lines) {
     if (lines.length == 0) {
         return []
@@ -41,7 +42,6 @@ function parseWAtxt(lines) {
     }
 }
 
-// DEPRECATED recursive stack explosion
 function parseWAtxt2(lines) {
     res = [];
     for (let i = 0; i < lines.length; i++) {
@@ -56,7 +56,7 @@ function parseWAtxt2(lines) {
                 30, // Seconds
                 0 // Milliseconds
             );
-            const timestamp = date.getTime() - 2 * 60 * 60 * 1000;
+            const timestamp = date.getTime();
             const message = {
                 timestamp: timestamp,
                 sender_name: matches[6],
