@@ -27,7 +27,7 @@ function parseWAtxt(lines) {
                 30, // Seconds
                 0 // Milliseconds
             );
-            const timestamp = date.getTime() - 2 * 60 * 60 * 1000;
+            const timestamp = date.getTime() + (date.getTimezoneOffset() * 60 * 1000);
             const message = {
                 timestamp: timestamp,
                 sender_name: matches[6],
